@@ -60,7 +60,9 @@ class TripleVector:
 
 	def normal(self):
 		return self.__copy().__div__(self.magnitude())
-
+	def dist_2Points(self, operand):
+		return (self.__copy() - operand).magnitude()
+	
 	def compt(self, number):
 		if number == 0:
 			return self.x
@@ -68,6 +70,8 @@ class TripleVector:
 			return self.y
 		elif number == 2:
 			return self.z
+
+	
 
 ZERO = TripleVector(0,0,0)
 vector1 = TripleVector(1, 2, 4)
@@ -78,4 +82,9 @@ array = np.array((10, vector1, vector2, vector3))
 array2 = np.vstack((array, np.array((11, vector1 + vector2, vector1 + vector3, vector2 + vector3))))
 
 # print(vector3)
+
+# vect1 = TripleVector(1, 1, 1)
+# vect2 = TripleVector(2, 2, 1)
+
+# print(vect1.dist_2Points(vect2))
 
