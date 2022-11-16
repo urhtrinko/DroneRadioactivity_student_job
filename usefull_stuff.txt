@@ -1,1 +1,2 @@
 DETAILED fitting points to circle using numpy: https://meshlogic.github.io/posts/jupyter/curve-fitting/fitting-a-circle-to-cluster-of-3d-points/
+SCIPY CURVE FIT EXAMPLE: https://scipython.com/blog/non-linear-least-squares-fitting-of-a-two-dimensional-data/
