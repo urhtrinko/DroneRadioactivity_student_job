@@ -1,5 +1,6 @@
 import numpy as np
-from numpy import random
+from numpy import unravel_index
+from numpy import random 
 
  
  # it equals to the activity
@@ -14,16 +15,17 @@ def point_source(x_max, y_max, A_min, A_max, x_min=0, y_min=0):
         return [random.uniform(x_min, x_max), random.uniform(y_min, y_max), random.uniform(A_min, A_max)]
 
 # Noise is a list that contanins the standard deviations of x/y coordinates as a result of the error of the detector
-def Random_flyover(n_points, radiation, detector, source = [], noise = []):
+def random_flyover(n_points, radiation, detector, source = [], noise = []):
     A_min, A_max, A_b, F = radiation["A_min"], radiation["A_max"], radiation["A_b"], radiation["dose_factor"]
     h, dt, x_max, y_max, grid, K = detector["h"], detector["dt"], detector["x_max"], detector["y_max"], detector["grid"], detector["detector_constant"]
     N_grid = grid
     square_x, square_y = (2*x_max)/N_grid, (2*y_max)/N_grid
-
-    grid_x, grid_y = np.zeros((N_grid, N_grid)), np.zeros((N_grid, N_grid))
-    grid_x_noise, grid_y_noise = np.zeros((N_grid, N_grid)), np.zeros((N_grid, N_grid))
-    xs = np.linspace(-x_max + square_x/2, x_max - square_x/2, int(N_grid))
     
+    xs = np.linspace(-x_max + square_x/2, x_max - square_x/2, int(N_grid))
+    ys = np.linspace(-y_max + square_y/2, y_max - square_y/2, int(N_grid))
+    grid_x, grid_y = np.meshgrid(xs, np.flip(ys))
+    grid_x_noise, grid_y_noise = np.zeros((N_grid, N_grid)), np.zeros((N_grid, N_grid))
+
     # If the source is not specified, then it is randomly generated 
     if len(source) == 0: 
         source = point_source(x_max, y_max, A_min, A_max)
@@ -31,7 +33,8 @@ def Random_flyover(n_points, radiation, detector, source = [], noise = []):
     HDs = np.zeros((int(N_grid), int(N_grid))); dHDs = np.zeros((int(N_grid), int(N_grid)))
     i = 0
     while i < n_points:
-        x = random.uniform(-x_max, x_max); y = random.uniform(-y_max, y_max)
+        n, m = np.random.randint(N_grid -1, size = 2)
+        x = random.uniform(xs[n] - square_x/2, xs[n] + square_x/2); y = random.uniform(ys[m] - square_y/2, ys[m] + square_y/2)
 
         A = activity(source, x, y, h)
         A_det = A * (1 - K)
@@ -47,7 +50,6 @@ def Random_flyover(n_points, radiation, detector, source = [], noise = []):
         HDs[n, m] = F * (N + N_b)
         dHDs[n, m] = F * np.sqrt(N + N_b)
             
-        grid_x[n, m] = x; grid_y[n, m] = y
         i += 1
     
     i_max, j_max = unravel_index(HDs.argmax(), HDs.shape)
