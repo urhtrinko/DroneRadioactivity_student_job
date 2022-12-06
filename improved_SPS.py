@@ -66,6 +66,8 @@ def dose_speed(source, x, y, data):
     N_b = np.random.poisson(A_b * dt)# background radiation
 
     HD = F * (N + N_b)
+
+
     dHD = F * np.sqrt(N + N_b)
     return [HD, dHD]
 #########################################################################################################################################
@@ -193,6 +195,7 @@ def improv_flyOver(radiation, detector, source = [], noise = []):
     # print(HD_max)
     while dose_speed(source, x, y, data)[0] < HD_max:
         map[j, i] = dose_speed(source, x, y, data)[0]
+        print(map)
         i = coors[max_i]['i']; j = coors[max_i]['j']
         if (i == 0) and (j == 0): # beginning
             tehnical['start_x'] = i; tehnical['start_y'] = j
