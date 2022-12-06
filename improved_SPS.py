@@ -15,7 +15,7 @@ h = 10 # m
 dt = 100 # the pause on each point od the grid in s
 x_max = 4; sigma_x = 0.1 # m
 y_max = 4; sigma_y = 0.1 # m
-grid = 8
+grid = 5
 n_bins = 20
 K = 0.1 # is somewhere in the interval [0, 1]
 F = 0.140 # factor for inhilation of Pu-239 in mSV/Bq
@@ -86,7 +86,7 @@ option3 = {"rotation": clockwise, "special": 'left+up'}
 option4 = {"rotation": anticlockwise, "special": 'up'}
 option5 = {"rotation": anticlockwise, "special": ''}
 
-def measure(y, x, source, doses, coordinates, count, matrix):
+def measure(x, y, source, doses, coordinates, count, matrix):
     X = grid_x[y, x]; Y = grid_y[y, x]; dose = dose_speed(source, X, Y, data)[0]
     doses.append(dose)
     coordinates.append({"i": x, "j": y})
@@ -114,27 +114,27 @@ def spiral(tehnical, option, source, grid_x, grid_y, data, count_max=9):
     while True:
         count += 1
         
-        measuring = measure(y, x, source, doses, coordinates, count, matrix)
+        measuring = measure(x, y, source, doses, coordinates, count, matrix)
         doses = measuring["dos"]; coordinates = measuring["coo"]; count = measuring["count"]; matrix = measuring["mat"]
 
         if (special == "up" and count == 1):
             count += 1
             y -= 1
 
-            measuring = measure(y, x, source, doses, coordinates, count, matrix)
+            measuring = measure(x, y, source, doses, coordinates, count, matrix)
             doses = measuring["dos"]; coordinates = measuring["coo"]; count = measuring["count"]; matrix = measuring["mat"]
 
         elif (special == "left+up" and count == 1):
             count += 1
             x -=1
 
-            measuring = measure(y, x, source, doses, coordinates, count, matrix)
+            measuring = measure(x, y, source, doses, coordinates, count, matrix)
             doses = measuring["dos"]; coordinates = measuring["coo"]; count = measuring["count"]; matrix = measuring["mat"]
 
             count += 1
             y -= 1
 
-            measuring = measure(y, x, source, doses, coordinates, count, matrix)
+            measuring = measure(x, y, source, doses, coordinates, count, matrix)
             doses = measuring["dos"]; coordinates = measuring["coo"]; count = measuring["count"]; matrix = measuring["mat"]
 
         if count_max <= count:
@@ -155,17 +155,11 @@ def spiral(tehnical, option, source, grid_x, grid_y, data, count_max=9):
                     return [doses[1:], coordinates[1:]] # nowhere to go
 
 
-# def print_matrix(matrix):
-#     stop_x = len(str(max(el for row in matrix for el in row if el is not None)))
-#     fmt = "{:0%dd}" % stop_x
-#     for row in matrix:
-#         print(" ".join("_"*stop_x if el is None else fmt.format(el) for el in row))
+tehnical = {"width": grid, "height": grid, "start_x": 0, "start_y": 0}
 
-tehnical = {"width": grid, "height": grid, "start_x": 7, "start_y": 6}
-
-matrix = spiral(tehnical, option4, test_source, grid_x, grid_y, data)
+matrix = spiral(tehnical, option1, [0, 0, 1000], grid_x, grid_y, data)
 # print_matrix(matrix)
-# print(matrix)
+print(matrix)
 
 def improv_flyOver(radiation, detector, source = [], noise = []):
     A_min, A_max, A_b, dt = radiation['A_min'], radiation['A_max'], radiation['A_b'], radiation['dt']
@@ -179,46 +173,53 @@ def improv_flyOver(radiation, detector, source = [], noise = []):
     grid_x, grid_y = np.meshgrid(xs, ys)
     grid_x_noise, grid_y_noise = np.zeros((N_grid, N_grid)), np.zeros((N_grid, N_grid))
     map = np.zeros((N_grid, N_grid))
+    data = {"h": h, "A_b": A_b, "K": K, "F": F, "dt": dt, "grid_x_noise": grid_x_noise, "grid_y_noise": grid_y_noise, "noise": noise}
 
     if len(source) == 0:
         source = point_source(x_max, y_max, A_min, A_max)
     
-    data = {"h": h, "A_b": A_b, "K": K, "F": F, "dt": dt, "grid_x_noise": grid_x_noise, "grid_y_noise": grid_y_noise, "noise": noise}
     i, j = 0, 0
+    option = option1
     x = grid_x[i, j]; y = grid_y[i, j]
-    tehnical = {"width": grid, "height": grid, "start_x": i, "start_y": j}
-
-    HDs = spiral(tehnical, option1, test_source, grid_x, grid_y, data)[0]; coors = spiral(tehnical, option1, test_source, grid_x, grid_y, data)[1]
+    tehnical = {"width": grid, "height": grid, "start_x": j, "start_y": i}
+    HD = dose_speed(source, x, y, data)[0]
+    
+    HDs = spiral(tehnical, option, source, grid_x, grid_y, data)[0]; coors = spiral(tehnical, option, source, grid_x, grid_y, data)[1]
     # print(HDs)
     HD_max = max(HDs)
     max_i = HDs.index(HD_max)
-    # print(HD_max)
-    while dose_speed(source, x, y, data)[0] < HD_max:
-        map[j, i] = dose_speed(source, x, y, data)[0]
+    while HD < HD_max:
+        print(HD_max)
+        input()
+        map[j, i] = HD
         print(map)
+        input()
         i = coors[max_i]['i']; j = coors[max_i]['j']
-        if (i == 0) and (j == 0): # beginning
-            tehnical['start_x'] = i; tehnical['start_y'] = j
-            HDs = spiral(tehnical, option1, test_source, grid_x, grid_y, data)[0]; coors = spiral(tehnical, option1, test_source, grid_x, grid_y, data)[1]
-        elif j == 0: # top
-            tehnical['start_x'] = i; tehnical['start_y'] = j
-            HDs = spiral(tehnical, option5, test_source, grid_x, grid_y, data)[0]; coors = spiral(tehnical, option5, test_source, grid_x, grid_y, data)[1]
+        x = grid_x[i, j]; y = grid_y[i, j]
+        print(i, j)
+        print(x, y)
+        print(option)
+        input()
+
+        # def f(option):
+        #     tehnical['start_x'] = i; tehnical['start_y'] = j
+        #     HDs = spiral(tehnical, option1, source, grid_x, grid_y, data)[0]; coors = spiral(tehnical, option1, source, grid_x, grid_y, data)[1]
+        #     return [HDs, coors]
+
+        if j == 0: # top
+            option = option5
         elif j == (N_grid -1): # bottom
-            tehnical['start_x'] = i; tehnical['start_y'] = j
-            HDs = spiral(tehnical, option3, test_source, grid_x, grid_y, data)[0]; coors = spiral(tehnical, option3, test_source, grid_x, grid_y, data)[1]
+            option = option3
         elif i == 0: # left
-            tehnical['start_x'] = i; tehnical['start_y'] = j
-            HDs = spiral(tehnical, option2, test_source, grid_x, grid_y, data)[0]; coors = spiral(tehnical, option2, test_source, grid_x, grid_y, data)[1]
+            option = option2
         elif i == (N_grid - 1): # right
-            tehnical['start_x'] = i; tehnical['start_y'] = j
-            HDs = spiral(tehnical, option4, test_source, grid_x, grid_y, data)[0]; coors = spiral(tehnical, option4, test_source, grid_x, grid_y, data)[1]        
-        else:
-            tehnical['start_x'] = i; tehnical['start_y'] = j
-            HDs = spiral(tehnical, option1, test_source, grid_x, grid_y, data)[0]; coors = spiral(tehnical, option1, test_source, grid_x, grid_y, data)[1]
+            option = option4
+        else: # middle
+            option = option1
 
     return map
 
-improv_flyOver(radiation, detector, test_source)
+# improv_flyOver(radiation, detector, test_source)
 
 #########################################################################################################################################
 
