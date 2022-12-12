@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from vector_class import TripleVector
 import random
+from scipy.optimize import curve_fit
 
 # The goal is to improve the code so that the drone flies over the grid in a way that it firs locates the "hotspot" tile and then gathers 
 # the information around it source. It dose this by flying around it in circles
@@ -13,19 +14,24 @@ A_max = 2e3 # Bq
 A_b = 5e-5 # Bq
 h = 10 # m
 dt = 100 # the pause on each point od the grid in s
-x_max = 4; sigma_x = 0.1 # m
-y_max = 4; sigma_y = 0.1 # m
-grid = 5
+x_max = 100; sigma_x = 0.1 # m
+y_max = 100; sigma_y = 0.1 # m
+grid = 8
 n_bins = 20
 K = 0.1 # is somewhere in the interval [0, 1]
 F = 0.140 # factor for inhilation of Pu-239 in mSV/Bq
 
-radiation = {"A_min": A_min, "A_max": A_max, "A_b": A_b, "dt": dt, "dose_factor": F}
-detector = {"h": h, "x_max": x_max, "y_max": y_max, "grid": grid, "detector_constant": K} # the detector constant tells us the quality of the 
-                                                                                          # detector
+n_points = 50 # fot the random_flyover() -> number of random points generated OR for improv_flyover() -> number of points in a spiral
+max_phi = 6*np.pi # rotation in radians that the detector will make will moving in a spiral trajectory
+s_grid = 5
+
+radiation = {"A_min": A_min, "A_max": A_max, "A_b": A_b, "dose_factor": F}
+detector = {"h": h, "dt": dt, "x_max": x_max, "y_max": y_max, "grid": grid, "detector_constant": K, "n_points": n_points, "max_phi": max_phi, "spiral_grid": s_grid} # the detector constant tells us the quality of the detector
+                                                                                         # detector
 #########################################################################################################################################
 
 ######################## SUBSIDARY ######################################################################################################
+ # it equals to the activity
 def activity(source, x, y, h, ru=0, rv=0):
     u, v, A0 = source[0], source[1], source[2] # u, v are the coordinates of the source and A0 is its activity
     return (A0*(ru**2 + rv**2 + h**2)) / ((x - (u - ru))**2 + (y - (v - rv))**2 + h**2)
@@ -36,29 +42,9 @@ def point_source(x_max, y_max, A_min, A_max, x_min=0, y_min=0):
     else:
         return [random.uniform(x_min, x_max), random.uniform(y_min, y_max), random.uniform(A_min, A_max)]
 
-# def simulated_event(source, x, y, h, grid_x_noise, grid_y_noise, noise=[], n="None", m="None"):
-#     A = activity(source, x, y, h)
-#     A_det = A * (1 - K)
-#     N = np.random.poisson(A_det * dt)
-#     N_b = np.random.poisson(A_b * dt)# background radiation
-
-#     # Add noise to the location data because of the GPS uncertianty
-
-#     if len(noise) != 0:
-#         if (n != "None" and m != "None"):
-#             sigma_x = noise[0]; sigma_y = noise[1]
-#             grid_x_noise[n, m] = x + np.random.normal(0, sigma_x)
-#             grid_y_noise[n, m] = y + np.random.normal(0, sigma_y)
-#         else:
-#             sigma_x = noise[0]; sigma_y = noise[1]
-#             x += np.random.normal(0, sigma_x)
-#             y += np.random.normal(0, sigma_y)
-
-#     return {"number": N, "N_b": N_b, "grid_x_noise": grid_x_noise, "grid_y_noise": grid_y_noise, "x": x, "y": y}Sž
-
-def dose_speed(source, x, y, data):
-    h = data['h']; A_b = data['A_b']; K = data['K']; F = data['F']; dt = data['dt']
-    grid_x_noise = data['grid_x_noise']; grid_y_noise = data['grid_y_noise']; noise = data['noise']
+def dose_speed_xy(source, x, y, radiation, detector):
+    A_b = radiation['A_b']
+    h = detector['h']; K = detector['detector_constant']; dt = detector['dt']
     
     A = activity(source, x, y, h)
     A_det = A * (1 - K)
@@ -70,156 +56,188 @@ def dose_speed(source, x, y, data):
 
     dHD = F * np.sqrt(N + N_b)
     return [HD, dHD]
+
+def dose_speed(source, i, j, radiation, detector, grid_x, grid_y):
+    A_b = radiation['A_b']
+    h = detector['h']; K = detector['detector_constant']; dt = detector['dt']
+
+    x = grid_x[i, j]; y = grid_y[i, j]
+
+    A = activity(source, x, y, h)
+    A_det = A * (1 - K)
+    N = np.random.poisson(A_det * dt)
+    N_b = np.random.poisson(A_b * dt)# background radiation
+
+    HD = F * (N + N_b)
+
+    dHD = F * np.sqrt(N + N_b)
+    return [HD, dHD]
+
 #########################################################################################################################################
 
 ######################## MAIN CODE ######################################################################################################
-test_source = point_source(x_max, y_max, A_min, A_max)
-# print(test_source)
+def combination(radiation, detector, func_fo, func_CF,  source=[], noise=[]):
+    measurement = func_fo(radiation, detector, source, noise)
+    sourceCF, stDev = func_CF(measurement, detector, noise=[])[0], func_CF(measurement, detector, noise=[])[1]
+    return {'measurement': measurement, 'sourceCF': sourceCF, "sourceCF_stDev": stDev}
 
-NORTH, S, W, E = (0, -1), (0, 1), (-1, 0), (1, 0) # directions
-anticlockwise = {NORTH: W, E: NORTH, S: E, W: S} # old -> new direction
-clockwise = {NORTH: E, E: S, S: W, W: NORTH}
+def make_list(source, i, j, radiation, detector, grid_x, grid_y):
+    N_grid = 10
+    HDs = []; direction = []
+    if j != (N_grid - 1): # go right
+        HDs0 = dose_speed(source, i, j + 1, radiation, detector, grid_x, grid_y)
+        HDs.append(HDs0[0])
+        direction.append(0)
+    if (i != (N_grid - 1)) and (j != (N_grid - 1)): # go diagonally
+        HDs1 = dose_speed(source, i + 1, j + 1, radiation, detector, grid_x, grid_y)
+        HDs.append(HDs1[0])
+        direction.append(1)
+    if i != (N_grid - 1): # go left
+        HDs2 = dose_speed(source, i + 1, j, radiation, detector, grid_x, grid_y)
+        HDs.append(HDs2[0])
+        direction.append(2)
+    if len(HDs) == 0:
+        print(source)
+    max_HD = max(HDs)
+    max_id = HDs.index(max_HD)
+    d = direction[max_id]
+    return [d, max_HD]
 
-option1 = {"rotation": clockwise, "special": ''}
-option2 = {"rotation": clockwise, "special": 'up'}
-option3 = {"rotation": clockwise, "special": 'left+up'}
-option4 = {"rotation": anticlockwise, "special": 'up'}
-option5 = {"rotation": anticlockwise, "special": ''}
+def r_ArhSpir(phi, k=1):
+    return k * phi
 
-def measure(x, y, source, doses, coordinates, count, matrix):
-    X = grid_x[y, x]; Y = grid_y[y, x]; dose = dose_speed(source, X, Y, data)[0]
-    doses.append(dose)
-    coordinates.append({"i": x, "j": y})
-    matrix[y][x] = count
-    return {"dos": doses, "coo": coordinates, "count": count, "mat": matrix}
-
-N_grid = grid
-dx, dy = (2*x_max)/N_grid, (2*y_max)/N_grid
-xs = np.linspace(-x_max + dx/2, x_max - dx/2, int(N_grid))
-ys = np.flip(np.linspace(-y_max + dy/2, y_max - dy/2, int(N_grid)))
-grid_x, grid_y = np.meshgrid(xs, ys)
-grid_x_noise, grid_y_noise = np.zeros((N_grid, N_grid)), np.zeros((N_grid, N_grid))
-data = {"h": h, "A_b": A_b, "K": K, "F": F, "dt": dt, "grid_x_noise": grid_x_noise, "grid_y_noise": grid_y_noise, "noise": []}
-
-def spiral(tehnical, option, source, grid_x, grid_y, data, count_max=9):
-    doses = []; coordinates = []
-    width = tehnical["width"]; height = tehnical["height"]; start_x = tehnical["start_x"]; start_y = tehnical["start_y"]
-    turn_type = option["rotation"]; special = option["special"]
-    if width < 1 or height < 1:
-        raise ValueError
-    x, y = start_x, start_y # start near the center
-    dx, dy = NORTH # initial direction
-    matrix = [[None] * width for _ in range(height)]
-    count = 0
-    while True:
-        count += 1
-        
-        measuring = measure(x, y, source, doses, coordinates, count, matrix)
-        doses = measuring["dos"]; coordinates = measuring["coo"]; count = measuring["count"]; matrix = measuring["mat"]
-
-        if (special == "up" and count == 1):
-            count += 1
-            y -= 1
-
-            measuring = measure(x, y, source, doses, coordinates, count, matrix)
-            doses = measuring["dos"]; coordinates = measuring["coo"]; count = measuring["count"]; matrix = measuring["mat"]
-
-        elif (special == "left+up" and count == 1):
-            count += 1
-            x -=1
-
-            measuring = measure(x, y, source, doses, coordinates, count, matrix)
-            doses = measuring["dos"]; coordinates = measuring["coo"]; count = measuring["count"]; matrix = measuring["mat"]
-
-            count += 1
-            y -= 1
-
-            measuring = measure(x, y, source, doses, coordinates, count, matrix)
-            doses = measuring["dos"]; coordinates = measuring["coo"]; count = measuring["count"]; matrix = measuring["mat"]
-
-        if count_max <= count:
-            return [doses[1:], coordinates[1:]]
-
-        # try to turn right
-        new_dx, new_dy = turn_type[dx,dy]
-        new_x, new_y = x + new_dx, y + new_dy
-        if not (0 <= new_x < width and 0 <= new_y < height):
-                return [doses[1:], coordinates[1:]] # nowhere to go
-        else:
-            if (0 <= new_x < width and 0 <= new_y < height and matrix[new_y][new_x] is None): # can turn right
-                x, y = new_x, new_y
-                dx, dy = new_dx, new_dy
-            else: # try to move straight
-                x, y = x + dx, y + dy
-                if not (0 <= x < width and 0 <= y < height):
-                    return [doses[1:], coordinates[1:]] # nowhere to go
-
-
-tehnical = {"width": grid, "height": grid, "start_x": 0, "start_y": 0}
-
-matrix = spiral(tehnical, option1, [0, 0, 1000], grid_x, grid_y, data)
-# print_matrix(matrix)
-print(matrix)
-
-def improv_flyOver(radiation, detector, source = [], noise = []):
-    A_min, A_max, A_b, dt = radiation['A_min'], radiation['A_max'], radiation['A_b'], radiation['dt']
-    h, x_max, y_max, grid, K = detector['h'], detector['x_max'], detector['y_max'], detector['grid'], detector['detector_constant']
-    N_grid = grid
+def spiral_flyover(radiation, detector, source = [], noise = []):
+    A_min = radiation['A_min']; A_max = radiation['A_max']
+    h = detector['h']; x_max = detector['x_max']; y_max = detector['y_max']; N_grid = detector['spiral_grid']
+    n_points = detector['n_points']; max_phi = detector['max_phi']
     dx, dy = (2*x_max)/N_grid, (2*y_max)/N_grid
     
     # grid_x_noise, grid_y_noise = np.zeros((N_grid, N_grid)), np.zeros((N_grid, N_grid))
     xs = np.linspace(-x_max + dx/2, x_max - dx/2, int(N_grid))
     ys = np.flip(np.linspace(-y_max + dy/2, y_max - dy/2, int(N_grid)))
     grid_x, grid_y = np.meshgrid(xs, ys)
-    grid_x_noise, grid_y_noise = np.zeros((N_grid, N_grid)), np.zeros((N_grid, N_grid))
+    # grid_x_noise, grid_y_noise = np.zeros((N_grid, N_grid)), np.zeros((N_grid, N_grid))
     map = np.zeros((N_grid, N_grid))
-    data = {"h": h, "A_b": A_b, "K": K, "F": F, "dt": dt, "grid_x_noise": grid_x_noise, "grid_y_noise": grid_y_noise, "noise": noise}
-
+    
     if len(source) == 0:
         source = point_source(x_max, y_max, A_min, A_max)
-    
+
     i, j = 0, 0
-    option = option1
-    x = grid_x[i, j]; y = grid_y[i, j]
-    tehnical = {"width": grid, "height": grid, "start_x": j, "start_y": i}
-    HD = dose_speed(source, x, y, data)[0]
+    HD = dose_speed(source, i, j, radiation, detector, grid_x, grid_y)[0]
+    HD_max = 0
+    while ((HD < HD_max) and (i != (N_grid - 1) and j != (N_grid - 1)))  or (i == 0 and j == 0):
+            map[i, j] = HD
+            d = make_list(source, i, j, radiation, detector, grid_x, grid_y)[0]
+            if d == 0: # go right
+                j += 1
+            elif d == 1: # go diagonally
+                i +=1; j += 1
+            else: # go down
+                i += 1
+            HD = dose_speed(source, i, j, radiation, detector, grid_x, grid_y)[0]
+            HD_max = make_list(source, i, j, radiation, detector, grid_x, grid_y)[1]
+    map[i, j] = HD
+    x_h = grid_x[i, j]; y_h = grid_y[i, j]
+    phis = np.linspace(0, max_phi, n_points)
+    if x_max <= y_max:
+        k = x_max / (max_phi * np.cos(max_phi))
+    else:
+        k = y_max / (max_phi * np.sin(max_phi))
+    x_data = []; y_data = []
+    HDs = []; dHDs = []
+    for phi in phis:
+        r = r_ArhSpir(phi, k)
+        x_data.append(r*np.cos(phi) + x_h)
+        y_data.append(r*np.sin(phi) + y_h)
+        List = dose_speed_xy(source, x_data[-1], y_data[-1], radiation, detector)
+        HDs.append(List[0]); dHDs.append(List[1])
+
+    return {"m_dose": np.array(HDs), "dm_dose": dHDs, "maps": map, "source": source, "x_max": x_max, "y_max": y_max, "hotspot": [x_h, y_h], "x_data": np.array(x_data), "y_data": np.array(y_data)}
+
+measurement = spiral_flyover(radiation, detector, [87.27186149650258, -96.62443338613733, 1327.4757423574104])
+
+# fit
+def spiral_locationCF(measurement, detector, noise = []):
+    x_data = measurement['x_data']
+    y_data = measurement['y_data']
+    h, x_max, y_max = detector['h'], detector['x_max'], detector['y_max']
+
+    XY = np.vstack((x_data, y_data))
+    HDs = measurement['m_dose']
+    dHDs = measurement['dm_dose']
+
+    source0 = [random.uniform(-x_max, x_max), random.uniform(-y_max, y_max), 1]
+
+    def dose(x, y, u, v, alpha):
+        return alpha / ((x - u)**2 + (y - v)**2 + h**2)
+
+    def __dose(M, *args): # M is a table of shape (N, 2), where each row is a new point of measurement, N is the number of measuremnts
+        x, y = M
+        arr = np.zeros(x.shape)
+        for i in range(len(args)//3):
+            arr += dose(x, y, *args[i*3:i*3+3])
+        return arr
+
+    popt, pcov = curve_fit(__dose, XY, HDs, source0, sigma = dHDs, absolute_sigma = True, method="lm")
+    perr = np.sqrt(np.diag(pcov))
     
-    HDs = spiral(tehnical, option, source, grid_x, grid_y, data)[0]; coors = spiral(tehnical, option, source, grid_x, grid_y, data)[1]
-    # print(HDs)
-    HD_max = max(HDs)
-    max_i = HDs.index(HD_max)
-    while HD < HD_max:
-        print(HD_max)
-        input()
-        map[j, i] = HD
-        print(map)
-        input()
-        i = coors[max_i]['i']; j = coors[max_i]['j']
-        x = grid_x[i, j]; y = grid_y[i, j]
-        print(i, j)
-        print(x, y)
-        print(option)
-        input()
 
-        # def f(option):
-        #     tehnical['start_x'] = i; tehnical['start_y'] = j
-        #     HDs = spiral(tehnical, option1, source, grid_x, grid_y, data)[0]; coors = spiral(tehnical, option1, source, grid_x, grid_y, data)[1]
-        #     return [HDs, coors]
+    MyDict = {"XY": XY, "Ns": HDs, "source0": source0}
 
-        if j == 0: # top
-            option = option5
-        elif j == (N_grid -1): # bottom
-            option = option3
-        elif i == 0: # left
-            option = option2
-        elif i == (N_grid - 1): # right
-            option = option4
-        else: # middle
-            option = option1
+    return popt, perr, MyDict
 
-    return map
+# location = spiral_locationCF(measurement, detector)
 
-# improv_flyOver(radiation, detector, test_source)
+def spiral_visualize(data):
+    measurement = data['measurement']
+    estimate = data['sourceCF']
+
+    X, Y = measurement['source'][0], measurement['source'][1]
+    x_max, y_max = measurement['x_max'], measurement['y_max']
+    HDs = measurement['m_dose']
+
+    fig, (ax1, ax2) = plt.subplots(nrows = 1, ncols = 2, figsize = (15, 6))
+    
+    im = ax1.imshow(measurement['maps'], extent=[-x_max,x_max,-y_max,y_max], aspect="auto")
+    ax1.plot(X, Y, "o", color = 'r', ms=10, label = "Original source")
+    ax1.plot(estimate[0], estimate[1], 'o', color = "b", ms = 6, label = "Estimated source")
+
+    ax1.axis("equal")
+    ax1.set_xlabel("X axis [m]", fontsize = 15)
+    ax1.set_ylabel("Y axis [m]", fontsize = 15)
+   
+    ax1.legend(fontsize = 15)
+
+    x_h, y_h = measurement['hotspot'][0], measurement['hotspot'][1]
+    x_data = measurement['x_data']; y_data = measurement['y_data']
+
+    ax2.plot(X, Y, 'o', color = 'r', ms=10, label = "Original source")
+    ax2.plot(x_h, y_h, 'o', color = 'k', ms=10, label = "Hotspot point")
+    im0 = ax2.scatter(x_data, y_data, c=HDs)
+    ax2.plot(estimate[0], estimate[1], 'o', color = "b", ms = 6, label = "Estimated source")
+
+
+    # ax2.plot(x_data, y_data, "o", color = "k", label = "Measurements")
+
+    ax2.set_xlabel("X axis [m]", fontsize = 15)
+    ax2.set_ylabel("Y axis [m]", fontsize = 15)
+   
+    ax2.legend(fontsize = 15)
+
+    fig.colorbar(im0, ax=ax2)
+
+    plt.tight_layout()
+    # plt.savefig("graphics/imporved.jpg")
+    plt.show()
+    # return points[1]
+    # print(measurement["intensities_array"], '\n', measurement["grid_x"], '\n', measurement["grid_y"])
+
+problematic_source = [87.27186149650258, -96.62443338613733, 1327.4757423574104] 
+data = combination(radiation, detector, spiral_flyover, spiral_locationCF)
+spiral_visualize(data)
+
+# An error that can occur is if we input to large of a number of grids the difference between the neighbouring tiles might be overshadowed by
+# the poisson distribution error of the detector. This will result in the detector stoping before reaching the hotspot tile.
 
 #########################################################################################################################################
 
