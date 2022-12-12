@@ -23,7 +23,7 @@ F = 0.140 # factor for inhilation of Pu-239 in mSV/Bq
 
 n_points = 50 # fot the random_flyover() -> number of random points generated OR for improv_flyover() -> number of points in a spiral
 max_phi = 6*np.pi # rotation in radians that the detector will make will moving in a spiral trajectory
-s_grid = 5
+s_grid = 2
 
 radiation = {"A_min": A_min, "A_max": A_max, "A_b": A_b, "dose_factor": F}
 detector = {"h": h, "dt": dt, "x_max": x_max, "y_max": y_max, "grid": grid, "detector_constant": K, "n_points": n_points, "max_phi": max_phi, "spiral_grid": s_grid} # the detector constant tells us the quality of the detector
@@ -82,7 +82,7 @@ def combination(radiation, detector, func_fo, func_CF,  source=[], noise=[]):
     return {'measurement': measurement, 'sourceCF': sourceCF, "sourceCF_stDev": stDev}
 
 def make_list(source, i, j, radiation, detector, grid_x, grid_y):
-    N_grid = 10
+    N_grid = detector['spiral_grid']
     HDs = []; direction = []
     if j != (N_grid - 1): # go right
         HDs0 = dose_speed(source, i, j + 1, radiation, detector, grid_x, grid_y)
@@ -154,7 +154,9 @@ def spiral_flyover(radiation, detector, source = [], noise = []):
 
     return {"m_dose": np.array(HDs), "dm_dose": dHDs, "maps": map, "source": source, "x_max": x_max, "y_max": y_max, "hotspot": [x_h, y_h], "x_data": np.array(x_data), "y_data": np.array(y_data)}
 
-measurement = spiral_flyover(radiation, detector, [87.27186149650258, -96.62443338613733, 1327.4757423574104])
+problematic_source = [87.27186149650258, -96.62443338613733, 1327.4757423574104] 
+
+measurement = spiral_flyover(radiation, detector, problematic_source)
 
 # fit
 def spiral_locationCF(measurement, detector, noise = []):
@@ -232,8 +234,7 @@ def spiral_visualize(data):
     # return points[1]
     # print(measurement["intensities_array"], '\n', measurement["grid_x"], '\n', measurement["grid_y"])
 
-problematic_source = [87.27186149650258, -96.62443338613733, 1327.4757423574104] 
-data = combination(radiation, detector, spiral_flyover, spiral_locationCF)
+data = combination(radiation, detector, spiral_flyover, spiral_locationCF, problematic_source)
 spiral_visualize(data)
 
 # An error that can occur is if we input to large of a number of grids the difference between the neighbouring tiles might be overshadowed by
