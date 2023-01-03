@@ -8,6 +8,9 @@ class FormObject( npyscreen.ActionForm ): # Action -> Cancel/OK
         # self.nextrely = 1
         self.lname = self.add( npyscreen.TitleText, name = "Last Name:")
 
+    def __str__(self):
+        return self
+
     def afterEditing( self ):
         # self.parentApp.setNextForm( None )
         pass
