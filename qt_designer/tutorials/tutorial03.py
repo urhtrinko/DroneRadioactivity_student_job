@@ -43,8 +43,8 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.button_lineEdit.clicked.connect(self.show_line())
-        self.button_textEdit.clicked.connect(self.show_text())
+        self.button_lineEdit.clicked.connect(self.show_line)
+        self.button_textEdit.clicked.connect(self.show_text)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
