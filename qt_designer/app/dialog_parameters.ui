@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>575</width>
-    <height>301</height>
+    <width>406</width>
+    <height>252</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="label_Ab">
      <property name="text">
-      <string>A_b:</string>
+      <string>A_b [Bq]:</string>
      </property>
     </widget>
    </item>
@@ -41,7 +41,7 @@
    <item row="3" column="0">
     <widget class="QLabel" name="label_h">
      <property name="text">
-      <string>h:</string>
+      <string>h [h]:</string>
      </property>
     </widget>
    </item>
@@ -51,32 +51,44 @@
    <item row="4" column="0">
     <widget class="QLabel" name="label_xmax">
      <property name="text">
-      <string>x_max:</string>
+      <string>x_max [m]:</string>
      </property>
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="QLineEdit" name="lineEdit_xmax"/>
+    <widget class="QLineEdit" name="lineEdit_xmax">
+     <property name="text">
+      <string>50</string>
+     </property>
+    </widget>
    </item>
    <item row="4" column="2">
     <widget class="QLabel" name="label_ymax">
      <property name="text">
-      <string>y_max:</string>
+      <string>y_max [m]:</string>
      </property>
     </widget>
    </item>
    <item row="4" column="3" colspan="2">
-    <widget class="QLineEdit" name="lineEdit_ymax"/>
+    <widget class="QLineEdit" name="lineEdit_ymax">
+     <property name="text">
+      <string>50</string>
+     </property>
+    </widget>
    </item>
    <item row="5" column="0">
     <widget class="QLabel" name="label_Ngrid">
      <property name="text">
-      <string>N_grid:</string>
+      <string>N_grid []:</string>
      </property>
     </widget>
    </item>
    <item row="5" column="1">
-    <widget class="QLineEdit" name="lineEdit_Ngrid"/>
+    <widget class="QLineEdit" name="lineEdit_Ngrid">
+     <property name="text">
+      <string>2</string>
+     </property>
+    </widget>
    </item>
    <item row="6" column="2" colspan="2">
     <widget class="QPushButton" name="btn_Cancel">
