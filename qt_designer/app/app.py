@@ -1,6 +1,7 @@
 import sys
 
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QMessageBox)
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 # from PyQt5.uic import loadUi
 
@@ -14,11 +15,10 @@ class Window(QMainWindow, Ui_MainWindow):
         self.connectSignalsSlots()
 
     def connectSignalsSlots(self):
-        self.actionExit.triggered.connect(self.close)
-        self.actionAbout.triggered.connect(self.about)
+        self.action_Exit.triggered.connect(self.close)
+        self.action_About.triggered.connect(self.about)
 
-        self.pushButton.clicked.connect(self.parameters)
-
+        self.btnPAR.clicked.connect(self.parameters)
 
     def parameters(self):
         dialog = ParametersDialog(self)
@@ -39,11 +39,14 @@ class ParametersDialog(QDialog, Ui_Dialog):
         super().__init__(parent)
         self.setupUi(self)
         self.connectSignalsSlots()
+        # self.defaultPAR()
 
     def connectSignalsSlots(self):
         self.btn_Cancel.clicked.connect(self.close)
         self.btn_Save.clicked.connect(self.userInput_parameters)
+        # self.btn_Save.clicked.connect(self.defaultPAR)
         self.btn_Save.clicked.connect(self.close)
+
 
     def userInput_parameters(self):
         A_b = self.lineEdit_Ab.text()
@@ -55,7 +58,21 @@ class ParametersDialog(QDialog, Ui_Dialog):
         fieldDetector = {"h": h, "x_max": x_max, "y_max": y_max, "N_grid": N_grid}
 
         print(fieldRadiation, fieldDetector)
-        return {'fieldRadiation': fieldRadiation, 'fieldDetector': fieldDetector}
+        return fieldRadiation, fieldDetector
+
+    # def defaultPAR(self):
+    #     fieldRadiation, fieldDetector = self.userInput_parameters()
+
+    #     A_b = fieldRadiation['A_b']
+    #     h = fieldDetector['h']; x_max = fieldDetector['x_max']; y_max = fieldDetector['y_max']; N_grid = fieldDetector['N_grid']
+
+    #     _translate = QtCore.QCoreApplication.translate
+    #     self.lineEdit_Ab.setText(_translate("Dialog", str(A_b)))
+    #     self.lineEdit_h.setText(_translate("Dialog", str(h)))
+    #     self.lineEdit_xmax.setText(_translate("Dialog", str(x_max)))
+    #     self.lineEdit_ymax.setText(_translate("Dialog", str(y_max)))
+    #     self.lineEdit_Ngrid.setText(_translate("Dialog", str(N_grid)))
+
 
     
 
