@@ -63,7 +63,6 @@ class Ui_Dialog(object):
 
         self.retranslateUi(Dialog)
         self.btn_Cancel.clicked.connect(Dialog.reject)
-        self.lineEdit_Ab.textEdited['QString'].connect(self.btn_Save.click)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):

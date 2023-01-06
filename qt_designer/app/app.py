@@ -45,28 +45,30 @@ class ParametersDialog(QDialog, Ui_Dialog):
         super().__init__(parent)
         self.setupUi(self)
         self.connectSignalsSlots()
-        # self.userInput_parameters()
-
-        self.test_save()
-        # self.saveUserInput()
+        self.saveUserInput()
 
     def connectSignalsSlots(self):
+        # the cancel button
         self.btn_Cancel.clicked.connect(self.close)
-        # self.btn_Save.clicked.connect(self.saveUserInput)
-        self.btn_Save.clicked.connect(self.test_save)
-        # self.btn_Save.clicked.connect(self.close)
+        # the save button
+        self.btn_Save.clicked.connect(self.saveUserInput)
+        self.btn_Save.clicked.connect(self.close)
 
-    # def saveUserInput(self):
-    #     self.lineEdit_Ab.setText(self.lineEdit_Ab.text())
-    #     self.lineEdit_h.setText(self.lineEdit_h.text())
+    def saveUserInput(self):
+        # saves the data the user inputed into the lineEdit - not operational yet
+        # self.lineEdit_Ab.setText(str(1000))
+        # self.lineEdit_h.setText(str(40))
 
-    def test_save(self):
-        A_b = self.lineEdit_Ab.text()
-        self.lineEdit_Ab.setText(A_b)
-        return A_b
+        fieldRadiation, fieldDetector = self.userInput_parameters() # (?)
+        A_b = fieldRadiation['A_b'] # (?)
+
+        _translate = QtCore.QCoreApplication.translate # (?)
+        self.lineEdit_Ab.setText(_translate("Dialog", self.lineEdit_Ab.text())) # (?)
+
 
     def userInput_parameters(self):
-        A_b = self.lineEdit_Ab.gettext()
+        # reads the data writtwn in the lineEdit and is called in the Window class to transfer the data into that class - works
+        A_b = self.lineEdit_Ab.text()
         h = self.lineEdit_h.text()
         x_max = self.lineEdit_xmax.text(); y_max = self.lineEdit_ymax.text()
         N_grid = self.lineEdit_Ngrid.text()
