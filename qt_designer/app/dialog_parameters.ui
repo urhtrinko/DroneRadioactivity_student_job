@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>406</width>
+    <width>436</width>
     <height>252</height>
    </rect>
   </property>
@@ -29,7 +29,11 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QLineEdit" name="lineEdit_Ab"/>
+    <widget class="QLineEdit" name="lineEdit_Ab">
+     <property name="inputMask">
+      <string/>
+     </property>
+    </widget>
    </item>
    <item row="2" column="0" colspan="2">
     <widget class="QLabel" name="label_DET">
@@ -115,8 +119,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>332</x>
-     <y>264</y>
+     <x>301</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel">
      <x>380</x>

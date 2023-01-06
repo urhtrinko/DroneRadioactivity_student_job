@@ -46,14 +46,14 @@
      <widget class="QLineEdit" name="lineEdit_3"/>
     </item>
     <item row="5" column="1">
-     <widget class="QPushButton" name="btn_plotGraph">
+     <widget class="QPushButton" name="btnPlotGraph">
       <property name="text">
        <string>Plot graph</string>
       </property>
      </widget>
     </item>
     <item row="5" column="2">
-     <widget class="QPushButton" name="btn_Calculate">
+     <widget class="QPushButton" name="btnCalculate">
       <property name="text">
        <string>Calculate</string>
       </property>

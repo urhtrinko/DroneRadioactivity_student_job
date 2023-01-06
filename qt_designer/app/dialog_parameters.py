@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(406, 252)
+        Dialog.resize(436, 252)
         self.gridLayout = QtWidgets.QGridLayout(Dialog)
         self.gridLayout.setObjectName("gridLayout")
         self.label_RAD = QtWidgets.QLabel(Dialog)
@@ -24,6 +24,7 @@ class Ui_Dialog(object):
         self.label_Ab.setObjectName("label_Ab")
         self.gridLayout.addWidget(self.label_Ab, 1, 0, 1, 1)
         self.lineEdit_Ab = QtWidgets.QLineEdit(Dialog)
+        self.lineEdit_Ab.setInputMask("")
         self.lineEdit_Ab.setObjectName("lineEdit_Ab")
         self.gridLayout.addWidget(self.lineEdit_Ab, 1, 1, 1, 1)
         self.label_DET = QtWidgets.QLabel(Dialog)
@@ -62,6 +63,7 @@ class Ui_Dialog(object):
 
         self.retranslateUi(Dialog)
         self.btn_Cancel.clicked.connect(Dialog.reject)
+        self.lineEdit_Ab.textEdited['QString'].connect(self.btn_Save.click)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
