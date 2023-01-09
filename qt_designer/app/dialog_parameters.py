@@ -73,11 +73,15 @@ class Ui_Dialog(object):
         self.label_DET.setText(_translate("Dialog", "DETECTOR"))
         self.label_h.setText(_translate("Dialog", "h [h]:"))
         self.label_xmax.setText(_translate("Dialog", "x_max [m]:"))
-        self.lineEdit_xmax.setText(_translate("Dialog", "50"))
-        self.label_ymax.setText(_translate("Dialog", "y_max [m]:"))
-        self.lineEdit_ymax.setText(_translate("Dialog", "50"))
         self.label_Ngrid.setText(_translate("Dialog", "N_grid []:"))
+        self.label_ymax.setText(_translate("Dialog", "y_max [m]:"))
+
+        #User input text
+        self.lineEdit_xmax.setText(_translate("Dialog", "50"))
+        self.lineEdit_ymax.setText(_translate("Dialog", "50"))
         self.lineEdit_Ngrid.setText(_translate("Dialog", "2"))
+        #User input text
+
         self.btn_Cancel.setText(_translate("Dialog", "Cancel"))
         self.btn_Save.setText(_translate("Dialog", "Save"))
 
