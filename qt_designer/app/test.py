@@ -4,10 +4,12 @@
 print("Hallo world.")
 
 #Begin
-u = 10
-v = 11
-t = 20
-k = 0
+self.lineEdit_Ab.setText(_translate("Dialog","1000"))
+self.lineEdit_Ab.setText(_translate(Dialog,1000))
+self.lineEdit_Ab.setText(_translate(Dialog,1000))
+self.lineEdit_Ab.setText(_translate(Dialog,1000))
+self.lineEdit_Ab.setText(_translate(Dialog,1000))
+
 #End
 
 #some other text
