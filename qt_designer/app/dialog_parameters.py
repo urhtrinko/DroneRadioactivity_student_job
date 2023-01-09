@@ -76,11 +76,11 @@ class Ui_Dialog(object):
         self.label_Ngrid.setText(_translate("Dialog", "N_grid []:"))
         self.label_ymax.setText(_translate("Dialog", "y_max [m]:"))
 
-        #User input text
+        #Begin user input
         self.lineEdit_xmax.setText(_translate("Dialog", "50"))
         self.lineEdit_ymax.setText(_translate("Dialog", "50"))
         self.lineEdit_Ngrid.setText(_translate("Dialog", "2"))
-        #User input text
+        #End user input
 
         self.btn_Cancel.setText(_translate("Dialog", "Cancel"))
         self.btn_Save.setText(_translate("Dialog", "Save"))
