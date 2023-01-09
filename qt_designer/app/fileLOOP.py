@@ -12,10 +12,19 @@ def betweenLinesFill(filename, starting_text, ending_text, replacelines):
     f = open(filename, "w")
     f.write(contents) # Rewrite the original file with the changed contents
 
-replacelines = ("u = 10" + "\n" + 
+replacelines0 = ("u = 10" + "\n" + 
                 "v = 11" + "\n" + 
                 "t = 20" + "\n" +
                 "k = 0")
 
-betweenLinesFill("test.py", "#Begin", "#End", replacelines)
+A_b = 1000
+
+replaceLines = ("self.lineEdit_Ab.setText(_translate(" + "\"Dialog\"," + "\"" + str(A_b) + "\"" + "))" + "\n"
+                "self.lineEdit_Ab.setText(_translate(" + "Dialog," + str(A_b) + "))" + "\n"
+                "self.lineEdit_Ab.setText(_translate(" + "Dialog," + str(A_b) + "))" + "\n"
+                "self.lineEdit_Ab.setText(_translate(" + "Dialog," + str(A_b) + "))" + "\n"
+                "self.lineEdit_Ab.setText(_translate(" + "Dialog," + str(A_b) + "))" + "\n"
+)   
+
+betweenLinesFill("test.py", "#Begin", "#End", replaceLines)
 
