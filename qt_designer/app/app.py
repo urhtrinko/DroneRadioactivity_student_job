@@ -8,6 +8,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from MainWindow import Ui_MainWindow
 from dialog_parameters import Ui_Dialog
 
+# import the file to loop over anf+d change lines between code
+from fileLOOP import betweenLinesFill
+
 class Window(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -61,9 +64,18 @@ class ParametersDialog(QDialog, Ui_Dialog):
 
         fieldRadiation, fieldDetector = self.userInput_parameters() # (?)
         A_b = fieldRadiation['A_b'] # (?)
+        x_max = fieldDetector['x_max']; y_max = fieldDetector['y_max']
+        N_grid = fieldDetector['N_grid']
+
         print(str(A_b))
 
-        self.lineEdit_Ab.setText(str(A_b)) # (?)
+        replaceLines = ("self.lineEdit_Ab.setText(_translate(" + "\"Dialog\"," + "\"" + str(A_b) + "\"" + "))" + "\n"
+                        "self.lineEdit_xmax.setText(_translate(" + "\"Dialog\"," + "\"" + str(x_max) + "\"" + "))" + "\n"
+                        "self.lineEdit_ymax.setText(_translate(" + "\"Dialog\"," + "\"" + str(y_max) + "\"" + "))" + "\n"
+                        "self.lineEdit_Ngrid.setText(_translate(" + "\"Dialog\"," + "\"" + str(N_grid) + "\"" + "))" + "\n"
+)  
+
+        betweenLinesFill("dialog_parameters.py", "Begin user input", "End user input", replaceLines)
 
 
     def userInput_parameters(self):
