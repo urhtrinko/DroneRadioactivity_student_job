@@ -18,8 +18,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.action_Exit.triggered.connect(self.close)
         self.action_About.triggered.connect(self.about)
 
-        self.btnPAR.clicked.connect(self.parameters)
-        self.btnCalculate.clicked.connect(self.calculate)
+        self.btnPAR.clicked.connect(self.parameters) # Opens the parameters dialog for user input
+        self.btnCalculate.clicked.connect(self.calculate) # Calculates the source position - NOT operational
 
     def parameters(self):
         dialog = ParametersDialog(self)
@@ -28,7 +28,6 @@ class Window(QMainWindow, Ui_MainWindow):
     def calculate(self):
         fieldRadiation, fieldDetector = ParametersDialog(self).userInput_parameters()
         print([fieldRadiation, fieldDetector])
-        
 
     def about(self):
         QMessageBox.about(
@@ -45,7 +44,8 @@ class ParametersDialog(QDialog, Ui_Dialog):
         super().__init__(parent)
         self.setupUi(self)
         self.connectSignalsSlots()
-        self.saveUserInput()
+        self.retranslateUi(self)
+        # self.saveUserInput()
 
     def connectSignalsSlots(self):
         # the cancel button
@@ -55,15 +55,15 @@ class ParametersDialog(QDialog, Ui_Dialog):
         self.btn_Save.clicked.connect(self.close)
 
     def saveUserInput(self):
-        # saves the data the user inputed into the lineEdit - not operational yet
+        # saves the data the user inputed into the lineEdit - NOT operational yet
         # self.lineEdit_Ab.setText(str(1000))
         # self.lineEdit_h.setText(str(40))
 
         fieldRadiation, fieldDetector = self.userInput_parameters() # (?)
         A_b = fieldRadiation['A_b'] # (?)
+        print(str(A_b))
 
-        _translate = QtCore.QCoreApplication.translate # (?)
-        self.lineEdit_Ab.setText(_translate("Dialog", self.lineEdit_Ab.text())) # (?)
+        self.lineEdit_Ab.setText(str(A_b)) # (?)
 
 
     def userInput_parameters(self):
