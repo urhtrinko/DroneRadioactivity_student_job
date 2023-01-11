@@ -12,5 +12,7 @@ self.lineEdit_Ab.setText(_translate(Dialog,1000))
 
 #End
 
-#some other text
+
+
+# some other text
 

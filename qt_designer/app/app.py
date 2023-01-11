@@ -51,11 +51,12 @@ class ParametersDialog(QDialog, Ui_Dialog):
         # self.saveUserInput()
 
     def connectSignalsSlots(self):
-        # the cancel button
-        self.btn_Cancel.clicked.connect(self.close)
+        # the cancel button 
+        # self.btn_Cancel.clicked.connect(self.run_program)
         # the save button
         self.btn_Save.clicked.connect(self.saveUserInput)
         self.btn_Save.clicked.connect(self.close)
+        # self.btn_Save.clicked.connect(self.run_program)
 
     def saveUserInput(self):
         # saves the data the user inputed into the lineEdit - NOT operational yet
@@ -69,14 +70,22 @@ class ParametersDialog(QDialog, Ui_Dialog):
 
         print(str(A_b))
 
-        replaceLines = ("self.lineEdit_Ab.setText(_translate(" + "\"Dialog\"," + "\"" + str(A_b) + "\"" + "))" + "\n"
-                        "self.lineEdit_xmax.setText(_translate(" + "\"Dialog\"," + "\"" + str(x_max) + "\"" + "))" + "\n"
-                        "self.lineEdit_ymax.setText(_translate(" + "\"Dialog\"," + "\"" + str(y_max) + "\"" + "))" + "\n"
-                        "self.lineEdit_Ngrid.setText(_translate(" + "\"Dialog\"," + "\"" + str(N_grid) + "\"" + "))" + "\n"
+        replaceLines = ("\t\tself.lineEdit_Ab.setText(_translate(" + "\"Dialog\"," + "\"" + str(A_b) + "\"" + "))" + "\n"
+                        "\t\tself.lineEdit_xmax.setText(_translate(" + "\"Dialog\"," + "\"" + str(x_max) + "\"" + "))" + "\n"
+                        "\t\tself.lineEdit_ymax.setText(_translate(" + "\"Dialog\"," + "\"" + str(y_max) + "\"" + "))" + "\n"
+                        "\t\tself.lineEdit_Ngrid.setText(_translate(" + "\"Dialog\"," + "\"" + str(N_grid) + "\"" + "))"
 )  
 
-        betweenLinesFill("dialog_parameters.py", "Begin user input", "End user input", replaceLines)
+        betweenLinesFill("dialog_parameters.py", "Begin user input", "#End user input", replaceLines)
 
+    #desperation move
+    def run_program(self): 
+        app = QApplication(sys.argv)
+        win = Window()
+        win.show()
+        sys.exit(app.exec())
+
+    
 
     def userInput_parameters(self):
         # reads the data writtwn in the lineEdit and is called in the Window class to transfer the data into that class - works
