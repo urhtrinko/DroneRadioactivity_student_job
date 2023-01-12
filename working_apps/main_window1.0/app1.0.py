@@ -85,10 +85,8 @@ class Window(QMainWindow, Ui_MainWindow):
     def pressSource(self):
         u = self.data["sourceCF"][0]; du = self.data["sourceCF_stDev"][0]
         v = self.data["sourceCF"][1]; dv = self.data["sourceCF_stDev"][1]
-        self.label_Source.setText("x0 = " + str(round(u, 2)) + " +/- " + str(round(du, 2)) + "\n" + 
-                                "y0 = " + str(round(v, 2)) + " +/-" + str(round(dv, 2)))
-
-
+        self.lineEdit_x0.setText(str(round(u, 2)) + " +/- " + str(round(du, 2))) 
+        self.lineEdit_y0.setText(str(round(v, 2)) + " +/- " + str(round(dv, 2)))
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
