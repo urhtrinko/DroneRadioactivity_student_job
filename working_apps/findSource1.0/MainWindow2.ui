@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>817</width>
-    <height>489</height>
+    <width>814</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,6 +17,39 @@
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout">
+      <item row="3" column="1" colspan="3">
+       <widget class="QLineEdit" name="lineEdit_Ngrid">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="5" colspan="2">
+       <widget class="QLineEdit" name="dose11"/>
+      </item>
+      <item row="12" column="10">
+       <widget class="QLineEdit" name="lineEdit_y0"/>
+      </item>
+      <item row="11" column="5" rowspan="2" colspan="3">
+       <widget class="QPushButton" name="btn_Source">
+        <property name="text">
+         <string>Source</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="10">
+       <widget class="QPushButton" name="btn_Save">
+        <property name="text">
+         <string>Save</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="5" colspan="2">
+       <widget class="QLineEdit" name="dose01"/>
+      </item>
       <item row="2" column="5" colspan="2">
        <widget class="QLabel" name="label_ymax">
         <property name="text">
@@ -24,22 +57,16 @@
         </property>
        </widget>
       </item>
-      <item row="7" column="5" colspan="2">
-       <widget class="QLineEdit" name="dose01"/>
-      </item>
-      <item row="7" column="3">
-       <widget class="QLineEdit" name="dose00"/>
+      <item row="7" column="4">
+       <widget class="QLineEdit" name="doseErr00"/>
       </item>
       <item row="7" column="7">
        <widget class="QLineEdit" name="doseErr01"/>
       </item>
-      <item row="7" column="4">
-       <widget class="QLineEdit" name="doseErr00"/>
-      </item>
-      <item row="3" column="10">
-       <widget class="QPushButton" name="btn_Save">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_h">
         <property name="text">
-         <string>Save</string>
+         <string>h [h]:</string>
         </property>
        </widget>
       </item>
@@ -50,13 +77,6 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_h">
-        <property name="text">
-         <string>h [h]:</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0" colspan="4">
        <widget class="QLabel" name="label_RAD">
         <property name="text">
@@ -64,10 +84,13 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="3" colspan="5">
-       <widget class="QLabel" name="label_Xaxis">
+      <item row="7" column="3">
+       <widget class="QLineEdit" name="dose00"/>
+      </item>
+      <item row="6" column="5" colspan="3">
+       <widget class="QLabel" name="label_x2">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;x-coordinate[m]&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;25&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
@@ -78,19 +101,32 @@
         </property>
        </widget>
       </item>
-      <item row="7" column="0" rowspan="2" colspan="2">
-       <widget class="QLabel" name="label_Yaxis">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;y-coordinate[m]&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="0">
        <widget class="QLabel" name="label_Ngrid">
         <property name="text">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;N&lt;span style=&quot; vertical-align:sub;&quot;&gt;grid&lt;/span&gt; []:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
+      </item>
+      <item row="11" column="2" rowspan="2">
+       <widget class="QPushButton" name="btn_Save2">
+        <property name="text">
+         <string>Save</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="3">
+       <widget class="QLineEdit" name="dose10"/>
+      </item>
+      <item row="5" column="3" colspan="5">
+       <widget class="QLabel" name="label_Xaxis">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;x-coordinate[m]&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="4">
+       <widget class="QLineEdit" name="doseErr10"/>
       </item>
       <item row="8" column="2">
        <widget class="QLabel" name="label_y2">
@@ -99,26 +135,20 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="5" colspan="3">
-       <widget class="QLabel" name="label_x2">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;25&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
       <item row="8" column="7">
        <widget class="QLineEdit" name="doseErr11"/>
       </item>
-      <item row="8" column="4">
-       <widget class="QLineEdit" name="doseErr10"/>
-      </item>
-      <item row="8" column="3">
-       <widget class="QLineEdit" name="dose10"/>
-      </item>
-      <item row="11" column="2" rowspan="2">
-       <widget class="QPushButton" name="btn_Save2">
+      <item row="7" column="0" rowspan="2" colspan="2">
+       <widget class="QLabel" name="label_Yaxis">
         <property name="text">
-         <string>Save</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;y-coordinate[m]&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" colspan="3">
+       <widget class="QLineEdit" name="lineEdit_xmax">
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </item>
@@ -143,27 +173,13 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="3" colspan="2">
-       <widget class="QLabel" name="label_x1">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;-25&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
+      <item row="11" column="10">
+       <widget class="QLineEdit" name="lineEdit_x0"/>
       </item>
       <item row="11" column="9">
        <widget class="QLabel" name="label_5">
         <property name="text">
          <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="10">
-       <widget class="QLineEdit" name="lineEdit_x0"/>
-      </item>
-      <item row="11" column="8">
-       <widget class="QLabel" name="label_x0">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;x&lt;/span&gt;&lt;span style=&quot; font-size:10pt; vertical-align:sub;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;[m]:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
@@ -174,6 +190,13 @@
         </property>
        </widget>
       </item>
+      <item row="11" column="8">
+       <widget class="QLabel" name="label_x0">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;x&lt;/span&gt;&lt;span style=&quot; font-size:10pt; vertical-align:sub;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;[m]:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1" colspan="3">
        <widget class="QLineEdit" name="lineEdit_h">
         <property name="text">
@@ -181,35 +204,19 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1" colspan="3">
-       <widget class="QLineEdit" name="lineEdit_xmax">
+      <item row="6" column="3" colspan="2">
+       <widget class="QLabel" name="label_x1">
         <property name="text">
-         <string/>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;-25&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1" colspan="3">
-       <widget class="QLineEdit" name="lineEdit_Ngrid">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
+      <item row="13" column="5" colspan="3">
+       <widget class="QPushButton" name="btn_Clear">
         <property name="text">
-         <string>2</string>
+         <string>Clear</string>
         </property>
        </widget>
-      </item>
-      <item row="8" column="5" colspan="2">
-       <widget class="QLineEdit" name="dose11"/>
-      </item>
-      <item row="11" column="5" rowspan="2" colspan="3">
-       <widget class="QPushButton" name="btn_Source">
-        <property name="text">
-         <string>Source</string>
-        </property>
-       </widget>
-      </item>
-      <item row="12" column="10">
-       <widget class="QLineEdit" name="lineEdit_y0"/>
       </item>
      </layout>
     </item>
@@ -220,7 +227,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>817</width>
+     <width>814</width>
      <height>31</height>
     </rect>
    </property>
@@ -282,6 +289,27 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_h</tabstop>
+  <tabstop>lineEdit_xmax</tabstop>
+  <tabstop>lineEdit_ymax</tabstop>
+  <tabstop>btn_Save</tabstop>
+  <tabstop>dose10</tabstop>
+  <tabstop>doseErr10</tabstop>
+  <tabstop>dose00</tabstop>
+  <tabstop>doseErr00</tabstop>
+  <tabstop>dose01</tabstop>
+  <tabstop>doseErr01</tabstop>
+  <tabstop>dose11</tabstop>
+  <tabstop>doseErr11</tabstop>
+  <tabstop>btn_Save2</tabstop>
+  <tabstop>btn_plotGraph</tabstop>
+  <tabstop>btn_Source</tabstop>
+  <tabstop>lineEdit_x0</tabstop>
+  <tabstop>lineEdit_y0</tabstop>
+  <tabstop>lineEdit_Ngrid</tabstop>
+  <tabstop>btn_Clear</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
