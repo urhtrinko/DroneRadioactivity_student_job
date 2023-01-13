@@ -10,9 +10,9 @@ def randSource(radiation, detector):
     x_max = detector['x_max']; y_max = detector['y_max']
     return [random.uniform(-x_max, x_max), random.uniform(-y_max, y_max), random.uniform(A_min, A_max)]
 
-def fieldMeasurement(radiation, detector, source, noise = []):
+def fieldMeasurement(radiation, detector, source, x, y, noise = []):
     A_b = radiation['A_b']; F = radiation['dose_factor']
-    x = detector['x']; y = detector['y']; h = detector['h']; dt = detector['dt']; K = detector['detector_constant']
+    h = detector['h']; dt = detector['dt']; K = detector['detector_constant']
     
     A = activity(source, x, y, h)
     A_det = A * (1 - K)

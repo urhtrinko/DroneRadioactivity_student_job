@@ -12,8 +12,6 @@ class Window(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.connectingSlots()
         
-        # self.Ab = 0; self.Amax = 0; self.Amin = 0; self.F = 0
-        # self.h = 0; self.dt = 0; self.K = 0
         self.radiation = {}
         self.detector = {}
         self.source = []
@@ -21,17 +19,35 @@ class Window(QMainWindow, Ui_MainWindow):
     def connectingSlots(self):
         self.btnSaveGenerate.clicked.connect(self.setParameters)
         self.btnSaveGenerate.clicked.connect(self.generateSource)
+        self.btnMeasure.clicked.connect(self.locationOfmeasuremnt)
 
     def setParameters(self):
         A_b = self.lineEdit_Ab.text(); A_max = self.lineEdit_Amax.text(); A_min = self.lineEdit_Amin.text()
         F = self.lineEdit_F.text()
         h = self.lineEdit_h.text(); dt = self.lineEdit_dt.text(); K = self.lineEdit_K.text()
+        x_max = self.lineEdit_xmax.text(); y_max = self.lineEdit_ymax.text()
 
-        self.radiation = {"A_min": A_min, "A_max": A_max, "A_b": A_b, "dose_factor": F}
-        self.detector = {"h": h, "dt": dt, "detector_constant": K}
+        self.radiation = {"A_min": float(A_min), "A_max": float(A_max), "A_b": float(A_b), "dose_factor": float(F)}
+        self.detector = {"h": float(h), "dt": float(dt), "x_max": float(x_max), "y_max": float(y_max), "detector_constant": float(K)}
 
     def generateSource(self):
         self.source = randSource(self.radiation, self.detector)
+        x0 = round(self.source[0], 2); y0 = round(self.source[1], 2); A0 = round(self.source[2])
+        self.lineEdit_genSourceXY.setText("(" + str(x0) + " m, " + str(y0) + " m)")
+        self.lineEdit_genSourceA0.setText(str(A0) + " Bq")
+
+    def minusInStr(self, string):
+        if string[0] == "-":
+            return (-1) * float(string[1:])
+        else:
+            return float(string)
+
+    def locationOfmeasuremnt(self):
+        x = self.lineEdit_x.text(); y = self.lineEdit_y.text()
+        HD, dHD = fieldMeasurement(self.radiation, self.detector, self.source, self.minusInStr(x), self.minusInStr(y), [])
+        self.lineEdit_HD.setText(str(round(HD, 2)) + " +/- " + str(round(dHD, 2)))
+
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
