@@ -33,16 +33,18 @@ class Window(QMainWindow, Ui_MainWindow):
         self.btn_Save2.clicked.connect(self.getData)
         self.btn_plotGraph.clicked.connect(self.pressPlot)
         self.btn_Source.clicked.connect(self.pressSource)
+        self.btn_Clear.clicked.connect(self.clearInput)
 
     def about(self):
         QMessageBox.about(
             self,
             "About the app",
-            "The user inputs parameters of the detector and clicks SAVE."
-            "The user inpusts the dose (left) and its error (right)"
-            "The second SAVE runs the code that estimates the source location must be pressed before PLOT or SOURCE."
-            "The user clicks PLOT to plot a colored grid of the input."
-            "SOURCE displays the estimated x/y position of the point source.",
+            "The user inputs parameters of the detector and clicks SAVE.\n"
+            "The user inpusts the dose (left) and its error (right).\n"
+            "The second SAVE runs the code that estimates the source location must be pressed before PLOT or SOURCE.\n"
+            "The user clicks PLOT to plot a colored grid of the input.\n"
+            "SOURCE displays the estimated x/y position of the point source.\n",
+            "The button CLEAR empties all line edits under DOSES AND ERRORS."
         )
 
     def parsInput(self):
@@ -98,6 +100,14 @@ class Window(QMainWindow, Ui_MainWindow):
         v = self.data["sourceCF"][1]; dv = self.data["sourceCF_stDev"][1]
         self.lineEdit_x0.setText(str(round(u, 2)) + " +/- " + str(round(du, 2))) 
         self.lineEdit_y0.setText(str(round(v, 2)) + " +/- " + str(round(dv, 2)))
+
+    def clearInput(self):
+        self.dose00.setText(""); self.doseErr00.setText("")
+        self.dose01.setText(""); self.doseErr01.setText("")
+        self.dose10.setText(""); self.doseErr10.setText("")
+        self.dose11.setText(""); self.doseErr11.setText("")
+        
+        self.lineEdit_x0.setText(""); self.lineEdit_y0.setText("")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
