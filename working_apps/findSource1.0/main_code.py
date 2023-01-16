@@ -77,14 +77,11 @@ measurement = {"m_dose": HDs, "dm_dose": dHDs, "source": [], "grid_x": grid_x, "
 def visualize(data):
     measurement = data['measurement']
     x_max = measurement['x_max']; y_max = measurement['y_max']
-    original = measurement['source']
     estimate = data['sourceCF']
 
     fig, (ax1, ax2) = plt.subplots(nrows = 1, ncols = 2, figsize = (12, 6))
     
     im0 = ax1.imshow(measurement['m_dose'], extent=[-x_max,x_max,-y_max,y_max], aspect="auto")
-    if original != []:
-        ax1.plot(original[0], original[1], "o", color = 'r', ms=12, label = "Original source")
     ax1.plot(estimate[0], estimate[1], "o", color = 'k', ms=3, label = "Scipy curve_fit")
 
     ax1.axis("equal")
@@ -97,10 +94,7 @@ def visualize(data):
     x_0, x_1 = hotspot['xrange']; y_0, y_1 = hotspot['yrange']
 
     im1 = ax2.imshow(measurement['m_dose'], extent=[-x_max,x_max,-y_max,y_max], aspect="auto")
-    if original != []:
-        ax2.plot(original[0], original[1], "o", color = 'r', ms=12, label = "Original source")
-    # ax2.plot(u1, v1, "o", color = 'g', ms=6, label = "Scipy least_square")
-    ax2.plot(estimate[0], estimate[1], "o", color = 'k', ms=3, label = "Scipy curve_fit")
+    ax2.plot(estimate[0], estimate[1], "o", color = 'r', ms=8, label = "Scipy curve_fit")
     ax2.axis("equal")
     ax2.set_xlim(x_0, x_1)
     ax2.set_xlabel("X axis [m]", fontsize = 15)
