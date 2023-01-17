@@ -3,6 +3,7 @@ import sys
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QMessageBox)
 
 from MainWindow import Ui_MainWindow
+from describtion import Ui_Dialog
 from detectorCode import randSource
 from detectorCode import fieldMeasurement
 
@@ -20,6 +21,11 @@ class Window(QMainWindow, Ui_MainWindow):
         self.btnSaveGenerate.clicked.connect(self.setParameters)
         self.btnSaveGenerate.clicked.connect(self.generateSource)
         self.btnMeasure.clicked.connect(self.locationOfmeasuremnt)
+        self.btnDescribtion.clicked.connect(self.description)
+
+    def description(self):
+        dialog = Dialog(self)
+        dialog.exec()
 
     def setParameters(self):
         A_b = self.lineEdit_Ab.text(); A_max = self.lineEdit_Amax.text(); A_min = self.lineEdit_Amin.text()
@@ -46,6 +52,15 @@ class Window(QMainWindow, Ui_MainWindow):
         x = self.lineEdit_x.text(); y = self.lineEdit_y.text()
         HD, dHD = fieldMeasurement(self.radiation, self.detector, self.source, self.minusInStr(x), self.minusInStr(y), [])
         self.lineEdit_HD.setText(str(round(HD, 2)) + " +/- " + str(round(dHD, 2)))
+
+class Dialog(QDialog, Ui_Dialog):
+    def __init__(self, parent= None):
+        super().__init__(parent)
+        self.setupUi(self)
+        self.connectSignalSlots()
+
+    def connectSignalSlots(self):
+        self.btnOK.clicked.connect(self.close)
 
 
 
