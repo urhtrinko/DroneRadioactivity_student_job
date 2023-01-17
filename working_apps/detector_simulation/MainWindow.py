@@ -114,6 +114,9 @@ class Ui_MainWindow(object):
         self.lineEdit_K = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_K.setObjectName("lineEdit_K")
         self.gridLayout.addWidget(self.lineEdit_K, 1, 9, 1, 1)
+        self.btnDescribtion = QtWidgets.QPushButton(self.centralwidget)
+        self.btnDescribtion.setObjectName("btnDescribtion")
+        self.gridLayout.addWidget(self.btnDescribtion, 6, 10, 1, 2)
         self.gridLayout_2.addLayout(self.gridLayout, 1, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -140,13 +143,14 @@ class Ui_MainWindow(object):
         self.label_Amin.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">A<span style=\" vertical-align:sub;\">min</span> [Bq]:</p></body></html>"))
         self.labelMeasre.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Measured at:</span></p><p><span style=\" font-size:10pt;\"><br/></span></p></body></html>"))
         self.label_dt.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">dt [s]:</p></body></html>"))
-        self.label_HD.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">HD [mSv]:</p></body></html>"))
+        self.label_HD.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">HD [mSv/s]:</p></body></html>"))
         self.label_y.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">y [m]:</p></body></html>"))
         self.label_x_2.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">y<span style=\" vertical-align:sub;\">max</span> [m]:</p></body></html>"))
         self.btnMeasure.setText(_translate("MainWindow", "Measure"))
         self.label_x.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">x [m]:</p></body></html>"))
         self.btnSaveGenerate.setText(_translate("MainWindow", "Save and Generate"))
         self.label_GenSource.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">Generated source:</p></body></html>"))
+        self.btnDescribtion.setText(_translate("MainWindow", "Describtion"))
 
 
 if __name__ == "__main__":
