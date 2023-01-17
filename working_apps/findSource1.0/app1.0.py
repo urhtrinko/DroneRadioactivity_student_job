@@ -43,7 +43,7 @@ class Window(QMainWindow, Ui_MainWindow):
             "The user inpusts the dose (left) and its error (right).\n"
             "The second SAVE runs the code that estimates the source location must be pressed before PLOT or SOURCE.\n"
             "The user clicks PLOT to plot a colored grid of the input.\n"
-            "SOURCE displays the estimated x/y position of the point source.\n",
+            "SOURCE displays the estimated x/y position of the point source.\n"
             "The button CLEAR empties all line edits under DOSES AND ERRORS."
         )
 
