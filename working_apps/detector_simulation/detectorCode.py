@@ -25,8 +25,8 @@ def fieldMeasurement(radiation, detector, source, x, y, noise = []):
         x +=  np.random.normal(0, sigma_x)
         y += np.random.normal(0, sigma_y)
 
-    HD = F * (N + N_b)
-    dHD = F * np.sqrt(N + N_b)
+    HD = F * (N + N_b)/dt # dose speed
+    dHD = F * np.sqrt(N + N_b)/dt # error of dose speed
             
     return HD, dHD
 
