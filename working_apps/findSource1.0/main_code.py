@@ -49,29 +49,6 @@ def field_combination(detector, measurement, noise=[]): #radiation
 
     return {'measurement': measurement, 'sourceCF': sourceCF, "sourceCF_stDev": stDev}#, "A0": [A0, dA0]}
 
-HDs = np.array([[444,  3843],
-                [330, 956]])
-dHDs = np.array([[7.9,  23.2],
-                [6.8, 11.6]])
-
-grid_x = np.array([[-25.,  25.],
-                    [-25.,  25.]])
-grid_y = np.array([[ 25.,  25.],
-                    [-25., -25.]])
-
-A_b = 5e-5
-N_grid = 2
-x_max = 50
-y_max = 50
-square_x = 2*x_max/N_grid
-square_y = 2*y_max/N_grid
-maxI_range = {'xrange': (0.0, 50.0), 'yrange': (-50.0, 0.0)}
-
-
-radiation = {"A_b": A_b}
-detector = {"h": 10, "x_max": x_max, "y_max": y_max, "N_grid": N_grid}
-measurement = {"m_dose": HDs, "dm_dose": dHDs, "source": [], "grid_x": grid_x, "grid_y": grid_y, "grid_x_noise": np.zeros((2, 2)), "grid_y_noise": np.zeros((2, 2)), "hotspot": maxI_range, "square_x": square_x, "square_y": square_y, "x_max": x_max, "y_max": y_max}
-
 #Visualization
 
 def visualize(data):
@@ -82,7 +59,7 @@ def visualize(data):
     fig, (ax1, ax2) = plt.subplots(nrows = 1, ncols = 2, figsize = (12, 6))
     
     im0 = ax1.imshow(measurement['m_dose'], extent=[-x_max,x_max,-y_max,y_max], aspect="auto")
-    ax1.plot(estimate[0], estimate[1], "o", color = 'k', ms=3, label = "Scipy curve_fit")
+    ax1.plot(estimate[0], estimate[1], "o", color = 'r', ms=8, label = "Scipy curve_fit")
 
     ax1.axis("equal")
     ax1.set_xlabel("X axis [m]", fontsize = 15)
@@ -109,8 +86,5 @@ def visualize(data):
 
     plt.tight_layout()
     plt.show()
-
-# data = field_combination(detector, measurement)
-# visualize(data)
 
 
