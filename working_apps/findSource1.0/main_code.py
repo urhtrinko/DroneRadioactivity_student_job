@@ -15,26 +15,38 @@ def locationCF(measurement, detector, noise = []):
         XY = np.vstack((grid_x.ravel(), grid_y.ravel()))
     else:
         XY = np.vstack((grid_x_noise.ravel(), grid_y_noise.ravel()))
+
+    u_est = random.uniform(x_0, x_1); v_est = random.uniform(y_0, y_1)
+
+    def parsEst2xN(HDs, grid_x, grid_y, h, u_est, v_est):
+        N = len(grid_x.flatten())
+        r = (grid_x.flatten() - np.ones((N))*u_est)**2 + (grid_y.flatten() - np.ones((N))*v_est)**2 + (np.ones((N))*h)**2
         
-    source0 = [random.uniform(x_0, x_1), random.uniform(y_0, y_1), 1]
+        a = np.rot90(np.array([1/r, np.ones(N)])); b = HDs.flatten()
+        
+        return np.linalg.lstsq(a, b, rcond=None)[0]
+
+    alpha_est0, beta_est0 = parsEst2xN(HDs, grid_x, grid_y, h, u_est, v_est)
     
-    def dose(x, y, u, v, alpha):
-        return alpha / ((x - u)**2 + (y - v)**2 + h**2)
+    source0 = [u_est, v_est, alpha_est0, beta_est0]
+    
+    def dose(x, y, u, v, alpha, beta):
+        return (alpha / ((x - u)**2 + (y - v)**2 + h**2)) + beta
 
     def __dose(M, *args): # M is a table of shape (N, 2), where each row is a new point of measurement, N is the number of measuremnts
         x, y = M
         arr = np.zeros(x.shape)
-        for i in range(len(args)//3):
-            arr += dose(x, y, *args[i*3:i*3+3])
+        for i in range(len(args)//4):
+            arr += dose(x, y, *args[i*4:i*4+4])
+
         return arr
 
-    popt, pcov = curve_fit(__dose, XY, HDs.ravel(), source0, sigma = dHDs.ravel(), absolute_sigma = True, method="lm")
+    popt, pcov = curve_fit(__dose, XY, HDs.ravel(), source0, sigma = dHDs.ravel(), absolute_sigma = True, method="lm", maxfev = 5000)
     perr = np.sqrt(np.diag(pcov))
-    
 
     MyDict = {"XY": XY, "Ns": HDs, "source0": source0}
 
-    return popt, perr, MyDict
+    return popt, perr
 
 # Combination
 def field_combination(detector, measurement, noise=[]): #radiation
