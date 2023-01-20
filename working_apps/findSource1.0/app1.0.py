@@ -2,6 +2,7 @@ import sys
 
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QMessageBox)
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QSettings
 
 # from PyQt5.uic import loadUi
 
@@ -18,12 +19,30 @@ class Window(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)
         self.connectSignalsSlots()
+        self.getSettingsValues()
         self.data = {}
-        self.h = 0
-        self.x_max = 0; self.y_max = 0
-        self.N_grid = 2
         self.xs = {}
         self.ys = {}
+
+        # Set parameter class atributes
+        self.h = self.settingVariables.value("height")
+        self.x_max = self.settingVariables.value("xmax"); self.y_max = self.settingVariables.value("ymax")
+        self.N_grid = 2
+        # Set doses and error of the doses atributes
+        self.D00 = self.settingVariables.value("dose00"); self.eD00 = self.settingVariables.value("doseErr00")
+        self.D01 = self.settingVariables.value("dose01"); self.eD01 = self.settingVariables.value("doseErr01")
+        self.D10 = self.settingVariables.value("dose10"); self.eD10 = self.settingVariables.value("doseErr10")
+        self.D11 = self.settingVariables.value("dose11"); self.eD11 = self.settingVariables.value("doseErr11")
+
+        # Set pararameter text
+        self.lineEdit_h.setText(self.h)
+        self.lineEdit_xmax.setText(self.x_max); self.lineEdit_ymax.setText(self.y_max)
+        # Set doses and error of the doses text
+        self.dose00.setText(self.D00); self.doseErr00.setText(self.eD00)
+        self.dose01.setText(self.D01); self.doseErr01.setText(self.eD01)
+        self.dose10.setText(self.D10); self.doseErr10.setText(self.eD10)
+        self.dose11.setText(self.D11); self.doseErr11.setText(self.eD11)
+
 
     def connectSignalsSlots(self):
         self.actionExit.triggered.connect(self.close)
@@ -34,6 +53,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.btn_plotGraph.clicked.connect(self.pressPlot)
         self.btn_Source.clicked.connect(self.pressSource)
         self.btn_Clear.clicked.connect(self.clearInput)
+
+    def getSettingsValues(self):
+        self.settingVariables = QSettings("My App", "Variables")
 
     def about(self):
         QMessageBox.about(
@@ -63,18 +85,10 @@ class Window(QMainWindow, Ui_MainWindow):
         self.label_y2.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">" + y2 + "</p></body></html>"))
 
     def getData(self):
-        D00 = self.dose00.text(); eD00 = self.doseErr00.text()
-        D01 = self.dose01.text(); eD01 = self.doseErr01.text()
-        D10 = self.dose10.text(); eD10 = self.doseErr10.text()
-        D11 = self.dose11.text(); eD11 = self.doseErr11.text()
-
-        # Save what is written:
-        # self.dose00.setText(D00); self.doseErr00.setText(D00)
-
-        HDs = np.array([[float(D00), float(D01)],
-                        [float(D10), float(D11)]])
-        dHDs = np.array([[float(eD00), float(eD01)],
-                        [float(eD10), float(eD11)]])
+        HDs = np.array([[float(self.D00), float(self.D01)],
+                        [float(self.D10), float(self.D11)]])
+        dHDs = np.array([[float(self.eD00), float(self.eD01)],
+                        [float(self.eD10), float(self.eD11)]])
         grid_x = np.array([[self.xs[0], self.xs[1]],
                             [self.xs[0],self.xs[1]]])
         grid_y = np.array([[self.ys[1],  self.ys[1]],
@@ -108,6 +122,17 @@ class Window(QMainWindow, Ui_MainWindow):
         self.dose11.setText(""); self.doseErr11.setText("")
         
         self.lineEdit_x0.setText(""); self.lineEdit_y0.setText("")
+
+    def closeEvent(self, event): # After cosing the application the input information will remain saved
+        # Set parameter values
+        self.settingVariables.setValue("height", self.lineEdit_h.text())
+        self.settingVariables.setValue("xmax", self.lineEdit_xmax.text()); self.settingVariables.setValue("ymax", self.lineEdit_ymax.text())
+
+        # Set doses and errors values
+        self.settingVariables.setValue("dose00", self.dose00.text()); self.settingVariables.setValue("doseErr00", self.doseErr00.text())
+        self.settingVariables.setValue("dose01", self.dose01.text()); self.settingVariables.setValue("doseErr01", self.doseErr01.text())
+        self.settingVariables.setValue("dose10", self.dose10.text()); self.settingVariables.setValue("doseErr10", self.doseErr10.text())
+        self.settingVariables.setValue("dose11", self.dose11.text()); self.settingVariables.setValue("doseErr11", self.doseErr11.text())
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
