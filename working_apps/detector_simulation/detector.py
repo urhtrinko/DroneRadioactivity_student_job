@@ -45,10 +45,10 @@ class Window(QMainWindow, Ui_MainWindow):
         dialog.exec()
 
     def setParameters(self):
-        # A_b = self.lineEdit_Ab.text(); A_max = self.lineEdit_Amax.text(); A_min = self.lineEdit_Amin.text()
-        # F = self.lineEdit_F.text()
-        # h = self.lineEdit_h.text(); dt = self.lineEdit_dt.text(); K = self.lineEdit_K.text()
-        # x_max = self.lineEdit_xmax.text(); y_max = self.lineEdit_ymax.text()
+        self.A_b = self.lineEdit_Ab.text(); self.A_max = self.lineEdit_Amax.text(); self.A_min = self.lineEdit_Amin.text()
+        self.F = self.lineEdit_F.text()
+        self.h = self.lineEdit_h.text(); self.dt = self.lineEdit_dt.text(); self.K = self.lineEdit_K.text()
+        self.x_max = self.lineEdit_xmax.text(); self.y_max = self.lineEdit_ymax.text()
 
         self.radiation = {"A_min": float(self.A_min), "A_max": float(self.A_max), "A_b": float(self.A_b), "dose_factor": float(self.F)}
         self.detector = {"h": float(self.h), "dt": float(self.dt), "x_max": float(self.x_max), "y_max": float(self.y_max), "detector_constant": float(self.K)}
