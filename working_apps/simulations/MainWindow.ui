@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>877</width>
+    <height>443</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="8" column="0" colspan="2">
+       <widget class="QPushButton" name="btnEstSource">
+        <property name="text">
+         <string>Eestimated Source</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" colspan="4">
+       <widget class="QRadioButton" name="checkSPIRAL">
+        <property name="text">
+         <string>SPIRAL</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <widget class="QLabel" name="x0labelEst">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;x&lt;span style=&quot; vertical-align:sub;&quot;&gt;0&lt;/span&gt; [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0" colspan="2">
+       <widget class="QPushButton" name="btnRandSource">
+        <property name="text">
+         <string>Generate Random Source</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="10">
+       <widget class="QLineEdit" name="A0lineEditRand"/>
+      </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QLabel" name="parametersLabel_2">
+        <property name="text">
+         <string>PARAMETERS</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="3">
+       <widget class="QLineEdit" name="x0lineEditRand"/>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QLabel" name="simulationLabel">
+        <property name="text">
+         <string>SIMULATION</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="10">
+       <widget class="QLineEdit" name="A0lineEditEst"/>
+      </item>
+      <item row="9" column="4" colspan="4">
+       <widget class="QPushButton" name="btnClearInput">
+        <property name="text">
+         <string>Clear Input</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="2">
+       <widget class="QLabel" name="x0labelRand">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;x&lt;span style=&quot; vertical-align:sub;&quot;&gt;0&lt;/span&gt; [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="7" colspan="2">
+       <widget class="QLineEdit" name="y0lineEditEst"/>
+      </item>
+      <item row="8" column="6">
+       <widget class="QLabel" name="y0labelEst">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;y&lt;span style=&quot; vertical-align:sub;&quot;&gt;0&lt;/span&gt; [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" colspan="4">
+       <widget class="QRadioButton" name="checkZIGRAND">
+        <property name="text">
+         <string>RANDOM + ZIG-ZAG</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="3" colspan="3">
+       <widget class="QLineEdit" name="x0lineEditEst"/>
+      </item>
+      <item row="1" column="1" colspan="4">
+       <widget class="QRadioButton" name="checkZIGZAG">
+        <property name="text">
+         <string>ZIG-ZAG</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="6">
+       <widget class="QLabel" name="y0labelRand">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;y&lt;span style=&quot; vertical-align:sub;&quot;&gt;0&lt;/span&gt; [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="7">
+       <widget class="QLineEdit" name="y0lineEditRand"/>
+      </item>
+      <item row="8" column="9">
+       <widget class="QLabel" name="A0labelEst">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;A&lt;span style=&quot; vertical-align:sub;&quot;&gt;0&lt;/span&gt; [Bq]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="2" colspan="2">
+       <widget class="QPushButton" name="btnPlot">
+        <property name="text">
+         <string>Plot graph</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="9">
+       <widget class="QLabel" name="A0labelRand">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;A&lt;span style=&quot; vertical-align:sub;&quot;&gt;0&lt;/span&gt; [Bq]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="2">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1" colspan="2">
+       <widget class="QPushButton" name="btnRadiation">
+        <property name="text">
+         <string>Edit Radiation</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3" colspan="2">
+       <widget class="QPushButton" name="btnDetector">
+        <property name="text">
+         <string>Edit Detector</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>877</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
