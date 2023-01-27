@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>338</width>
     <height>300</height>
    </rect>
   </property>
@@ -70,6 +70,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEditAb</tabstop>
+  <tabstop>lineEditAmin</tabstop>
+  <tabstop>lineEditAmax</tabstop>
+  <tabstop>lineEditF</tabstop>
+  <tabstop>btnSave</tabstop>
+  <tabstop>btnClearInput</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
