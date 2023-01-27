@@ -13,19 +13,16 @@ class Window(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)
         self.connectSignalsSlots()
-        self.radioButton()
 
     #Connect the signal to the appropriate buttons
     def connectSignalsSlots(self):
        self.btnRadiation.clicked.connect(self.radiation)
        self.btnDetector.clicked.connect(self.detector)
+       self.checkZIGZAG.toggled.connect(self.radButZigZag)
 
-    def radioButton(self):
-        if self.checkZIGZAG.isChecked():
-            DetectorDialog(self).ZigZag()
-        elif self.checkSPIRAL.isChecked():
-            DetectorDialog(self).Spiral()
-
+    def radButZigZag(self):
+        self.x0lineEditRand.setEnabled(False)
+        
     #Open radiation/detector dialog window
     def radiation(self):
         dialog = RadiationDialog(self)
