@@ -14,7 +14,7 @@ def combination(radiation, detector, func_fo, func_CF,  source=[], noise=[]):
     sourceCF, stDev = func_CF(measurement, detector, noise)[0], func_CF(measurement, detector, noise)[1]
     
     alpha = sourceCF[2]; rel_alpha = stDev[2]/(sourceCF[2])
-    A0 = ((alpha)/(F*(1-K)*dt*h**2))*1
+    A0 = ((alpha)/(F*(1-K)*h**2))*1
     dA0 = rel_alpha*A0
 
     return {'measurement': measurement, 'sourceCF': sourceCF, "sourceCF_stDev": stDev, "A0": [A0, dA0]}

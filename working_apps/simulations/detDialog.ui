@@ -11,11 +11,15 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Detector</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="5" column="2">
-    <widget class="QLineEdit" name="lineEdit_m"/>
+    <widget class="QLineEdit" name="lineEdit_m">
+     <property name="text">
+      <string>100</string>
+     </property>
+    </widget>
    </item>
    <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="label_h">
@@ -88,10 +92,18 @@
     </widget>
    </item>
    <item row="0" column="2">
-    <widget class="QLineEdit" name="lineEdit_h"/>
+    <widget class="QLineEdit" name="lineEdit_h">
+     <property name="text">
+      <string>10</string>
+     </property>
+    </widget>
    </item>
    <item row="4" column="2">
-    <widget class="QLineEdit" name="lineEdit_K"/>
+    <widget class="QLineEdit" name="lineEdit_K">
+     <property name="text">
+      <string>0.1</string>
+     </property>
+    </widget>
    </item>
    <item row="7" column="6" colspan="5">
     <widget class="QPushButton" name="btnSave">
@@ -112,16 +124,31 @@
      <property name="enabled">
       <bool>true</bool>
      </property>
+     <property name="text">
+      <string>18</string>
+     </property>
     </widget>
    </item>
    <item row="1" column="2">
-    <widget class="QLineEdit" name="lineEdit_dt"/>
+    <widget class="QLineEdit" name="lineEdit_dt">
+     <property name="text">
+      <string>20</string>
+     </property>
+    </widget>
    </item>
    <item row="2" column="2">
-    <widget class="QLineEdit" name="lineEditX"/>
+    <widget class="QLineEdit" name="lineEditX">
+     <property name="text">
+      <string>50</string>
+     </property>
+    </widget>
    </item>
    <item row="3" column="2">
-    <widget class="QLineEdit" name="lineEditGrid"/>
+    <widget class="QLineEdit" name="lineEditGrid">
+     <property name="text">
+      <string>10</string>
+     </property>
+    </widget>
    </item>
    <item row="4" column="0" colspan="2">
     <widget class="QLabel" name="label_K">
@@ -135,10 +162,17 @@
      <property name="enabled">
       <bool>true</bool>
      </property>
+     <property name="text">
+      <string>10</string>
+     </property>
     </widget>
    </item>
    <item row="2" column="7" colspan="3">
-    <widget class="QLineEdit" name="lineEditY"/>
+    <widget class="QLineEdit" name="lineEditY">
+     <property name="text">
+      <string>50</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

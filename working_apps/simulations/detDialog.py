@@ -103,7 +103,8 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Detector"))
+        self.lineEdit_m.setText(_translate("Dialog", "100"))
         self.label_h.setText(_translate("Dialog", "<html><head/><body><p align=\"center\">h [m]:</p></body></html>"))
         self.label_m.setText(_translate("Dialog", "<html><head/><body><p align=\"center\">m []:</p></body></html>"))
         self.labelX.setText(_translate("Dialog", "<html><head/><body><p align=\"center\">X [m]:</p></body></html>"))
@@ -112,9 +113,17 @@ class Ui_Dialog(object):
         self.labePhi.setText(_translate("Dialog", "<html><head/><body><p align=\"center\">phi [rad]:</p></body></html>"))
         self.labelY.setText(_translate("Dialog", "<html><head/><body><p align=\"center\">Y [m]:</p></body></html>"))
         self.labelGrid.setText(_translate("Dialog", "<html><head/><body><p align=\"center\">grid []:</p></body></html>"))
+        self.lineEdit_h.setText(_translate("Dialog", "10"))
+        self.lineEdit_K.setText(_translate("Dialog", "0.1"))
         self.btnSave.setText(_translate("Dialog", "Save"))
         self.btnClearInput.setText(_translate("Dialog", "Clear Input"))
+        self.lineEditPhi.setText(_translate("Dialog", "18"))
+        self.lineEdit_dt.setText(_translate("Dialog", "20"))
+        self.lineEditX.setText(_translate("Dialog", "50"))
+        self.lineEditGrid.setText(_translate("Dialog", "10"))
         self.label_K.setText(_translate("Dialog", "<html><head/><body><p align=\"center\">K []</p></body></html>"))
+        self.lineEditSgrid.setText(_translate("Dialog", "10"))
+        self.lineEditY.setText(_translate("Dialog", "50"))
 
 
 if __name__ == "__main__":

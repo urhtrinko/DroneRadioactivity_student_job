@@ -25,7 +25,6 @@ detector = {"h": h, "dt": dt, "width": X, "height": Y, "measured_points": m, "gr
              #detector
 ####################################### DON'T CHANGE #########################################################################################
 
-
 # Subsidary code
 def activity(source, x, y, h, ru=0, rv=0):
     u, v, A0 = source[0], source[1], source[2] # u, v are the coordinates of the source and A0 is its activity
@@ -44,9 +43,9 @@ def dose_speed_xy(source, x, y, radiation, detector):
     N = np.random.poisson(A_det * dt)
     N_b = np.random.poisson(A_b * dt)# background radiation
 
-    HD = F * (N + N_b)
+    HD = F*(N + N_b)/dt
 
-    dHD = F * np.sqrt(N + N_b)
+    dHD = F*np.sqrt(N + N_b)/dt
     return [HD, dHD]
 def dose_speed(source, i, j, radiation, detector, grid_x, grid_y):
     A_b = radiation['A_b']
@@ -59,9 +58,9 @@ def dose_speed(source, i, j, radiation, detector, grid_x, grid_y):
     N = np.random.poisson(A_det * dt)
     N_b = np.random.poisson(A_b * dt)# background radiation
 
-    HD = F * (N + N_b)
+    HD = F*(N + N_b)/dt
 
-    dHD = F * np.sqrt(N + N_b)
+    dHD = F*np.sqrt(N + N_b)/dt
     return [HD, dHD]
 def mPointsGeneration(w, h, m):
     my = np.sqrt((h/w)*m)

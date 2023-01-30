@@ -14,32 +14,37 @@ class Window(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)
         self.connectSignalsSlots()
+        self.getSettingsValues()
         
+        # Set parameter class atributes
+        self.x0Rand = self.settingVariables.value("x0Rand")
+        self.y0Rand = self.settingVariables.value("y0Rand")
+        self.A0Rand = self.settingVariables.value("A0Rand")
+
+        # Set text value
+        self.x0lineEditRand.setText(self.x0Rand)
+        self.y0lineEditRand.setText(self.y0Rand)
+        self.A0lineEditRand.setText(self.A0Rand)
+
         # Atributes for saving values
         self.dataZIGZAG = {}
         self.dataZIGRAND = {}
         self.dataSPIRAL = {}
-        self.source = []
+        self.source = [float(self.x0Rand), float(self.y0Rand), float(self.A0Rand)]
+
+    def getSettingsValues(self):
+        self.settingVariables = QSettings("My App", "MainWindowVariables")
 
     #Connect the signal to the appropriate buttons
     def connectSignalsSlots(self):
-       #Push buttons
        self.btnRadiation.clicked.connect(self.radiation)
        self.btnDetector.clicked.connect(self.detector)
        self.btnEstSource.clicked.connect(self.estimateSource)
        self.btnRandSource.clicked.connect(self.generateSource)
        self.btnPlot.clicked.connect(self.plotGraph)
-       #Radio buttons
-       self.checkZIGZAG.toggled.connect(self.radButZigZag)
-       self.checkZIGRAND.toggled.connect(self.radButZigRand)
-       self.checkSPIRAL.toggled.connect(self.radButSpiral)
 
-    def radButZigZag(self):
-        DetectorDialog(self).ZigZag()
-    def radButZigRand(self):
-        DetectorDialog(self).ZigRand()
-    def radButSpiral(self):
-        DetectorDialog(self).Spiral()
+       self.actionExit.triggered.connect(self.close)
+
         
     #Open radiation/detector dialog window
     def radiation(self):
@@ -49,12 +54,23 @@ class Window(QMainWindow, Ui_MainWindow):
         dialog = DetectorDialog(self)
         dialog.exec()
 
+    def EnableDisable(self):
+        if self.checkZIGZAG.isChecked():
+            print("It worsk!")
+            return {"ZigZag": True, "ZigRand": False, "Spiral": False}
+        elif self.checkZIGRAND.isChecked():
+            return {"ZigZag": False, "ZigRand": True, "Spiral": False}
+        elif self.checkSPIRAL.isChecked():
+            return {"ZigZag": False, "ZigRand": False, "Spiral": True}
+        else:
+            return {"ZigZag": False, "ZigRand": False, "Spiral": False}
+
     def generateSource(self):
         radiation = RadiationDialog(self).giveRadiation()
         detector = DetectorDialog(self).giveDetector()
         Amax = radiation['A_max']; Amin = radiation['A_min']
         xmax = detector['width']; ymax = detector['height']
-        self.source = point_source(xmax, ymax, Amin, Amax)
+        self.source = point_source(xmax/2, ymax/2, Amin, Amax)
         self.x0lineEditRand.setText((str(round(self.source[0], 2)))); self.y0lineEditRand.setText(str(round(self.source[1], 2)))
         self.A0lineEditRand.setText(str(round(self.source[-1], 2)))
 
@@ -84,6 +100,22 @@ class Window(QMainWindow, Ui_MainWindow):
             visualize(self.dataZIGRAND)
         elif self.checkSPIRAL.isChecked():
             spiral_visualize(self.dataSPIRAL)
+
+    def closeEvent(self, event): # After cosing the application the input information will remain saved
+        close = QMessageBox()
+        close.setWindowTitle("Are you sure you want to exit?")
+        close.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
+        close = close.exec()
+
+        if close == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
+
+        # Set parameter values
+        self.settingVariables.setValue("x0Rand", self.x0lineEditRand.text())
+        self.settingVariables.setValue("y0Rand", self.y0lineEditRand.text())
+        self.settingVariables.setValue("A0Rand", self.A0lineEditRand.text())
         
 from radDialog import Ui_Dialog
 
@@ -128,6 +160,16 @@ class RadiationDialog(QDialog, Ui_Dialog):
         return self.radiation
 
     def closeEvent(self, event): # After cosing the application the input information will remain saved
+        close = QMessageBox()
+        close.setWindowTitle("Are all lines filled?")
+        close.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        close = close.exec()
+
+        if close == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
+
         # Set parameter values
         self.settingVariables.setValue("Ab", self.lineEditAb.text())
         self.settingVariables.setValue("Amin", self.lineEditAmin.text())
@@ -143,6 +185,9 @@ class DetectorDialog(QDialog, Ui_Dialog):
         self.connectSignalsSlots()
         self.getSettingsValues()
 
+        self.boolDict = Window(self).EnableDisable()
+        self.DisEnLineEdits()
+
         # Set parameter class atributes
         self.h = self.settingVariables.value("h")
         self.dt = self.settingVariables.value("dt")
@@ -155,6 +200,10 @@ class DetectorDialog(QDialog, Ui_Dialog):
         self.detector = {"h": float(self.h), "dt": float(self.dt), "width": float(self.X), "height": float(self.Y), "measured_points": 
                         int(self.m), "grid": [int(self.grid), int(self.grid)], "detector_constant": float(self.K),
                         "max_phi": float(self.phi), "spiral_grid": int(self.s_grid)}
+        
+        # Whene you accidentaly save a line edit without anything written in it -> problem occures when converting to float
+        # self.detector = {"h": self.h, "dt": self.dt, "width": self.X, "height": self.Y, "measured_points": self.m, 
+        #                 "grid": [self.grid, self.grid], "detector_constant": self.K, "max_phi": self.phi, "spiral_grid": self.s_grid}
 
         # Set text value
         self.lineEdit_h.setText(self.h)
@@ -173,23 +222,19 @@ class DetectorDialog(QDialog, Ui_Dialog):
         self.btnClearInput.clicked.connect(self.clearInput)
 
     #Enable/disable certian lineEdits depending on the method selected with the radio button (?)
-    def ZigZag(self):
-        self.lineEditGrid.setEnabled(True)
-        self.lineEditSgrid.setEnabled(False)
-        self.lineEditPhi.setEnabled(False)
-
-    def ZigRand(self):
-        self.lineEditGrid.setEnabled(False)
-        self.lineEditSgrid.setEnabled(False)
-        self.lineEditPhi.setEnabled(False)
-
-    def Spiral(self):
-        self.lineEditGrid.setEnabled(False)
-        self.lineEditSgrid.setEnabled(True)
-        self.lineEditPhi.setEnabled(True)
-
-    def userInput_parameters(self):
-        pass
+    def DisEnLineEdits(self):
+        if self.boolDict['ZigZag'] == True:
+            self.lineEditGrid.setEnabled(True)
+            self.lineEditSgrid.setEnabled(False)
+            self.lineEditPhi.setEnabled(False)
+        elif self.boolDict['ZigRand'] == True:
+            self.lineEditGrid.setEnabled(False)
+            self.lineEditSgrid.setEnabled(False)
+            self.lineEditPhi.setEnabled(False)
+        elif self.boolDict['Spiral'] == True:
+            self.lineEditGrid.setEnabled(False)
+            self.lineEditSgrid.setEnabled(True)
+            self.lineEditPhi.setEnabled(True)
 
     def clearInput(self):
         self.lineEdit_h.setText("")
@@ -204,6 +249,9 @@ class DetectorDialog(QDialog, Ui_Dialog):
     def giveDetector(self):
         return self.detector
     
+    def printSth(self):
+        print(self.boolDict)
+    
     def closeEvent(self, event):
         self.settingVariables.setValue("h", self.lineEdit_h.text())
         self.settingVariables.setValue("dt", self.lineEdit_dt.text())
@@ -214,6 +262,16 @@ class DetectorDialog(QDialog, Ui_Dialog):
         self.settingVariables.setValue("K", self.lineEdit_K.text())
         self.settingVariables.setValue("m", self.lineEdit_m.text())
         self.settingVariables.setValue("phi", self.lineEditPhi.text())
+
+        close = QMessageBox()
+        close.setWindowTitle("Are all lines filled?")
+        close.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        close = close.exec()
+
+        if close == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

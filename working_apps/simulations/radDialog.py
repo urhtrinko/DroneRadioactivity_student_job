@@ -58,11 +58,15 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Radiation"))
         self.labelAb.setText(_translate("Dialog", "<html><head/><body><p align=\"center\">A<span style=\" vertical-align:sub;\">b</span> [Bq]:</p></body></html>"))
+        self.lineEditAb.setText(_translate("Dialog", "100"))
         self.labelAmin.setText(_translate("Dialog", "<html><head/><body><p align=\"center\">A<span style=\" vertical-align:sub;\">min</span> [Bq]:</p></body></html>"))
+        self.lineEditAmin.setText(_translate("Dialog", "1000"))
         self.labelAmax.setText(_translate("Dialog", "<html><head/><body><p align=\"center\">A<span style=\" vertical-align:sub;\">max</span> [Bq]:</p></body></html>"))
+        self.lineEditAmax.setText(_translate("Dialog", "1500"))
         self.labelF.setText(_translate("Dialog", "<html><head/><body><p align=\"center\">F [mSv]:</p></body></html>"))
+        self.lineEditF.setText(_translate("Dialog", "0.140"))
         self.btnClearInput.setText(_translate("Dialog", "Clear Input"))
         self.btnSave.setText(_translate("Dialog", "Save"))
 

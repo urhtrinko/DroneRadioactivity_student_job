@@ -99,17 +99,23 @@ class Ui_MainWindow(object):
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 877, 31))
         self.menubar.setObjectName("menubar")
+        self.menuFile = QtWidgets.QMenu(self.menubar)
+        self.menuFile.setObjectName("menuFile")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.actionExit = QtWidgets.QAction(MainWindow)
+        self.actionExit.setObjectName("actionExit")
+        self.menuFile.addAction(self.actionExit)
+        self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Simulation"))
         self.btnEstSource.setText(_translate("MainWindow", "Eestimated Source"))
         self.checkSPIRAL.setText(_translate("MainWindow", "SPIRAL"))
         self.x0labelEst.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">x<span style=\" vertical-align:sub;\">0</span> [m]:</p></body></html>"))
@@ -127,13 +133,6 @@ class Ui_MainWindow(object):
         self.A0labelRand.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">A<span style=\" vertical-align:sub;\">0</span> [Bq]:</p></body></html>"))
         self.btnRadiation.setText(_translate("MainWindow", "Edit Radiation"))
         self.btnDetector.setText(_translate("MainWindow", "Edit Detector"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+        self.menuFile.setTitle(_translate("MainWindow", "File"))
+        self.actionExit.setText(_translate("MainWindow", "Exit"))
+        self.actionExit.setShortcut(_translate("MainWindow", "Esc"))
