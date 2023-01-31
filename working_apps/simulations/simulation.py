@@ -1,8 +1,10 @@
 import sys
+import re
 
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QMessageBox)
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QSettings
+from PyQt5.uic import loadUi
 
 from MainWindow import Ui_MainWindow
 
@@ -42,11 +44,28 @@ class Window(QMainWindow, Ui_MainWindow):
        self.btnEstSource.clicked.connect(self.estimateSource)
        self.btnRandSource.clicked.connect(self.generateSource)
        self.btnPlot.clicked.connect(self.plotGraph)
+       self.btnClearInput.clicked.connect(self.clearInput)
 
        self.actionExit.triggered.connect(self.close)
+       self.actionAbout.triggered.connect(self.mainDes)
 
+       self.infoZigZag.clicked.connect(self.ZigZagDes)
+       self.infoZigRand.clicked.connect(self.ZigRandDes)
+       self.infoSpiral.clicked.connect(self.SpiralDes)
         
-    #Open radiation/detector dialog window
+    #Open the dialog windows
+    def mainDes(self):
+        dialog = MainDescribtion(self)
+        dialog.exec()
+    def ZigZagDes(self):
+        dialog = ZigZagDescribtion(self)
+        dialog.exec()
+    def ZigRandDes(self):
+        dialog = ZigRandDescribtion(self)
+        dialog.exec()
+    def SpiralDes(self):
+        dialog = SpiralDescribtion(self)
+        dialog.exec()
     def radiation(self):
         dialog = RadiationDialog(self)
         dialog.exec()
@@ -54,9 +73,9 @@ class Window(QMainWindow, Ui_MainWindow):
         dialog = DetectorDialog(self)
         dialog.exec()
 
+    # Still unsolved
     def EnableDisable(self):
         if self.checkZIGZAG.isChecked():
-            print("It worsk!")
             return {"ZigZag": True, "ZigRand": False, "Spiral": False}
         elif self.checkZIGRAND.isChecked():
             return {"ZigZag": False, "ZigRand": True, "Spiral": False}
@@ -101,9 +120,14 @@ class Window(QMainWindow, Ui_MainWindow):
         elif self.checkSPIRAL.isChecked():
             spiral_visualize(self.dataSPIRAL)
 
+    def clearInput(self):
+        self.x0lineEditRand.setText(""); self.y0lineEditRand.setText(""); self.A0lineEditRand.setText("")
+        self.x0lineEditEst.setText(""); self.y0lineEditEst.setText(""); self.A0lineEditEst.setText("")
+
     def closeEvent(self, event): # After cosing the application the input information will remain saved
         close = QMessageBox()
-        close.setWindowTitle("Are you sure you want to exit?")
+        close.setWindowTitle("Exit Message")
+        close.setText("<html><head/><body><p align=\"center\">Are you sure you want to close?</p></body></html>")
         close.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         close = close.exec()
 
@@ -160,15 +184,17 @@ class RadiationDialog(QDialog, Ui_Dialog):
         return self.radiation
 
     def closeEvent(self, event): # After cosing the application the input information will remain saved
-        close = QMessageBox()
-        close.setWindowTitle("Are all lines filled?")
-        close.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        close = close.exec()
+        List = [self.lineEditAb.text(), self.lineEditAmin.text(), self.lineEditAmax.text(),
+                self.lineEditF.text()]
+        if lineEditsFilled(List) == True:
+            close = QMessageBox()
+            close.setWindowTitle("Error Message")
+            close.setText("<html><head/><body><p align=\"center\">Check if the lines contain only floats/intigers and are filled!</p></body></html>")
+            close.setStandardButtons(QMessageBox.Ok)
+            close = close.exec()
 
-        if close == QMessageBox.Yes:
-            event.accept()
-        else:
-            event.ignore()
+            if close == QMessageBox.Ok:
+                event.ignore()
 
         # Set parameter values
         self.settingVariables.setValue("Ab", self.lineEditAb.text())
@@ -200,8 +226,8 @@ class DetectorDialog(QDialog, Ui_Dialog):
         self.detector = {"h": float(self.h), "dt": float(self.dt), "width": float(self.X), "height": float(self.Y), "measured_points": 
                         int(self.m), "grid": [int(self.grid), int(self.grid)], "detector_constant": float(self.K),
                         "max_phi": float(self.phi), "spiral_grid": int(self.s_grid)}
-        
-        # Whene you accidentaly save a line edit without anything written in it -> problem occures when converting to float
+
+        # FOR EMERGANCIES, Whene you accidentaly save a line edit without anything written in it -> problem occures when converting to float
         # self.detector = {"h": self.h, "dt": self.dt, "width": self.X, "height": self.Y, "measured_points": self.m, 
         #                 "grid": [self.grid, self.grid], "detector_constant": self.K, "max_phi": self.phi, "spiral_grid": self.s_grid}
 
@@ -243,6 +269,7 @@ class DetectorDialog(QDialog, Ui_Dialog):
         self.lineEditY.setText("")
         self.lineEditGrid.setText("")
         self.lineEditSgrid.setText("")
+        self.lineEdit_K.setText("")
         self.lineEdit_m.setText("")
         self.lineEditPhi.setText("")
 
@@ -253,6 +280,19 @@ class DetectorDialog(QDialog, Ui_Dialog):
         print(self.boolDict)
     
     def closeEvent(self, event):
+        List = [self.lineEdit_h.text(), self.lineEdit_dt.text(), self.lineEditX.text(), 
+                self.lineEditY.text(), self.lineEditGrid.text(), self.lineEditSgrid.text(),
+                self.lineEdit_K.text(), self.lineEdit_m.text(), self.lineEditPhi.text()]
+        if lineEditsFilled(List) == True:
+            close = QMessageBox()
+            close.setWindowTitle("Error Message")
+            close.setText("<html><head/><body><p align=\"center\">Check if the lines contain only floats/intigers and are filled!</p></body></html>")
+            close.setStandardButtons(QMessageBox.Ok)
+            close = close.exec()
+
+            if close == QMessageBox.Ok:
+                event.ignore()
+
         self.settingVariables.setValue("h", self.lineEdit_h.text())
         self.settingVariables.setValue("dt", self.lineEdit_dt.text())
         self.settingVariables.setValue("X", self.lineEditX.text())
@@ -263,15 +303,26 @@ class DetectorDialog(QDialog, Ui_Dialog):
         self.settingVariables.setValue("m", self.lineEdit_m.text())
         self.settingVariables.setValue("phi", self.lineEditPhi.text())
 
-        close = QMessageBox()
-        close.setWindowTitle("Are all lines filled?")
-        close.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        close = close.exec()
+class MainDescribtion(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        loadUi("mainDescribtion.ui", self)
 
-        if close == QMessageBox.Yes:
-            event.accept()
-        else:
-            event.ignore()
+class ZigZagDescribtion(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        loadUi("ZigZagDescribtion.ui", self)
+
+class ZigRandDescribtion(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        loadUi("ZigRandDescribtion.ui", self)
+
+class SpiralDescribtion(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        loadUi("SpiralDescribtion.ui", self)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
