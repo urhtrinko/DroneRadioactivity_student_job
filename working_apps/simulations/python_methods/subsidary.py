@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import re
 
 # ALL the major flyover and location code works for this parameters 
 ####################################### DON'T CHENGE #########################################################################################
@@ -98,3 +99,11 @@ def parsEst2xN(HDs, grid_x, grid_y, h, u_est, v_est):
     r = (grid_x.flatten() - np.ones((N))*u_est)**2 + (grid_y.flatten() - np.ones((N))*v_est)**2 + (np.ones((N))*h)**2
     a = np.rot90(np.array([1/r, np.ones(N)])); b = HDs.flatten()  
     return np.linalg.lstsq(a, b, rcond=None)[0]
+def lineEditsFilled(List):
+    for String in List:
+        if re.match('^[0-9\.]*$', String) and String != "":
+            continue
+        else:
+            return True
+            break
+    return False
