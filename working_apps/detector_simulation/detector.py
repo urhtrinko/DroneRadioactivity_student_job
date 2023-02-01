@@ -90,10 +90,16 @@ class Dialog(QDialog, Ui_Dialog):
     def connectSignalSlots(self):
         self.btnOK.clicked.connect(self.close)
 
-
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+
+    #open qss file
+    File = open("stylesheets/Diplaytap/Diplaytap.qss", 'r')
+
+    with File:
+        qss = File.read()
+        app.setStyleSheet(qss)
+
     win = Window()
     win.show()
     sys.exit(app.exec())
