@@ -32,7 +32,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.dataZIGZAG = {}
         self.dataZIGRAND = {}
         self.dataSPIRAL = {}
-        self.source = [float(self.x0Rand), float(self.y0Rand), float(self.A0Rand)]
+        self.source = [self.x0Rand, self.y0Rand, self.A0Rand]
 
     def getSettingsValues(self):
         self.settingVariables = QSettings("My App", "MainWindowVariables")
@@ -45,6 +45,7 @@ class Window(QMainWindow, Ui_MainWindow):
        self.btnRandSource.clicked.connect(self.generateSource)
        self.btnPlot.clicked.connect(self.plotGraph)
        self.btnClearInput.clicked.connect(self.clearInput)
+       self.btnUserGenSource.clicked.connect(self.userGenSource)
 
        self.actionExit.triggered.connect(self.close)
        self.actionAbout.triggered.connect(self.mainDes)
@@ -83,6 +84,12 @@ class Window(QMainWindow, Ui_MainWindow):
             return {"ZigZag": False, "ZigRand": False, "Spiral": True}
         else:
             return {"ZigZag": False, "ZigRand": False, "Spiral": False}
+
+    def userGenSource(self):
+        List = [self.x0lineEditRand.text(), self.y0lineEditRand.text(), self.A0lineEditRand.text()]
+        print(List)
+        if lineEditsFilled(List) == False:
+            self.source = [float(List[0]), float(List[1]), float(List[2])]
 
     def generateSource(self):
         radiation = RadiationDialog(self).giveRadiation()
