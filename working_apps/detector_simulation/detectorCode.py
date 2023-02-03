@@ -1,5 +1,30 @@
+import re
 import numpy as np
 import random
+
+# ALL the major flyover and location code works for this parameters 
+####################################### DON'T CHENGE #########################################################################################
+A_min = 1e3 # Bq
+A_max = 1.5e3 # Bq
+A_b = 100 # Bq
+h = 10 # m
+dt = 20 # the pause on each point od the grid in s
+X = 50; sigma_x = 0.1 # m #size of grid in x direction
+Y = 50; sigma_y = 0.1 # m #size of grid in y direction
+m = 100 # number of measured points
+grid = [10, 10] # size of grid, n x n measurements 
+n_bins = 25
+K = 0.1 # is somewhere in the interval [0, 1]
+F = 0.140 # factor for inhilation of Pu-239 in mSV/Bq
+
+max_phi = 6*np.pi # rotation in radians that the detector will make will moving in a spiral trajectory
+s_grid = 10
+
+radiation = {"A_min": A_min, "A_max": A_max, "A_b": A_b, "dose_factor": F}
+detector = {"h": h, "dt": dt, "width": X, "height": Y, "measured_points": m, "grid": grid, "detector_constant": K,
+             "max_phi": max_phi, "spiral_grid": s_grid} # the detector constant tells us the quality of the 
+             #detector
+####################################### DON'T CHANGE #########################################################################################
 
 def activity(source, x, y, h, ru=0, rv=0):
     u, v, A0 = source[0], source[1], source[2] # u, v are the coordinates of the source and A0 is its activity
@@ -28,3 +53,24 @@ def fieldMeasurement(radiation, detector, source, x, y, noise = []):
             
     return HD, dHD
 
+# Testing detector quality
+K1 = 0.1; K2 = 0.8
+testSource = [0, 0, 1250]
+detector_K1 = {"h": h, "dt": dt, "width": X, "height": Y, "measured_points": m, "grid": grid, "detector_constant": K1,
+             "max_phi": max_phi, "spiral_grid": s_grid}
+detector_K2 = {"h": h, "dt": dt, "width": X, "height": Y, "measured_points": m, "grid": grid, "detector_constant": K2,
+             "max_phi": max_phi, "spiral_grid": s_grid}
+
+# print(fieldMeasurement(radiation, detector_K1, testSource, 0, 0, [])[1]
+#                     /fieldMeasurement(radiation, detector_K1, testSource, 0, 0, [])[0])
+# print(fieldMeasurement(radiation, detector_K2, testSource, 0, 0, [])[1]
+#                     /fieldMeasurement(radiation, detector_K2, testSource, 0, 0, [])[0])
+
+def lineEditsFilled(List):
+    for String in List:
+        if re.match('^[0-9\.]*$', String) and String != "":
+            continue
+        else:
+            return True
+            break
+    return False
