@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>452</width>
-    <height>633</height>
+    <width>583</width>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
+    <item row="0" column="1">
      <layout class="QGridLayout" name="gridLayout">
       <property name="leftMargin">
        <number>0</number>
@@ -23,17 +23,117 @@
       <property name="topMargin">
        <number>0</number>
       </property>
-      <item row="2" column="0" colspan="2">
-       <widget class="QLabel" name="label_Amin">
+      <item row="13" column="3">
+       <widget class="QPushButton" name="btnDescribtion">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;A&lt;span style=&quot; vertical-align:sub;&quot;&gt;min&lt;/span&gt; [Bq]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Describtion</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="0" colspan="2">
-       <widget class="QLabel" name="label_h">
+      <item row="12" column="3">
+       <widget class="QLabel" name="label_y">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;h [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;y [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="3">
+       <widget class="QLabel" name="label_genSourceA0">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;A&lt;span style=&quot; vertical-align:sub;&quot;&gt;0&lt;/span&gt; [Bq]&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="4">
+       <widget class="QLineEdit" name="lineEdit_ymax"/>
+      </item>
+      <item row="5" column="3">
+       <widget class="QLabel" name="label_x_2">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;y&lt;span style=&quot; vertical-align:sub;&quot;&gt;max&lt;/span&gt; [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="4">
+       <widget class="QLineEdit" name="lineEdit_dt"/>
+      </item>
+      <item row="8" column="3">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;y&lt;span style=&quot; vertical-align:sub;&quot;&gt;0&lt;/span&gt; [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="4">
+       <widget class="QLineEdit" name="lineEdit_y"/>
+      </item>
+      <item row="9" column="4">
+       <widget class="QLineEdit" name="lineEdit_genSourceA0"/>
+      </item>
+      <item row="7" column="3">
+       <widget class="QLabel" name="label_genSourceX">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;x&lt;span style=&quot; vertical-align:sub;&quot;&gt;0&lt;/span&gt; [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="4">
+       <widget class="QLineEdit" name="lineEdit_genSourceY"/>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLabel" name="label_Amax">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;A&lt;span style=&quot; vertical-align:sub;&quot;&gt;max&lt;/span&gt; [Bq]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0" colspan="3">
+       <widget class="QPushButton" name="btnSaveGenerate">
+        <property name="text">
+         <string>Save and Generate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QLabel" name="label_dt">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;dt [s]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QLabel" name="label_F">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;F [?]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QLineEdit" name="lineEdit_Amax"/>
+      </item>
+      <item row="3" column="4">
+       <widget class="QLineEdit" name="lineEdit_F"/>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QLabel" name="label_Ab">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;A&lt;span style=&quot; vertical-align:sub;&quot;&gt;b&lt;/span&gt; [Bq]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLineEdit" name="lineEdit_Ab"/>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLineEdit" name="lineEdit_Amin"/>
+      </item>
+      <item row="4" column="2">
+       <widget class="QLineEdit" name="lineEdit_h"/>
+      </item>
+      <item row="6" column="0" colspan="2">
+       <widget class="QLabel" name="label_K">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;K []:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
@@ -44,119 +144,24 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QLabel" name="label_Ab">
+      <item row="3" column="0" colspan="2">
+       <widget class="QLabel" name="label_Amin">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;A&lt;span style=&quot; vertical-align:sub;&quot;&gt;b&lt;/span&gt; [Bq]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;A&lt;span style=&quot; vertical-align:sub;&quot;&gt;min&lt;/span&gt; [Bq]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
       <item row="4" column="0" colspan="2">
-       <widget class="QLabel" name="label_K">
+       <widget class="QLabel" name="label_h">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;K []:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;h [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="3" colspan="3">
-       <widget class="QLineEdit" name="lineEdit_genSourceXY"/>
-      </item>
-      <item row="6" column="0" colspan="3">
-       <widget class="QPushButton" name="btnSaveGenerate">
-        <property name="text">
-         <string>Save and Generate</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="3" colspan="3">
-       <widget class="QLineEdit" name="lineEdit_genSourceA0"/>
-      </item>
-      <item row="1" column="2">
-       <widget class="QLineEdit" name="lineEdit_Ab"/>
-      </item>
-      <item row="2" column="2">
-       <widget class="QLineEdit" name="lineEdit_Amin"/>
-      </item>
-      <item row="3" column="2">
-       <widget class="QLineEdit" name="lineEdit_h"/>
-      </item>
-      <item row="1" column="3">
-       <widget class="QLabel" name="label_Amax">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;A&lt;span style=&quot; vertical-align:sub;&quot;&gt;max&lt;/span&gt; [Bq]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="3">
-       <widget class="QLabel" name="label_F">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;F [?]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="3">
-       <widget class="QLabel" name="label_dt">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;dt [s]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="4">
-       <widget class="QLineEdit" name="lineEdit_Amax"/>
-      </item>
-      <item row="2" column="4">
-       <widget class="QLineEdit" name="lineEdit_F"/>
-      </item>
-      <item row="3" column="4">
-       <widget class="QLineEdit" name="lineEdit_dt"/>
-      </item>
-      <item row="4" column="2">
-       <widget class="QLineEdit" name="lineEdit_K"/>
-      </item>
-      <item row="5" column="2">
-       <widget class="QLineEdit" name="lineEdit_xmax"/>
-      </item>
-      <item row="5" column="3">
-       <widget class="QLabel" name="label_x_2">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;y&lt;span style=&quot; vertical-align:sub;&quot;&gt;max&lt;/span&gt; [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="4">
-       <widget class="QLineEdit" name="lineEdit_ymax"/>
-      </item>
-      <item row="10" column="3">
-       <widget class="QLabel" name="label_y">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;y [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="4">
-       <widget class="QLineEdit" name="lineEdit_y"/>
-      </item>
-      <item row="10" column="2">
-       <widget class="QLineEdit" name="lineEdit_x"/>
-      </item>
-      <item row="10" column="0" colspan="2">
-       <widget class="QLabel" name="label_x">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;x [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="2">
+      <item row="13" column="2">
        <widget class="QPushButton" name="btnMeasure">
         <property name="text">
          <string>Measure</string>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="3">
-       <widget class="QPushButton" name="btnDescribtion">
-        <property name="text">
-         <string>Describtion</string>
         </property>
        </widget>
       </item>
@@ -167,8 +172,40 @@
         </property>
        </widget>
       </item>
+      <item row="12" column="0" colspan="2">
+       <widget class="QLabel" name="label_x">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;x [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="2">
+       <widget class="QLineEdit" name="lineEdit_x"/>
+      </item>
+      <item row="5" column="2">
+       <widget class="QLineEdit" name="lineEdit_xmax"/>
+      </item>
+      <item row="6" column="2">
+       <widget class="QLineEdit" name="lineEdit_K"/>
+      </item>
+      <item row="7" column="4">
+       <widget class="QLineEdit" name="lineEdit_genSourceX"/>
+      </item>
       <item row="0" column="2" colspan="2">
-       <widget class="QLineEdit" name="lineEdit_HD"/>
+       <widget class="QLineEdit" name="lineEdit_resultHD">
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>20 +/- 1</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -179,7 +216,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>452</width>
+     <width>583</width>
      <height>31</height>
     </rect>
    </property>
