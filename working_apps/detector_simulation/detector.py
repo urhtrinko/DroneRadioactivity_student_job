@@ -19,7 +19,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.A_b = self.settingParameters.value("Ab"); self.A_max = self.settingParameters.value("Amax"); self.A_min = self.settingParameters.value("Amin")
         self.F = self.settingParameters.value("dose_factor")
         self.h = self.settingParameters.value("height"); self.dt = self.settingParameters.value("dt")
-        self.x_max = self.settingParameters.value("xmax"); self.y_max = self.settingParameters.value("ymax")
+        self.X = self.settingParameters.value("X"); self.Y = self.settingParameters.value("Y")
 
         self.K = self.settingParameters.value("K")
 
@@ -27,7 +27,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.lineEdit_Ab.setText(self.A_b); self.lineEdit_Amax.setText(self.A_max); self.lineEdit_Amin.setText(self.A_min)
         self.lineEdit_F.setText(self.F)
         self.lineEdit_h.setText(self.h); self.lineEdit_dt.setText(self.dt)
-        self.lineEdit_xmax.setText(self.x_max); self.lineEdit_ymax.setText(self.y_max)
+        self.lineEdit_X.setText(self.X); self.lineEdit_Y.setText(self.Y)
 
         # Factor-K slider)
         self.sliderForK.setMinimum(0)
@@ -79,7 +79,7 @@ class Window(QMainWindow, Ui_MainWindow):
         List = [self.lineEdit_Ab.text(), self.lineEdit_Amax.text(),
                 self.lineEdit_Amin.text(), self.lineEdit_F.text(),
                 self.lineEdit_h.text(), self.lineEdit_dt.text(),
-                self.lineEdit_xmax.text(), self.lineEdit_ymax.text(),
+                self.lineEdit_X.text(), self.lineEdit_Y.text(),
                 self.lineEdit_valueK.text()]
 
         if lineEditsFilled(List) == True:
@@ -95,11 +95,11 @@ class Window(QMainWindow, Ui_MainWindow):
             self.A_b = self.lineEdit_Ab.text(); self.A_max = self.lineEdit_Amax.text(); self.A_min = self.lineEdit_Amin.text()
             self.F = self.lineEdit_F.text()
             self.h = self.lineEdit_h.text(); self.dt = self.lineEdit_dt.text()
-            self.x_max = self.lineEdit_xmax.text(); self.y_max = self.lineEdit_ymax.text()
+            self.X = self.lineEdit_X.text(); self.Y = self.lineEdit_Y.text()
             self.K = self.sliderForK.value()*(1/100)
 
             self.radiation = {"A_min": float(self.A_min), "A_max": float(self.A_max), "A_b": float(self.A_b), "dose_factor": float(self.F)}
-            self.detector = {"h": float(self.h), "dt": float(self.dt), "x_max": float(self.x_max), "y_max": float(self.y_max), "detector_constant": float(self.K)}
+            self.detector = {"h": float(self.h), "dt": float(self.dt), "X": float(self.X), "Y": float(self.Y), "detector_constant": float(self.K)}
 
     def slide_it(self):
         value = round(self.sliderForK.value()*(1/100), 2)
@@ -120,10 +120,10 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def locationOfmeasuremnt(self):
         x = self.minusInStr(self.lineEdit_x.text()); y = self.minusInStr(self.lineEdit_y.text())
-        if (float(self.lineEdit_xmax.text()) < np.abs(x)) or (float(self.lineEdit_ymax.text()) < np.abs(y)):
+        if ((float(self.lineEdit_X.text())/2) < np.abs(x)) or ((float(self.lineEdit_Y.text())/2) < np.abs(y)):
             close = QMessageBox()
             close.setWindowTitle("Error Message")
-            close.setText("<html><head/><body><p align=\"center\">The inpute measuring coordinates are out of bounds!</p></body></html>")
+            close.setText("<html><head/><body><p align=\"center\">Inputed measuring coordinates are out of bounds!</p></body></html>")
             close.setStandardButtons(QMessageBox.Ok)
             close = close.exec()
 
@@ -140,8 +140,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.settingParameters.setValue("dose_factor", self.lineEdit_F.text())
         self.settingParameters.setValue("height", self.lineEdit_h.text())
         self.settingParameters.setValue("dt", self.lineEdit_dt.text())
-        self.settingParameters.setValue("xmax", self.lineEdit_xmax.text())
-        self.settingParameters.setValue("ymax", self.lineEdit_ymax.text())
+        self.settingParameters.setValue("X", self.lineEdit_X.text())
+        self.settingParameters.setValue("Y", self.lineEdit_Y.text())
 
         self.settingParameters.setValue("K", round(self.sliderForK.value()*(1/100), 2))
 

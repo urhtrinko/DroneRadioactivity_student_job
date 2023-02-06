@@ -84,9 +84,9 @@
      <widget class="QLineEdit" name="lineEdit_dt"/>
     </item>
     <item row="7" column="4" colspan="2">
-     <widget class="QLabel" name="label_x_2">
+     <widget class="QLabel" name="label_Y">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;y&lt;span style=&quot; vertical-align:sub;&quot;&gt;max&lt;/span&gt; [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Y [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </item>
@@ -135,9 +135,9 @@
      </widget>
     </item>
     <item row="7" column="0" colspan="2">
-     <widget class="QLabel" name="label_xmax">
+     <widget class="QLabel" name="label_X">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;x&lt;span style=&quot; vertical-align:sub;&quot;&gt;max&lt;/span&gt; [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;X [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </item>
@@ -156,7 +156,7 @@
      </widget>
     </item>
     <item row="7" column="2">
-     <widget class="QLineEdit" name="lineEdit_xmax"/>
+     <widget class="QLineEdit" name="lineEdit_X"/>
     </item>
     <item row="9" column="0" colspan="2">
      <widget class="QPushButton" name="btn_Save">
@@ -186,7 +186,7 @@
      </widget>
     </item>
     <item row="7" column="6">
-     <widget class="QLineEdit" name="lineEdit_ymax"/>
+     <widget class="QLineEdit" name="lineEdit_Y"/>
     </item>
     <item row="8" column="6">
      <widget class="QLineEdit" name="lineEdit_valueK"/>
@@ -242,8 +242,8 @@
   <tabstop>lineEdit_Amax</tabstop>
   <tabstop>lineEdit_F</tabstop>
   <tabstop>lineEdit_dt</tabstop>
-  <tabstop>lineEdit_xmax</tabstop>
-  <tabstop>lineEdit_ymax</tabstop>
+  <tabstop>lineEdit_X</tabstop>
+  <tabstop>lineEdit_Y</tabstop>
   <tabstop>lineEdit_x</tabstop>
   <tabstop>lineEdit_y</tabstop>
   <tabstop>btnMeasure</tabstop>

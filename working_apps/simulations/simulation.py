@@ -1,5 +1,4 @@
 import sys
-import re
 
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QMessageBox)
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -177,9 +176,6 @@ class RadiationDialog(QDialog, Ui_Dialog):
     def connectSignalsSlots(self):
         self.btnSave.clicked.connect(self.close)
         self.btnClearInput.clicked.connect(self.clearInput)
-
-    def userInput_parameters(self):
-        pass
 
     def clearInput(self):
         self.lineEditAb.setText("")
