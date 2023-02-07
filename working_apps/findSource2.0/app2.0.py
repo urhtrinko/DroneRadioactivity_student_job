@@ -1,8 +1,12 @@
 import sys
 
-from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QMessageBox)
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+
+# from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QMessageBox)
 # from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QSettings
+# from PyQt5.QtCore import QSettings
 from PyQt5.uic import loadUi
 
 from MainWindow import Ui_MainWindow
@@ -13,6 +17,10 @@ class Window(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+
+        self.btnNext.setShortcut("Return")
+        self.btnBack.setShortcut("Shift+Return")
+
         self.connectSignalsSlots()
         self.getSettingsValues()
 
@@ -20,6 +28,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.i = -1 # a variable - it allows the user to iterate through the measurements
         self.parameters = {}
         self.List = []; self.HDs = np.zeros((1, 2)); self.dHDs = np.zeros((1, 2))
+        self.FC = {}
+
+        self.progressBarHD.setValue(0)
         
         # Set parameter class atributes
         # (???????????????????)
@@ -29,7 +40,6 @@ class Window(QMainWindow, Ui_MainWindow):
         # self.HDs = self.settingVariables.value("HDs")
         # self.dHDs = self.settingVariables.value("dHDs")
         # ???
-        
 
     def getSettingsValues(self):
         self.settingVariables = QSettings("My App", "MainWindowVariables")
@@ -39,6 +49,7 @@ class Window(QMainWindow, Ui_MainWindow):
        self.btnEditPars.clicked.connect(self.Parameters)
        self.btnNext.clicked.connect(self.Next)
        self.btnBack.clicked.connect(self.Back)
+       self.btnFindSource.clicked.connect(self.estimateSource)
         
     #Open the dialog windows
     def Parameters(self):
@@ -47,6 +58,16 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def clearInput(self):
         pass
+
+    def Message(self, title, message):
+        close = QMessageBox()
+        close.setWindowTitle(title)
+        close.setText("<html><head/><body><p align=\"center\">" + message + "</p></body></html>")
+        close.setStandardButtons(QMessageBox.Ok)
+        close = close.exec()
+
+        if close == QMessageBox.Ok:
+            pass
 
     def Next(self):
         if self.i == -1:
@@ -61,10 +82,9 @@ class Window(QMainWindow, Ui_MainWindow):
         else:
             i, j = self.List[self.i]['ij']
             self.HDs[i, j] = float(self.lineEdit_HD.text()); self.dHDs[i, j] = float(self.lineEdit_dHD.text())
-
+            self.progressBarHD.setValue(count0InArray(self.HDs))
             if self.parameters['m'] - 1 <= self.i: 
-                print("You have reached the end, mate.")
-                print(self.HDs)
+                self.Message("Border Message", "You have reached the end, mate.")
             else:
                 self.i += 1
                 x, y = self.List[self.i]['xy']
@@ -74,15 +94,13 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def Back(self):
         if self.i < 0:
-            print("You've reached the beginning, mate.")
-            print(self.HDs)
+            self.Message("Border Message", "You have reached the beginning, mate.")
         else:
             i, j = self.List[self.i]['ij']
             self.HDs[i, j] = float(self.lineEdit_HD.text()); self.dHDs[i, j] = float(self.lineEdit_dHD.text())
-
+            self.progressBarHD.setValue(count0InArray(self.HDs))
             if self.i - 1 < 0:
-                print("You've reached the beginning, mate.")
-                print(self.HDs)
+                self.Message("Border Message", "You have reached the beginning, mate.")
             else:
                 self.i = self.i - 1
                 x, y = self.List[self.i]['xy']
@@ -93,6 +111,18 @@ class Window(QMainWindow, Ui_MainWindow):
     def resetIndex(self):
         self.i = -1
         self.lineEdit_X.setText("x = ? m"); self.lineEdit_Y.setText("y = ? m")
+
+    def estimateSource(self):
+        measurement = {"m_dose": self.HDs, "dm_dose": self.dHDs}
+        detector = self.parameters
+
+        self.FC = field_combination(detector, measurement)
+        self.lineEditX0.setText(str(round(self.FC['sourceCF'][0], 2)) + " +/- " + str(round(self.FC['sourceCF_stDev'][0], 2)))
+        self.lineEditY0.setText(str(round(self.FC['sourceCF'][1], 2)) + " +/- " + str(round(self.FC['sourceCF_stDev'][1], 2)))
+        self.lineEditA0.setText(str(round(self.FC['sourceCF'][2], 2)) + " +/- " + str(round(self.FC['sourceCF_stDev'][2], 2)))
+
+    def plotGraph(self):
+        visualize(self.FC)
 
     def closeEvent(self, event): # After cosing the application the input information will remain saved
         close = QMessageBox()
