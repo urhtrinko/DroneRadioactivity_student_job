@@ -37,9 +37,9 @@ class Ui_MainWindow(object):
         self.progressBarHD.setProperty("value", 24)
         self.progressBarHD.setObjectName("progressBarHD")
         self.gridLayout.addWidget(self.progressBarHD, 2, 2, 1, 5)
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setObjectName("pushButton")
-        self.gridLayout.addWidget(self.pushButton, 8, 5, 1, 1)
+        self.btnPlotGraph = QtWidgets.QPushButton(self.centralwidget)
+        self.btnPlotGraph.setObjectName("btnPlotGraph")
+        self.gridLayout.addWidget(self.btnPlotGraph, 8, 5, 1, 1)
         self.lineEditX0 = QtWidgets.QLineEdit(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -109,7 +109,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label_HD.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">HD [mSv/s]:</p></body></html>"))
         self.label_dHD.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">dHD [mSv/s]:</p></body></html>"))
-        self.pushButton.setText(_translate("MainWindow", "Plot Graph"))
+        self.btnPlotGraph.setText(_translate("MainWindow", "Plot Graph"))
         self.labelY0.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">y</span><span style=\" font-size:10pt; vertical-align:sub;\">0</span><span style=\" font-size:10pt;\"> [m]:</span></p></body></html>"))
         self.btnFindSource.setText(_translate("MainWindow", "Find Source"))
         self.btnEditPars.setText(_translate("MainWindow", "Edit Parameters"))
@@ -121,13 +121,3 @@ class Ui_MainWindow(object):
         self.btnNext.setText(_translate("MainWindow", "Next"))
         self.lineEdit_X.setText(_translate("MainWindow", "x = ?"))
         self.lineEdit_Y.setText(_translate("MainWindow", "y = ?"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
