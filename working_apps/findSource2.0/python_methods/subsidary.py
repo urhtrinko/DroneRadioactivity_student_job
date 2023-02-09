@@ -17,7 +17,7 @@ def lineEditsFilled(List):
 
 # Make a list of coordinates and indexes that will help us treverse accros the measurements plus the
 # arrays HDs and dHDS
-def makeArrays(parameters):
+def listPath(parameters):
     X = parameters['X']; Y = parameters['Y']
     N_grid = int(np.sqrt(parameters['m']))
 
@@ -25,7 +25,7 @@ def makeArrays(parameters):
 
     xs = np.linspace(-X/2 + square_x/2, X/2 - square_x/2, int(N_grid))
     
-    HDs = np.zeros((int(N_grid), int(N_grid))); dHDs = np.zeros((int(N_grid), int(N_grid)))
+    # HDs = np.zeros((int(N_grid), int(N_grid))); dHDs = np.zeros((int(N_grid), int(N_grid)))
 
     List = []
     n, m = N_grid - 1, 0
@@ -40,8 +40,14 @@ def makeArrays(parameters):
             n -= 1*i
         n += 1*i; i = i * (-1); y += (square_y)*i; m += 1
 
-    return {"list": List, "HDs": HDs, "dHDs": dHDs}
+    return {"list": List}#, "HDs": HDs, "dHDs": dHDs}
 # print(makeArrays({"h": 10, "X": 50, "Y": 50, "m": 2}))
+
+def checkArray(parameters, array):
+    N_grid = int(np.sqrt(parameters['m']))
+    HDs = np.zeros((int(N_grid), int(N_grid))); dHDs = np.zeros((int(N_grid), int(N_grid)))
+    if HDs.shape != array.shape:
+        return {"m_dose": HDs, "dm_dose": dHDs}
 
 # Made for the purpose of the progress bar
 def count0InArray(array):
@@ -108,9 +114,9 @@ def locationCF(measurement, detector, noise = [0, 0]):
     popt, pcov = curve_fit(__dose, XY, HDs.ravel(), source0, sigma = dHDs.ravel(), absolute_sigma = True, method="lm", maxfev = 5000)
     perr = np.sqrt(np.diag(pcov))
 
-    MyDict = {"XY": XY, "Ns": HDs, "source0": source0}
+    # MyDict = {"XY": XY, "Ns": HDs, "source0": source0}
 
-    return popt, perr
+    return popt, perr, hotspot
 
 # Combination
 def field_combination(detector, measurement, noise=[0, 0]): #radiation
@@ -118,22 +124,23 @@ def field_combination(detector, measurement, noise=[0, 0]): #radiation
     # F = radiation['dose_factor']
 
     sourceCF, stDev = locationCF(measurement, detector, noise)[0], locationCF(measurement, detector, noise)[1]
+    hotspot = locationCF(measurement, detector, noise)[2]
 
     # alpha = sourceCF[2]; rel_alpha = 1/(sourceCF[2]/stDev[2])
     # A0 = (alpha)/(F*(1-K)*dt*h**2)
     # dA0 = rel_alpha*A0
 
-    return {'measurement': measurement, 'sourceCF': sourceCF, "sourceCF_stDev": stDev}#, "A0": [A0, dA0]}
+    return {"measurement": measurement, "detector": detector, "hotspot": hotspot, "sourceCF": sourceCF, "sourceCF_stDev": stDev}
 
 #Visualization
 def visualize(data):
     measurement = data['measurement']
-    x_max = measurement['x_max']; y_max = measurement['y_max']
+    X = data['detector']['X']; Y = data['detector']['Y']
     estimate = data['sourceCF']
 
     fig, (ax1, ax2) = plt.subplots(nrows = 1, ncols = 2, figsize = (12, 6))
     
-    im0 = ax1.imshow(measurement['m_dose'], extent=[-x_max,x_max,-y_max,y_max], aspect="auto")
+    im0 = ax1.imshow(measurement['m_dose'], extent=[-X/2,X/2,-Y/2,Y/2], aspect="auto")
     ax1.plot(estimate[0], estimate[1], "o", color = 'r', ms=8, label = "Scipy curve_fit")
 
     ax1.axis("equal")
@@ -142,10 +149,10 @@ def visualize(data):
    
     ax1.legend(fontsize = 15)
 
-    hotspot = measurement['hotspot']
+    hotspot = data['hotspot']
     x_0, x_1 = hotspot['xrange']; y_0, y_1 = hotspot['yrange']
 
-    im1 = ax2.imshow(measurement['m_dose'], extent=[-x_max,x_max,-y_max,y_max], aspect="auto")
+    im1 = ax2.imshow(measurement['m_dose'], extent=[-X/2,X/2,-Y/2,Y/2], aspect="auto")
     ax2.plot(estimate[0], estimate[1], "o", color = 'r', ms=8, label = "Scipy curve_fit")
     ax2.axis("equal")
     ax2.set_xlim(x_0, x_1)
@@ -162,4 +169,9 @@ def visualize(data):
     plt.tight_layout()
     plt.show()
 
+# measurement = {'m_dose': np.array([[146.95,  19.61], [ 30.19,  12.82]]), 'dm_dose': np.array([[0.83, 0.3 ], [0.38, 0.24]])}
+# detector = {"h": 10, "X": 50, "Y": 50, "m": 4}
 
+# data = locationCF(measurement, detector)
+# # print(type(data))
+# # visualize(data)
