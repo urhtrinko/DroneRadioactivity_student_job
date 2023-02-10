@@ -27,97 +27,47 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="1">
-     <widget class="QLabel" name="label_HD">
+    <item row="2" column="2">
+     <widget class="QLineEdit" name="lineEdit_X">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;HD [mSv/s]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>x = ?</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
-     <widget class="QLineEdit" name="lineEdit_HD"/>
-    </item>
-    <item row="1" column="8">
-     <widget class="QLineEdit" name="lineEdit_dHD"/>
-    </item>
-    <item row="1" column="5">
-     <widget class="QLabel" name="label_dHD">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;dHD [mSv/s]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="2" colspan="5">
+    <item row="5" column="2" colspan="5">
      <widget class="QProgressBar" name="progressBarHD">
       <property name="value">
        <number>24</number>
       </property>
      </widget>
     </item>
-    <item row="8" column="5">
-     <widget class="QPushButton" name="btnPlotGraph">
-      <property name="text">
-       <string>Plot Graph</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="1">
-     <widget class="QLineEdit" name="lineEditX0">
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="2">
+    <item row="0" column="3">
      <widget class="QLabel" name="labelY0">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;y&lt;/span&gt;&lt;span style=&quot; font-size:10pt; vertical-align:sub;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; [m]:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;y&lt;/span&gt;&lt;span style=&quot; font-size:14pt; vertical-align:sub;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt; [m]:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </item>
-    <item row="8" column="2">
-     <widget class="QPushButton" name="btnFindSource">
+    <item row="4" column="2">
+     <widget class="QPushButton" name="btnClear">
       <property name="text">
-       <string>Find Source</string>
+       <string>Clear</string>
       </property>
      </widget>
     </item>
-    <item row="7" column="9">
-     <widget class="QLineEdit" name="lineEditA0"/>
-    </item>
-    <item row="7" column="5">
+    <item row="0" column="5">
      <widget class="QLineEdit" name="lineEditY0">
       <property name="font">
        <font>
-        <pointsize>10</pointsize>
+        <pointsize>14</pointsize>
        </font>
       </property>
      </widget>
     </item>
-    <item row="5" column="0" colspan="2">
-     <widget class="QPushButton" name="btnEditPars">
-      <property name="text">
-       <string>Edit Parameters</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="8">
-     <widget class="QLabel" name="labelA0">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-size:10pt; vertical-align:sub;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; [Bq]:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="0">
-     <widget class="QLabel" name="labelX0">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;x&lt;/span&gt;&lt;span style=&quot; font-size:10pt; vertical-align:sub;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; [m]:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
+    <item row="2" column="1">
      <widget class="QLabel" name="labelMeasurement">
       <property name="minimumSize">
        <size>
@@ -136,38 +86,78 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="2">
-     <widget class="QPushButton" name="btnClear">
+    <item row="11" column="2">
+     <widget class="QPushButton" name="btnFindSource">
       <property name="text">
-       <string>Clear</string>
+       <string>Find Source</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="5">
+    <item row="11" column="5">
+     <widget class="QPushButton" name="btnPlotGraph">
+      <property name="text">
+       <string>Plot Graph</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLabel" name="label_HD">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;HD [mSv/s]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLineEdit" name="lineEditX0">
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QLineEdit" name="lineEdit_HD"/>
+    </item>
+    <item row="3" column="5">
+     <widget class="QLineEdit" name="lineEdit_dHD"/>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="labelX0">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;x&lt;/span&gt;&lt;span style=&quot; font-size:14pt; vertical-align:sub;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt; [m]:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QLabel" name="label_dHD">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;dHD [mSv/s]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="3">
      <widget class="QPushButton" name="btnBack">
       <property name="text">
        <string>Back</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="8">
+    <item row="4" column="5">
      <widget class="QPushButton" name="btnNext">
       <property name="text">
        <string>Next</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="2">
-     <widget class="QLineEdit" name="lineEdit_X">
+    <item row="1" column="3" colspan="2">
+     <widget class="QPushButton" name="btnEditPars">
       <property name="text">
-       <string>x = ?</string>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
+       <string>Edit Parameters</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="5">
+    <item row="2" column="5">
      <widget class="QLineEdit" name="lineEdit_Y">
       <property name="text">
        <string>y = ?</string>
