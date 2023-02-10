@@ -45,11 +45,13 @@ class Window(QMainWindow, Ui_MainWindow):
         self.radiation = {}
         self.detector = {}
         self.HD = 0; self.dHD = 0
+        self.source = []
 
     def connectingSlots(self):
         self.btn_Generate.clicked.connect(self.generateSource)
         self.btn_Generate.clicked.connect(self.setParameters)
-        self.btn_Save.clicked.connect(self.setParameters)
+        self.btn_SavePars.clicked.connect(self.setParameters)
+        self.btn_SaveUsr.clicked.connect(self.userInputSource)
         self.btnMeasure.clicked.connect(self.locationOfmeasuremnt)
 
         self.unitQuestionBtn.clicked.connect(self.unitsOfMeasurement)
@@ -79,6 +81,16 @@ class Window(QMainWindow, Ui_MainWindow):
         if info == QMessageBox.Ok:
             pass
 
+    def messageBox(self, message, title):
+        close = QMessageBox()
+        close.setWindowTitle(title)
+        close.setText("<html><head/><body><p align=\"center\">" + message + "</p></body></html>")
+        close.setStandardButtons(QMessageBox.Ok)
+        close = close.exec()
+
+        if close == QMessageBox.Ok:
+            pass
+
     def setParameters(self):
         List = [self.lineEdit_Ab.text(), self.lineEdit_Amax.text(),
                 self.lineEdit_Amin.text(), self.lineEdit_F.text(),
@@ -87,14 +99,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.lineEdit_valueK.text()]
 
         if lineEditsFilled(List) == True:
-            close = QMessageBox()
-            close.setWindowTitle("Error Message")
-            close.setText("<html><head/><body><p align=\"center\">Check if the lines contain only floats/intigers and are filled!</p></body></html>")
-            close.setStandardButtons(QMessageBox.Ok)
-            close = close.exec()
-
-            if close == QMessageBox.Ok:
-                pass
+            self.messageBox("Check if the lines contain only floats/integers and are all filled.", "Input Error")
         else:
             self.A_b = self.lineEdit_Ab.text(); self.A_max = self.lineEdit_Amax.text(); self.A_min = self.lineEdit_Amin.text()
             self.F = self.lineEdit_F.text()
@@ -104,6 +109,14 @@ class Window(QMainWindow, Ui_MainWindow):
 
             self.radiation = {"A_min": float(self.A_min), "A_max": float(self.A_max), "A_b": float(self.A_b), "dose_factor": float(self.F)}
             self.detector = {"h": float(self.h), "dt": float(self.dt), "X": float(self.X), "Y": float(self.Y), "detector_constant": float(self.K)}
+
+    def userInputSource(self):
+        List = [self.lineEdit_genSourceX.text(), self.lineEdit_genSourceY.text(), self.lineEdit_genSourceA0.text()]
+        if lineEditsFilled(List) == True:
+            self.messageBox("Check if the lines contain only floats/integers and are all filled.", "Input Error")
+        else:
+            self.source = [float(self.lineEdit_genSourceX.text()), float(self.lineEdit_genSourceY.text()),
+                           float(self.lineEdit_genSourceA0.text())]
 
     def slide_it(self):
         value = round(self.sliderForK.value()*(1/100), 2)
@@ -123,19 +136,17 @@ class Window(QMainWindow, Ui_MainWindow):
             return float(string)
 
     def locationOfmeasuremnt(self):
-        x = self.minusInStr(self.lineEdit_x.text()); y = self.minusInStr(self.lineEdit_y.text())
-        if ((float(self.lineEdit_X.text())/2) < np.abs(x)) or ((float(self.lineEdit_Y.text())/2) < np.abs(y)):
-            close = QMessageBox()
-            close.setWindowTitle("Error Message")
-            close.setText("<html><head/><body><p align=\"center\">Inputed measuring coordinates are out of bounds!</p></body></html>")
-            close.setStandardButtons(QMessageBox.Ok)
-            close = close.exec()
-
-            if close == QMessageBox.Ok:
-                pass
+        List = [self.lineEdit_genSourceX.text(), self.lineEdit_genSourceY.text(), self.lineEdit_genSourceA0.text(),
+                self.lineEdit_x.text(), self.lineEdit_y.text()]
+        if lineEditsFilled(List) == True:
+            self.messageBox("Check if the lines contain only floats/integers and are all filled.", "Input Error")
         else:
-            self.HD, self.dHD = fieldMeasurement(self.radiation, self.detector, self.source, x, y, [])
-            self.lineEdit_resultHD.setText(str(round(self.HD, 2)) + " +/- " + str(round(self.dHD, 2)))
+            x = self.minusInStr(self.lineEdit_x.text()); y = self.minusInStr(self.lineEdit_y.text())
+            if ((float(self.lineEdit_X.text())/2) < np.abs(x)) or ((float(self.lineEdit_Y.text())/2) < np.abs(y)):
+                self.messageBox("The inputed coordiantes are out of bounds", "Input Error")
+            else:        
+                self.HD, self.dHD = fieldMeasurement(self.radiation, self.detector, self.source, x, y, [])
+                self.lineEdit_resultHD.setText(str(round(self.HD, 2)) + " +/- " + str(round(self.dHD, 2)))
 
     def closeEvent(self, event):
         self.settingParameters.setValue("Ab", self.lineEdit_Ab.text())
