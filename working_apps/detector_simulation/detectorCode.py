@@ -68,7 +68,7 @@ detector_K2 = {"h": h, "dt": dt, "width": X, "height": Y, "measured_points": m, 
 
 def lineEditsFilled(List):
     for String in List:
-        if re.match('^[0-9\.]*$', String) and String != "":
+        if re.match('^[0-9\.\-]*$', String) and String != "":
             continue
         else:
             return True
