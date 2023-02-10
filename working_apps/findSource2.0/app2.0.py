@@ -32,14 +32,9 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.progressBarHD.setValue(0)
         
-        # Set parameter class atributes
-        # (???????????????????)
-        # self.i = self.settingVariables.value("i")
-        # self.parameters = self.settingVariables.value("parameters")
-        # self.List = self.settingVariables.value("list")
+        # Set atributes
         self.HDs = self.settingVariables.value("HDs")
         self.dHDs = self.settingVariables.value("dHDs")
-        # ???
 
     def getSettingsValues(self):
         self.settingVariables = QSettings("My App", "MainWindowVariables")
@@ -100,6 +95,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.HDs[i, j] = float(self.lineEdit_HD.text()); self.dHDs[i, j] = float(self.lineEdit_dHD.text())
                 self.progressBarHD.setValue(int(((self.i + 1)/len(self.List))*100))
                 if self.parameters['m'] - 1 <= self.i:
+                    # print(self.HDs, self.dHDs)
                     self.progressBarHD.setValue(100)
                     # self.Message("Border Message", "You have reached the end, mate.")
                 else:
@@ -139,10 +135,11 @@ class Window(QMainWindow, Ui_MainWindow):
         measurement = {"m_dose": self.HDs, "dm_dose": self.dHDs}
         detector = self.parameters
 
-        self.data = field_combination(detector, measurement)
+        self.data = field_combination(measurement, detector)
         self.lineEditX0.setText(str(round(self.data['sourceCF'][0], 2)) + " +/- " + str(round(self.data['sourceCF_stDev'][0], 2)))
         self.lineEditY0.setText(str(round(self.data['sourceCF'][1], 2)) + " +/- " + str(round(self.data['sourceCF_stDev'][1], 2)))
-        self.lineEditA0.setText(str(round(self.data['sourceCF'][2], 2)) + " +/- " + str(round(self.data['sourceCF_stDev'][2], 2)))
+        # To estimate the source activity we need to now the parameters dt, K and F
+        # self.lineEditA0.setText(str(round(self.data['sourceCF'][2], 2)) + " +/- " + str(round(self.data['sourceCF_stDev'][2], 2)))
 
     def visualizeGraph(self):
         visualize(self.data)
@@ -235,7 +232,7 @@ class ParametersDialog(QDialog, Ui_Dialog):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
-    # #open qss file
+    # # open qss file
     # File = open("stylesheets/Diplaytap/Diplaytap.qss", 'r')
 
     # with File:
