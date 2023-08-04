@@ -6,6 +6,8 @@ zigzag.py: detector flies over the surface in a zig-zag pattern.
 
 spiral.py: the detector roughly locates the location of the radioactive source and then makes measurements while fying outward in a spiral
 
+location.py: uses LM meathod to solve a overdefined system of equations and with that calculate source location
+
 combination.py: combines the detector flyover and the location detection
 
 example.py: shows the capability of the simulation for locating a randomly generated radioactive source

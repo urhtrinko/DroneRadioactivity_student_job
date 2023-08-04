@@ -1,10 +1,10 @@
 # combines the detector flyover and the location detection
-def combination(radiation, detector, func_fo, func_CF,  source=[], noise=[]):
+def combination(radiation, detector, func_fo, func_CF,  source=[]):
     h = detector['h']; K = detector['detector_constant']; dt = detector['dt']
     F = radiation['dose_factor']
 
-    measurement = func_fo(radiation, detector, source, noise)
-    sourceCF, stDev = func_CF(measurement, detector, noise)[0], func_CF(measurement, detector, noise)[1]
+    measurement = func_fo(radiation, detector, source)
+    sourceCF, stDev = func_CF(measurement, detector)[0], func_CF(measurement, detector)[1]
     
 
     # search = 0
