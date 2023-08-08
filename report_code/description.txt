@@ -1,13 +1,21 @@
-Main goal: simulate detection of a radioactive (point) source which is located in a square, level plain with a detector that flies over the surface at a constant height.
+MAING GOSL is to simulate detection of a radioactive (point) source which is located in a square, level plain with a detector that flies over the surface at a constant height.
 
 subsidary.py: contains subsidary code, which is used in the simulation. Such as the inverse square function, random radioactive source generation...
 
 zigzag.py: detector flies over the surface in a zig-zag pattern.
 
-spiral.py: the detector roughly locates the location of the radioactive source and then makes measurements while fying outward in a spiral
+spiral.py: the detector roughly locates the location of the radioactive source and then makes measurements while fying outward in a spiral.
 
-location.py: uses LM meathod to solve a overdefined system of equations and with that calculate source location
+location.py: uses LM meathod to solve a overdefined system of equations and with that calculate source location.
 
-combination.py: combines the detector flyover and the location detection
+combination.py: combines the detector flyover and the location detection.
 
-example.py: shows the capability of the simulation for locating a randomly generated radioactive source
+example.py: shows the capability of the simulation for locating a randomly generated radioactive source.
+
+test1.py: the first test to show that the simualtion is working properly. Comparing the calculated and simulated standard deviation.
+
+parameters.py: contains the adjustable parameters which define the properties of the radiation and detector which are involved in the simulation.
+
+test2.py: simulating location of the source ad different positions in the plain to see if the deviation is not defined by the location of the source.
+
+deviationToPars.py: displays how the deviation of a source changes when we change the hight of the detector flyover and the amount of time spent at each grid. All for zigzag flyover.
