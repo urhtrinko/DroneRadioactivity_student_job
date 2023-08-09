@@ -18,4 +18,4 @@ parameters.py: contains the adjustable parameters which define the properties of
 
 test2.py: simulating location of the source ad different positions in the plain to see if the deviation is not defined by the location of the source.
 
-deviationToPars.py: displays how the deviation of a source changes when we change the hight of the detector flyover and the amount of time spent at each grid. All for zigzag flyover.
+devToPars.py: displays how the deviation of a source changes when we change the hight of the detector flyover and the amount of time spent at each grid. All for zigzag flyover.

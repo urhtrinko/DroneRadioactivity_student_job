@@ -7,8 +7,7 @@ from subsidary import point_source, parsEst2xN, dose_speed
 # SIMULATED FLYOVER
 def flyover(radiation, detector, source = []):
     # adjustable parameters are stored in two dictionaries - radiation (radiation related) and detector (detector related parameters)
-    # see file example.py for more information for each parameter
-    A_min = radiation['A_min']; A_max = radiation['A_max']
+    # see file parameters.py for more information for each parameter
     X = detector['width']; Y = detector['height']; N_gridX = detector['grid'][0]; N_gridY = detector['grid'][1]
 
     square_x = (X)/N_gridX; square_y = (Y)/N_gridY # the size of the tile in which the plain is divided into
@@ -17,7 +16,8 @@ def flyover(radiation, detector, source = []):
     
     # If the source is not specified, then it is randomly generated 
     if len(source) == 0: 
-        source = point_source(X/2, Y/2, A_min, A_max)
+        A_min = radiation['A_min']; A_max = radiation['A_max']; r0min = radiation['r0_min']; r0max = radiation['r0_max']
+        source = point_source(X/2, Y/2, A_min, A_max, r0min, r0max)
     
     HDs = np.zeros((int(N_gridX), int(N_gridY))); dHDs = np.zeros((int(N_gridY), int(N_gridY))) # array storing dose speed and error 
 

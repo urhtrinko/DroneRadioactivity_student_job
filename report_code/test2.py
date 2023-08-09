@@ -9,13 +9,13 @@ from combination import combination
 
 # Simulate the source at different positions in the grid and then produce a colored map to show the deviation at each position
 
-def loopOverGrid00(radiation, detector, func_combination, func_fo, func_CF,  A0 = 1000):
+def loopOverGrid00(radiation, detector, A0, r0):
 
-    A_min = radiation['A_min']; A_max = radiation['A_max']
+    # A_min = radiation['A_min']; A_max = radiation['A_max']
     N_grid = detector['grid'][0]; X = detector['width']; Y = detector['height']
 
-    source00 = [0, 0, A0]
-    data0 = func_combination(radiation, detector, func_fo, func_CF, source00)
+    source00 = [0, 0, A0, r0]
+    data0 = combination(radiation, detector, flyover, locationCF, source00)
     du0 = data0['sourceCF_stDev'][0]; dv0 = data0['sourceCF_stDev'][1]
 
     square_x, square_y = (X)/N_grid, (Y)/N_grid # calculate tile sizes
@@ -27,9 +27,9 @@ def loopOverGrid00(radiation, detector, func_combination, func_fo, func_CF,  A0 
     for x in xs:
         for y in ys:
             try: # try to calculate the source location
-                Source = point_source(x + square_x/2, y + square_y/2, A_min, A_max, x - square_x/2, y - square_y/2) # generate a random 
-                Source[-1] = A0                                                                                     # source in current
-                data = func_combination(radiation, detector, func_fo, func_CF, Source)                              # tile
+                Source = point_source(x + square_x/2, y + square_y/2, A0, A0, r0, r0, x - square_x/2, y - square_y/2) # generate a random 
+                # Source[-1] = A0                                                                                     # source in current
+                data = combination(radiation, detector, flyover, locationCF, Source)                                  # tile
                 du = data['sourceCF_stDev'][0]; dv = data['sourceCF_stDev'][1]
 
                 X_data[i, j] = Source[0]; Y_data[i, j] = Source[1] # store date in the right array
@@ -64,4 +64,8 @@ def loopOverGrid00(radiation, detector, func_combination, func_fo, func_CF,  A0 
     # plt.savefig("images/test2.png")
     plt.show()
 
-print(loopOverGrid00(radiation, detector, combination, flyover, locationCF))
+
+A0 = 1000 # Bq
+r0 = 50 # m
+
+print(loopOverGrid00(radiation, detector, A0, r0))

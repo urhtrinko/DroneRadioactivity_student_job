@@ -10,7 +10,7 @@ def locationCF(measurement, detector):
     HDs, dHDs, grid_x, grid_y, hotspot = measurement['m_dose'], measurement['dm_dose'], measurement['grid_x'], measurement['grid_y'], measurement["hotspot"] # in example Z, here Is
     h = detector["h"]
     
-    XY = np.vstack((grid_x.ravel(), grid_y.ravel())) # two colums contaniing all coorcinates of the tile centers
+    XY = np.vstack((grid_x.ravel(), grid_y.ravel())) # two colums contaniing all coordinates of the tile centers
 
     u_est = np.random.uniform(hotspot['xrange'][0], hotspot['xrange'][1]); v_est = np.random.uniform(hotspot['yrange'][0], hotspot['yrange'][1])
     

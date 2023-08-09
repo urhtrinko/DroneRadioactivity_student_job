@@ -1,24 +1,25 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 # Inverse square law - used for calculating activity at a certian position away from the source
 def activity(source, x, y, h): # the detector is at the position (x, y, h)
-    u, v, A0 = source[0], source[1], source[2] # u, v are the coordinates of the source and A0 is its activity
-    return (A0*(h**2)) / ((x - u)**2 + (y - v)**2 + h**2)
+    u, v, A0, r0 = source[0], source[1], source[2], source[3] # u, v are the coordinates of the source
+    return (A0*(r0**2)) / ((x - u)**2 + (y - v)**2 + h**2)
 
 # Randomly created point source
-def point_source(xmax, ymax, Amin, Amax, xmin=0, ymin=0):
+def point_source(xmax, ymax, Amin, Amax, r0min, r0max, xmin=0, ymin=0):
     if (xmin == 0) and (ymin == 0): # if we don't specify the minimum values the source is generated in a simetrical plain
-        return [np.random.uniform(-xmax, xmax), np.random.uniform(-ymax, ymax), np.random.uniform(Amin, Amax)]
+        return [np.random.uniform(-xmax, xmax), np.random.uniform(-ymax, ymax), np.random.uniform(Amin, Amax), np.random.uniform(r0min, r0max)]
     else: # otherwise the source is generated in the plain dictaed by the border values
-        return [np.random.uniform(xmin, xmax), np.random.uniform(ymin, ymax), np.random.uniform(Amin, Amax)]
+        return [np.random.uniform(xmin, xmax), np.random.uniform(ymin, ymax), np.random.uniform(Amin, Amax), np.random.uniform(r0min, r0max)]
 
 # Calculate the dose speed at a certian position (x, y, h)
 def dose_speed(source, x, y, radiation, detector):
-    A_b = radiation['A_b']; F = radiation['dose_factor'] # dose factor - how this type of radiation effects parts of the human body
+    A_b = radiation['A_b']; F = radiation['dose_factor']
     h = detector['h']; K = detector['detector_constant']; dt = detector['dt']
     
     A = activity(source, x, y, h) # first calculate the activity
-    A_det = A * (1 - K) # the multipy it with (1 - K), where K is the detector constant (close to 0 - good, close to 1 bad detector)
+    A_det = A * (1 - K) # the multipy it with (1 - K), where K is the detector constant
     N = np.random.poisson(A_det * dt) # number of detected pulses - generated randomly by the Poisson distribution: expexted value A_det
     N_b = np.random.poisson(A_b * dt) # same for the background radiation
 
@@ -33,6 +34,23 @@ def parsEst2xN(HDs, grid_x, grid_y, h, u_est, v_est): # estimated source locatio
     a = np.rot90(np.array([1/r, np.ones(N)])); b = HDs.flatten()  
     return np.linalg.lstsq(a, b, rcond=None)[0] # we use a least square method for finding parameters of a overdefined system
                                                 # we assume that the lestimated source location is the correct value
+
+# Used for the graphs in deviationToPars.py
+def draw(xs, ys, name_x = "", name_y = "", tit = ""):
+    plt.plot(list(xs), ys[0], "o", label = "u-error")
+    if len(ys) == 2:
+        plt.plot(list(xs), ys[1], "o", label = "v-error")
+
+    plt.xlabel(name_x, fontsize = 15)
+    plt.xticks(fontsize = 14)
+    plt.ylabel(name_y, fontsize = 15)
+    plt.yticks(fontsize = 14)
+
+    plt.title(tit)
+
+    # plt.savefig("graphics/err_to_K.png")
+    plt.legend()
+    plt.show()
 
 # CODE USED SPECIFICALLY IN THE SPIRAL FLYOVER
 
@@ -53,7 +71,7 @@ def make_list(source, i, j, radiation, detector, grid_x, grid_y):
         HDs2 = dose_speed(source, grid_x[i + 1, j], grid_y[i + 1, j], radiation, detector)
         HDs.append(HDs2[0])
         direction.append(2)
-    max_HD = max(HDs) # determine the maimum dose speed of the tile
+    max_HD = max(HDs) # determine the maximum dose speed of the tile
     max_id = HDs.index(max_HD)
     d = direction[max_id] # move into the direction of the max dose speed
     return {"direction": d, "max_doseSpeed": max_HD, "mes": len(HDs)}

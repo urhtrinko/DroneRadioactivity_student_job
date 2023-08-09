@@ -9,9 +9,9 @@ from parameters import *
 # In this file we simulate the locating process (with zigzag) for a source located at (0, 0) n_sims-times. We then calculate the standard
 # deviation of the gathered data and compare it to the deviation that is caclulated through the scipy curve_fit method.
 
-def loopstDev(radiation, detector, n_sims, A0): # the radiation and detector parameters ar the same as in the example.py
+def loopstDev(radiation, detector, n_sims, A0, r0): # the radiation and detector parameters ar the same as in the example.py
     us = [] # a list of calculated x-positions
-    source00 = [0, 0, A0] # the source is at (0, 0)
+    source00 = [0, 0, A0, r0] # the source is at (0, 0)
     for n in range(n_sims): # repeat the locating prosses n_sims-times
         data = combination(radiation, detector, flyover, locationCF, source00)
         u = data['sourceCF'][0] # gather the calculated x-coordiante of the source
@@ -24,7 +24,7 @@ def loopstDev(radiation, detector, n_sims, A0): # the radiation and detector par
     plt.ylabel("Number of measuremnets []", fontsize = 15)
     plt.yticks(fontsize = 14)
 
-    plt.savefig("images/test1.png")
+    # plt.savefig("images/test1.png")
     plt.show()
 
     stDevS = statistics.stdev(us) # calculate the standard deviation from the gathered x-positions
@@ -38,5 +38,6 @@ def loopstDev(radiation, detector, n_sims, A0): # the radiation and detector par
     return [stDevS, stDevF] 
 
 A0 = 1000 # Bq
+r0 = 50 # m
 
-loopstDev(radiation, detector, 1000, A0)
+loopstDev(radiation, detector, 1000, A0, r0)

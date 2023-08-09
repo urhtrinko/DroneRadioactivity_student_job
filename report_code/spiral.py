@@ -9,7 +9,6 @@ from subsidary import point_source, dose_speed, make_list, r_ArhSpir, next_move
 # first locate the hotspot tile, then move outward from it's ceneter in a spiral
 def spiral_flyover(radiation, detector, source = []):
     # deifne adjustable parameters
-    A_min = radiation['A_min']; A_max = radiation['A_max']
     X = detector['width']; Y = detector['height']; N_grid = detector['grid'][0]; max_phi = detector['max_phi']
 
     dx, dy = X/N_grid, Y/N_grid # define size of a tile
@@ -21,7 +20,8 @@ def spiral_flyover(radiation, detector, source = []):
     
     # if a source not specified, one is randomly generated
     if len(source) == 0:
-        source = point_source(X/2, Y/2, A_min, A_max)
+        A_min = radiation['A_min']; A_max = radiation['A_max']; r0min = radiation['r0_min']; r0max = radiation['r0_max']
+        source = point_source(X/2, Y/2, A_min, A_max, r0min, r0max)
 
     # loop that guides the detector in the direction of the highest dose speed
     i, j = 0, 0 # indexes we use to iterate over the arrays that contain position of the tile centers
@@ -30,12 +30,12 @@ def spiral_flyover(radiation, detector, source = []):
     HD_max = next_move(source, i, j, radiation, detector, grid_x, grid_y)[-1] # HD_max is the maximum dose speed of surrounding tiles
     
     # while the dose speed at current location is lower then at least one neighbouring tile we aren't at the hotspot yet
-    while (HD < HD_max): # or (i == 0 and j == 0)
+    while (HD < HD_max):
             search += 1
             if (i == (N_grid - 1)) and (j == (N_grid - 1)): # we reached the end of the plain, stop while loop
                 break
             map[i, j] = HD
-            # now make a decision on where to move next
+            # now make a decision on where to move next (see subsidary.py for functions next_move, make_list and r_ArhSpir)
             i, j, HD = next_move(source, i, j, radiation, detector, grid_x, grid_y)
             if (i != (N_grid - 1)) and (j != (N_grid - 1)): # since we moved further we have to check again if we are not at plain end
                 dicT = make_list(source, i, j, radiation, detector, grid_x, grid_y)
