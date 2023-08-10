@@ -15,13 +15,14 @@ def point_source(xmax, ymax, Amin, Amax, r0min, r0max, xmin=0, ymin=0):
 
 # Calculate the dose speed at a certian position (x, y, h)
 def dose_speed(source, x, y, radiation, detector):
-    A_b = radiation['A_b']; F = radiation['dose_factor']
+    Ab = radiation['A_b']; F = radiation['dose_factor']
     h = detector['h']; K = detector['detector_constant']; dt = detector['dt']
     
     A = activity(source, x, y, h) # first calculate the activity
     A_det = A * (1 - K) # the multipy it with (1 - K), where K is the detector constant
+    Ab_det = Ab * (1 - K) # same for background radiation
     N = np.random.poisson(A_det * dt) # number of detected pulses - generated randomly by the Poisson distribution: expexted value A_det
-    N_b = np.random.poisson(A_b * dt) # same for the background radiation
+    N_b = np.random.poisson(Ab_det * dt) # same for the background radiation
 
     HD = F*(N + N_b)/dt # dose speed - combined number of pulses multiplied by the radiation factor and devided by duration of measurement
     dHD = F*np.sqrt(N + N_b)/dt # the deviation of the dose speed

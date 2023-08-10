@@ -5,6 +5,10 @@ from zigzag import flyover, visualize
 from spiral import spiral_flyover, spiral_visualize
 from location import locationCF
 from combination import combination
+from subsidary import point_source
+
+# define a test source
+testSource = point_source(X/2, Y/2, A_min, A_max, r0_min, r0_max)
 
 # see parameters.py to change the parameters
 if testSource != []:

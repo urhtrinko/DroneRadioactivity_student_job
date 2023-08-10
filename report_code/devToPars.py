@@ -28,7 +28,7 @@ def compH(radiation, detector, source):
     draw(hs, [dus, dvs], "Height of flyover [m]", "Relative error []", "ZIG-ZAG")
 
 def compT(radiation, detector, source):
-    dts = np. linspace(1, 1000, 20)
+    dts = np. linspace(1, 60, 20)
     dus = []
     dvs = []
     for dt in dts:
@@ -39,6 +39,7 @@ def compT(radiation, detector, source):
     draw(dts, [dus, dvs], "Time of measurement at each grid point s[]", "Relative error []", "ZIG-ZAG")
 
 testSource = point_source(X/2, Y/2, A_min, A_max, r0_min, r0_max)
+# testSource = [5, -2, 1000, 50]
 compK(radiation, detector, testSource)
 compH(radiation, detector, testSource)
 compT(radiation, detector, testSource)

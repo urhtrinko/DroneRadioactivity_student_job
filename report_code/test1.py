@@ -40,4 +40,4 @@ def loopstDev(radiation, detector, n_sims, A0, r0): # the radiation and detector
 A0 = 1000 # Bq
 r0 = 50 # m
 
-loopstDev(radiation, detector, 1000, A0, r0)
+loopstDev(radiation, detector, 500, A0, r0)
