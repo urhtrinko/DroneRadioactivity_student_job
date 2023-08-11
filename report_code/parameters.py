@@ -3,7 +3,7 @@ import numpy as np
 # ADJUSTABLE PARAMETERS
 A_min = 1e5; A_max = 1.5e5 # borders between which A0 is randomly selected in Bq
 r0_min = 10; r0_max = 100 # borders between which r0 si radomly selected. The distance from the source where the activity is A0 in m
-A_b = 1 # background activity in Bq
+A_b = 10 # background activity in Bq
 h = 20 # hight at which the detector flies over in m
 X = 50 # Size of the area of flyover in positive x direction in m (the whole grid extends also in the negative direction the same amount)
 Y = 50 # Size of the area of flyover in positive y direction in m (the whole grid extends also in the negative direction the same amount)

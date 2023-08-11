@@ -49,6 +49,7 @@ def draw(xs, ys, name_x = "", name_y = "", tit = ""):
 
     plt.title(tit)
 
+    plt.tight_layout()
     # plt.savefig("graphics/err_to_K.png")
     plt.legend()
     plt.show()
