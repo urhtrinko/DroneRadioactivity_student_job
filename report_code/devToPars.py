@@ -1,11 +1,10 @@
-import statistics
 import matplotlib.pyplot as plt
 
 from parameters import *
 from combination import combination
 from zigzag import flyover
 from location import locationCF
-from subsidary import point_source, draw
+from subsidary import point_source
 
 def comp(radiation, detector, source, option):
     I = option['range']
@@ -31,7 +30,7 @@ def comp(radiation, detector, source, option):
     plt.show()
 
 testSource = point_source(X/2, Y/2, A_max, A_max, r0_max, r0_max)
-testSource = [-14.47, -8.73, 15000, 50]
+testSource = [-8.73, -14.47, 15000, 50]
 print("u [m]:", testSource[0], "v [m]:", testSource[1])
 print("A0 [Bq]:", testSource[-2], "r0 [m]:", testSource[-1])
 

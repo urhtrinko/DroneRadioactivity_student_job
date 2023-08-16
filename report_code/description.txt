@@ -1,4 +1,4 @@
-MAING GOSL is to simulate detection of a radioactive (point) source which is located in a square, level plain with a detector that flies over the surface at a constant height.
+MAING GOAL is to simulate detection of a radioactive (point) source which is located in a square, level plain with a detector that flies over the surface at a constant height.
 
 subsidary.py: contains subsidary code, which is used in the simulation. Such as the inverse square function, random radioactive source generation...
 
@@ -21,3 +21,5 @@ test2.py: simulating location of the source ad different positions in the plain 
 devToPars.py: displays how the deviation of a source changes when we change the hight of the detector flyover and the amount of time spent at each grid. All for zigzag flyover.
 
 devToParsErrBar.py: the same as devToPars.py, just with the added error bars.
+
+devToPars3D.py: display deviation change for two different parameters, which produces a 3D graph.
