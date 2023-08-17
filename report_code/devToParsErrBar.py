@@ -10,6 +10,8 @@ def comp(radiation, detector, n_sims, option):
     I = option['range']
     dus = {}; dvs = {}
     X = detector['width']; Y = detector['height']
+    # default values
+    detector['detector_constant'] = 0.1; detector['h'] = 20; detector['dt'] = 20 
     for i in I:
         dus0 = []; dvs0 = []
         for x in np.linspace(-X/2, X/2, n_sims):
@@ -25,6 +27,9 @@ def comp(radiation, detector, n_sims, option):
     plt.errorbar(list(I), [dus[key][0] for key in dus], yerr = [dus[key][1] for key in dus], fmt = '.', label = "u-error")
     plt.errorbar(list(I), [dvs[key][0] for key in dvs], yerr = [dvs[key][1] for key in dvs], fmt = ".", label = "v-error")
 
+    # plt.plot(list(I), [dus[key][0] for key in dus], "o", label = "u-error")
+    # plt.plot(list(I), [dvs[key][0] for key in dvs], "o", label = "v-error")
+    
     plt.xlabel(option['xlabel'], fontsize = 15)
     plt.xticks(fontsize = 14)
     plt.ylabel("Source location deviation [m]", fontsize = 15)
@@ -32,7 +37,7 @@ def comp(radiation, detector, n_sims, option):
 
     plt.legend()
     plt.tight_layout()
-    plt.savefig("images/" + option["saveAs"])
+    # plt.savefig("images/" + option["saveAs"])
     plt.show()
 
 option_K = {'range': np.linspace(0, 0.8, 10), 'name': 'detector_constant', 'xlabel': "Detector coefficient []", 'saveAs': "err_Kbar.png"}
