@@ -61,7 +61,7 @@
       <item row="10" column="0" colspan="2">
        <widget class="QPushButton" name="btnEstSource">
         <property name="text">
-         <string>Eestimated Source</string>
+         <string>Estimated Source</string>
         </property>
        </widget>
       </item>

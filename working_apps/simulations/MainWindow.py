@@ -158,7 +158,7 @@ class Ui_MainWindow(object):
         self.x0labelEst.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">x<span style=\" vertical-align:sub;\">0</span> [m]:</p></body></html>"))
         self.x0labelRand.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">x<span style=\" vertical-align:sub;\">0</span> [m]:</p></body></html>"))
         self.btnRandSource.setText(_translate("MainWindow", "Generate Random Source"))
-        self.btnEstSource.setText(_translate("MainWindow", "Eestimated Source"))
+        self.btnEstSource.setText(_translate("MainWindow", "Estimated Source"))
         self.checkSPIRAL.setText(_translate("MainWindow", "SPIRAL"))
         self.A0labelEst.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">A<span style=\" vertical-align:sub;\">0</span> [Bq]:</p></body></html>"))
         self.btnRadiation.setText(_translate("MainWindow", "Edit Radiation"))
