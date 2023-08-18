@@ -17,7 +17,7 @@ def comp(radiation, detector, n_sims, option):
         for x in np.linspace(-X/2, X/2, n_sims):
             for y in np.linspace(-Y/2, Y/2, n_sims):
                 detector[option['name']] = i
-                data = combination(radiation, detector, flyover, locationCF, [x, y, 15000, 50])
+                data = combination(radiation, detector, flyover, locationCF, [x, y, 15000, 50]) # 15000 Bq, 50 m
                 dus0.append(data['sourceCF_stDev'][0])
                 dvs0.append(data['sourceCF_stDev'][1])
         

@@ -23,3 +23,5 @@ devToPars.py: displays how the deviation of a source changes when we change the 
 devToParsErrBar.py: the same as devToPars.py, just with the added error bars.
 
 devToPars3D.py: display deviation change for two different parameters, which produces a 3D graph.
+
+devToParsTable.py combines parts of all previous devToPars__.py files in a table/colormap 

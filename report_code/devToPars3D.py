@@ -17,6 +17,13 @@ def comp3D(radiation, detector, source, option1, option2):
             detector[option2['name']] = J[j]
             data = combination(radiation, detector, flyover, locationCF, source)
             dus[i, j] = data['sourceCF_stDev'][0]
+
+    return dus
+
+def graph(radiation, detector, source, option1, option2):
+    I = option1['range']
+    J = option2['range']
+    dus = comp3D(radiation, detector, source, option1, option2)
     
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
 
@@ -50,6 +57,6 @@ option_K = {'range': np.linspace(0, 0.8, 20), 'name': 'detector_constant', 'xlab
 option_h = {'range': np.linspace(10, 60, 20), 'name': 'h', 'xlabel': "Height of flyover [m]", 'saveAs': 'err_h.png'}
 option_dt = {'range': np. linspace(1, 60, 20), 'name': 'dt', 'xlabel': "Measurement duration [s]", 'saveAs': 'err_dt.png'}
 
-comp3D(radiation, detector, testSource, option_h, option_dt)
-# comp3D(radiation, detector, testSource, option_K, option_dt)
-# comp3D(radiation, detector, testSource, option_K, option_h)
+# graph(radiation, detector, testSource, option_h, option_dt)
+# graph(radiation, detector, testSource, option_K, option_dt)
+# graph(radiation, detector, testSource, option_K, option_h)
