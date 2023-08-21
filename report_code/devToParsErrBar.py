@@ -30,21 +30,21 @@ def comp(radiation, detector, n_sims, option):
     # plt.plot(list(I), [dus[key][0] for key in dus], "o", label = "u-error")
     # plt.plot(list(I), [dvs[key][0] for key in dvs], "o", label = "v-error")
     
-    plt.xlabel(option['xlabel'], fontsize = 15)
-    plt.xticks(fontsize = 14)
-    plt.ylabel("Source location deviation [m]", fontsize = 15)
-    plt.yticks(fontsize = 14)
+    plt.xlabel(option['xlabel'], fontsize = 20)
+    plt.xticks(fontsize = 15)
+    plt.ylabel("Source location deviation [m]", fontsize = 20)
+    plt.yticks(fontsize = 15)
 
-    plt.legend()
+    plt.legend(fontsize = 15)
     plt.tight_layout()
-    # plt.savefig("images/" + option["saveAs"])
+    # plt.savefig("images/" + option["saveAs"], bbox_inches = "tight")
     plt.show()
 
 option_K = {'range': np.linspace(0, 0.8, 10), 'name': 'detector_constant', 'xlabel': "Detector coefficient []", 'saveAs': "err_Kbar.png"}
 option_h = {'range': np.linspace(10, 60, 10), 'name': 'h', 'xlabel': "Height of flyover [m]", 'saveAs': "err_hbar.png"}
 option_dt = {'range': np. linspace(1, 60, 10), 'name': 'dt', 'xlabel': "Time of measurement at each grid point [s]", 'saveAs': "err_dtbar.png"}
 
-comp(radiation, detector, 5, option_K)
-comp(radiation, detector, 5, option_h)
-comp(radiation, detector, 5, option_dt)
+# comp(radiation, detector, 5, option_K)
+# comp(radiation, detector, 5, option_h)
+# comp(radiation, detector, 5, option_dt)
 

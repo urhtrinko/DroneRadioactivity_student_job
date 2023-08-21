@@ -19,12 +19,13 @@ def loopstDev(radiation, detector, n_sims, A0, r0): # the radiation and detector
 
     # # Plot a histogram of the x-coordinates gathered from the simulations 
     plt.hist(us, bins=100)
-    plt.xlabel("X source coordinate estimate [m]", fontsize = 15)
-    plt.xticks(fontsize = 14)
-    plt.ylabel("Number of measuremnets []", fontsize = 15)
-    plt.yticks(fontsize = 14)
+    plt.xlabel("Source x-coordinate [m]", fontsize = 20)
+    plt.xticks(fontsize = 16)
+    plt.ylabel("Number of simulations []", fontsize = 20)
+    plt.yticks(fontsize = 16)
 
-    # plt.savefig("images/test1.png")
+    # plt.savefig("images/test1.png", bbox_inches = "tight")
+    plt.tight_layout()
     plt.show()
 
     stDevS = statistics.stdev(us) # calculate the standard deviation from the gathered x-positions
@@ -40,4 +41,4 @@ def loopstDev(radiation, detector, n_sims, A0, r0): # the radiation and detector
 A0 = 1000 # Bq
 r0 = 50 # m
 
-loopstDev(radiation, detector, 500, A0, r0)
+loopstDev(radiation, detector, 1000, A0, r0)

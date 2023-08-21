@@ -63,9 +63,10 @@ def visualize(data):
         ax1.plot(original[0], original[1], "o", color = 'r', ms=12, label = "Original source") # a point that shows the original source
     ax1.plot(estimate[0], estimate[1], "o", color = 'k', ms=3, label = "Scipy curve_fit") # a point that shows the calculated source
     ax1.axis("equal") # equal scale for both x and y axes
-    ax1.set_xlabel("X axis [m]", fontsize = 15)
-    ax1.set_ylabel("Y axis [m]", fontsize = 15)
-    
+    ax1.set_xlabel("X axis [m]", fontsize = 25)
+    ax1.tick_params(axis='x', labelsize = 15)
+    ax1.set_ylabel("Y axis [m]", fontsize = 25)
+    ax1.tick_params(axis='y', labelsize = 15)    
     ax1.legend(fontsize = 15)
 
     x_0, x_1 = hotspot['xrange']; y_0, y_1 = hotspot['yrange']
@@ -78,15 +79,16 @@ def visualize(data):
     ax2.plot(estimate[0], estimate[1], "o", color = 'k', ms=3, label = "Scipy curve_fit")
     ax2.axis("equal")
     ax2.set_xlim(x_0, x_1) # zoom into the hotspot tile
-    ax2.set_xlabel("X axis [m]", fontsize = 15)
+    ax2.set_xlabel("X axis [m]", fontsize = 20)
+    ax2.tick_params(axis='x', labelsize = 15)
     ax2.set_ylim(y_0, y_1) # zoom into the hotspot tile
-    ax2.set_ylabel("Y axis [m]", fontsize = 15)
-
+    ax2.set_ylabel("Y axis [m]", fontsize = 20)
+    ax2.tick_params(axis='y', labelsize = 15)
     
     ax2.legend(fontsize = 15)
 
-    fig.colorbar(im0, ax=ax1) # add colors that corespond to the dose speed at each tile
-    fig.colorbar(im1, ax=ax2)
+    cbar = plt.colorbar(im0)
+    cbar.ax.tick_params(labelsize = 15)
 
     plt.tight_layout()
     plt.show()

@@ -1,7 +1,7 @@
 import numpy as np
 
 # ADJUSTABLE PARAMETERS
-A_min = 1e5; A_max = 1.5e5 # borders between which A0 is randomly selected in Bq
+A_min = 1e4; A_max = 1.5e4 # borders between which A0 is randomly selected in Bq
 r0_min = 10; r0_max = 100 # borders between which r0 si radomly selected. The distance from the source where the activity is A0 in m
 A_b = 10 # background activity in Bq
 h = 20 # hight at which the detector flies over in m
@@ -24,5 +24,5 @@ radiation = {'A_min': A_min, 'A_max': A_max, 'r0_min': r0_min, 'r0_max': r0_max,
 detector = {"h": h, "dt": dt, "width": X, "height": Y, "grid": grid, "detector_constant": K, "max_phi": max_phi} 
 
 # SPECIFY A SOURCE
-testSource = [20, -20, 1000, 50]
+testSource = [20, -20, 15000, 50]
 # testSource = []

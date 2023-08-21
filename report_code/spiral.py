@@ -88,9 +88,11 @@ def spiral_visualize(data):
     ax1.plot(estimate[0], estimate[1], 'o', color = "b", ms = 6, label = "Estimated source")
 
     ax1.axis("equal")
-    ax1.set_xlabel("X axis [m]", fontsize = 15)
-    ax1.set_ylabel("Y axis [m]", fontsize = 15)
-   
+    ax1.set_xlabel("X axis [m]", fontsize = 20)
+    ax1.tick_params(axis='x', labelsize = 15)
+    ax1.set_ylabel("Y axis [m]", fontsize = 20)
+    ax1.tick_params(axis='y', labelsize = 15)
+
     ax1.legend(fontsize = 15)
 
     x_data = measurement['grid_x']; y_data = measurement['grid_y']
@@ -102,13 +104,15 @@ def spiral_visualize(data):
 
     # ax2.plot(x_data, y_data, "o", color = "k", label = "Measurements")
 
-    ax2.set_xlabel("X axis [m]", fontsize = 15)
-    ax2.set_ylabel("Y axis [m]", fontsize = 15)
+    ax2.set_xlabel("X axis [m]", fontsize = 20)
+    ax2.tick_params(axis='x', labelsize = 15)
+    ax2.set_ylabel("Y axis [m]", fontsize = 20)
+    ax2.tick_params(axis='y', labelsize = 15)
    
     ax2.legend(fontsize = 15)
 
-    fig.colorbar(im0, ax=ax2)
+    cbar = plt.colorbar(im0)
+    cbar.ax.tick_params(labelsize = 15)
 
     plt.tight_layout()
-    # plt.savefig("graphics/imporved.jpg")
     plt.show()

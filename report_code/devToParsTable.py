@@ -34,18 +34,22 @@ def compTable(radiation, detector, option1, option2, n_sims, K):
                 text = ax.text(j, i, f"{round(dev_array[i, j], 2)}",
                             ha="center", va="center", color='w')
 
-    ax.set_title("Table of uncertianties for K = " + str(K))
-    ax.set_xticks(range(len(J)), list(round(j, 1) for j in J))
-    ax.set_xlabel("Measurement duration [s]")
-    ax.set_yticks(range(len(I)), list(round(i, 1) for i in I))
-    ax.set_ylabel("Height of flyover [m]")
-    fig.colorbar(im, shrink=0.5, aspect=5)
+    ax.set_title("K = " + str(K), fontsize = 20)
+    ax.set_xticks(range(len(J)), list(int(j) for j in J))
+    ax.set_xlabel("Measurement duration [s]", fontsize = 18)
+    ax.set_yticks(range(len(I)), list(int(i) for i in I))
+    ax.tick_params('x', labelsize = 15)
+    ax.set_ylabel("Height of flyover [m]", fontsize = 18)
+    ax.tick_params('y', labelsize = 15)
+
+    cbar = plt.colorbar(im)
+    cbar.ax.tick_params(labelsize = 15)
     fig.tight_layout()
 
-    # plt.savefig("images/ParsTable" + "K=" + str(K) + ".png")
+    # plt.savefig("images/ParsTable" + "K=" + str(K) + ".png", bbox_inches = "tight")
     plt.show()
 
 option_h = {'range': np.linspace(10, 60, 6), 'name': 'h', 'xlabel': "Height of flyover [m]", 'saveAs': 'err_h.png'}
 option_dt = {'range': np. linspace(10, 60, 6), 'name': 'dt', 'xlabel': "Measurement duration [s]", 'saveAs': 'err_dt.png'}
 
-print(compTable(radiation, detector, option_h, option_dt, 3, 0.6))
+print(compTable(radiation, detector, option_h, option_dt, 3, 0.1))
