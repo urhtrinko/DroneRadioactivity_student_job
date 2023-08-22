@@ -1,1 +1,0 @@
-pyuic5 -x tutorial03.ui -o tutorial03.py
