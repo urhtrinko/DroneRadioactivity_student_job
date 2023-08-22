@@ -13,7 +13,7 @@ from combination import combination
 def loopOverGrid00(radiation, detector, A0, r0):
 
     # A_min = radiation['A_min']; A_max = radiation['A_max']
-    N_grid = detector['grid'][0]; X = detector['width']; Y = detector['height']
+    N_grid = detector['grid'][0]; X = detector['X']; Y = detector['Y']
 
     source00 = [0, 0, A0, r0]
     data0 = combination(radiation, detector, spiral_flyover, locationCF, source00)
