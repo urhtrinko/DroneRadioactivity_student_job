@@ -1,4 +1,5 @@
 import sys
+import numpy as np
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -11,7 +12,11 @@ from PyQt5.uic import loadUi
 
 from MainWindow import Ui_MainWindow
 
-from python_methods.subsidary import *
+sys.path.insert(1, 'C:/Users/urhtr/OneDrive/Documents/Studij_fizike/Absolventsko_delo/DroneRadioactivity_student_job')
+
+from main_code.subsidary import lineEditsFilled, checkArray, listPath
+from main_code.combination import field_combination
+from main_code.zigzag import visualize
 
 class Window(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
@@ -132,7 +137,20 @@ class Window(QMainWindow, Ui_MainWindow):
         self.lineEdit_X.setText("x = ? m"); self.lineEdit_Y.setText("y = ? m")
 
     def estimateSource(self):
-        measurement = {"m_dose": self.HDs, "dm_dose": self.dHDs}
+        X = self.parameters['X']; Y = self.parameters['Y']; grid = np.sqrt(self.parameters['m'])
+
+        square_x = X/grid; square_y = Y/grid
+
+        xs = np.linspace(-X/2 + square_x/2, X/2 - square_x/2, int(grid))
+        ys = np.linspace(-Y/2 + square_y/2, Y/2 - square_y/2, int(grid))
+        grid_x, grid_y = np.meshgrid(xs, np.flip(ys))
+
+        i_max, j_max = np.unravel_index(self.HDs.argmax(), self.HDs.shape)
+        x_c, y_c = grid_x[i_max, j_max], grid_y[i_max, j_max]
+        hotspot = {"xrange": (x_c - square_x/2, x_c + square_x/2), "yrange": (y_c - square_y/2, y_c + square_y/2)}
+
+        measurement = {"m_dose": self.HDs, "dm_dose": self.dHDs, "grid_x": grid_x, "grid_y": grid_y, "hotspot": hotspot, "X": X, "Y": Y,
+                       "source": []}
         detector = self.parameters
 
         self.data = field_combination(measurement, detector)
