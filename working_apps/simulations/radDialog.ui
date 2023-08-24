@@ -6,39 +6,42 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>338</width>
-    <height>300</height>
+    <width>341</width>
+    <height>283</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Radiation</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="labelAb">
+   <item row="0" column="3">
+    <widget class="QLineEdit" name="lineEditAmin">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;A&lt;span style=&quot; vertical-align:sub;&quot;&gt;b&lt;/span&gt; [Bq]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>1000</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="lineEditAb">
-     <property name="text">
-      <string>100</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
+   <item row="0" column="2">
     <widget class="QLabel" name="labelAmin">
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;A&lt;span style=&quot; vertical-align:sub;&quot;&gt;min&lt;/span&gt; [Bq]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="lineEditAmin">
+   <item row="2" column="2">
+    <widget class="QLabel" name="label_r0min">
      <property name="text">
-      <string>1000</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;r&lt;span style=&quot; vertical-align:sub;&quot;&gt;0min&lt;/span&gt; [m]&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QLineEdit" name="lineEdit_r0min"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="lineEditAmax">
+     <property name="text">
+      <string>1500</string>
      </property>
     </widget>
    </item>
@@ -49,35 +52,52 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QLineEdit" name="lineEditAmax">
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="lineEditAb">
      <property name="text">
-      <string>1500</string>
+      <string>100</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="labelAb">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;A&lt;span style=&quot; vertical-align:sub;&quot;&gt;b&lt;/span&gt; [Bq]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
    <item row="3" column="0">
+    <widget class="QLabel" name="label_r0max">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;r&lt;span style=&quot; vertical-align:sub;&quot;&gt;0max&lt;/span&gt; [m]&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="lineEdit_r0max"/>
+   </item>
+   <item row="3" column="2">
     <widget class="QLabel" name="labelF">
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;F [mSv]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="3" column="3">
     <widget class="QLineEdit" name="lineEditF">
      <property name="text">
       <string>0.140</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
+   <item row="5" column="0" colspan="2">
     <widget class="QPushButton" name="btnClearInput">
      <property name="text">
       <string>Clear Input</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="2">
+   <item row="5" column="2" colspan="2">
     <widget class="QPushButton" name="btnSave">
      <property name="text">
       <string>Save</string>
@@ -88,9 +108,7 @@
  </widget>
  <tabstops>
   <tabstop>lineEditAb</tabstop>
-  <tabstop>lineEditAmin</tabstop>
   <tabstop>lineEditAmax</tabstop>
-  <tabstop>lineEditF</tabstop>
   <tabstop>btnSave</tabstop>
   <tabstop>btnClearInput</tabstop>
  </tabstops>
