@@ -85,22 +85,12 @@
         </property>
        </widget>
       </item>
-      <item row="9" column="9">
-       <widget class="QLabel" name="A0labelEst">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;A&lt;span style=&quot; vertical-align:sub;&quot;&gt;0&lt;/span&gt; [Bq]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="1" colspan="2">
        <widget class="QPushButton" name="btnRadiation">
         <property name="text">
          <string>Edit Radiation</string>
         </property>
        </widget>
-      </item>
-      <item row="9" column="10">
-       <widget class="QLineEdit" name="A0lineEditEst"/>
       </item>
       <item row="3" column="0" colspan="2">
        <widget class="QLabel" name="parametersLabel_2">
@@ -178,6 +168,16 @@
         </property>
        </widget>
       </item>
+      <item row="8" column="2">
+       <widget class="QLabel" name="r0labelRand">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;r&lt;span style=&quot; vertical-align:sub;&quot;&gt;0&lt;/span&gt; [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="3">
+       <widget class="QLineEdit" name="r0lineEditRand"/>
+      </item>
      </layout>
     </item>
    </layout>
@@ -236,7 +236,6 @@
   <tabstop>btnEstSource</tabstop>
   <tabstop>x0lineEditEst</tabstop>
   <tabstop>y0lineEditEst</tabstop>
-  <tabstop>A0lineEditEst</tabstop>
   <tabstop>btnPlot</tabstop>
   <tabstop>btnClearInput</tabstop>
  </tabstops>
