@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>253</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,8 +21,8 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This method divides a square surface into tiles in the same way as the zig-zag one dose. Hire the tiles number is equal to s_grid&lt;span style=&quot; vertical-align:super;&quot;&gt;2&lt;/span&gt;. &lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;However the detector dosen't flyover in a zig-zag paterrn. It starts measureing the dose at the top left corner. It measures the dose in the tile where it it located and its right, bottom and diagonal botom neighbors. It them moves into the tile with the highest dose. The process is repeated until we reach the tile with the highest dose measurement. The detector then flies outward in a spiral an makes m number of measurements. This measurements are used to locate the source.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This method divides a square surface into tiles in the same way as the zig-zag one dose.&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;However the detector dosen't flyover in a zig-zag paterrn. It starts measureing the dose at the top left corner. It measures the dose in the tile where it it located and its right, bottom and diagonal botom neighbors. It them moves into the tile with the highest dose. The process is repeated until we reach the tile with the highest dose measurement. The detector then flies outward in a spiral an makes the measurements. This measurements are used to locate the source.&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The ploted graph shows the location of the tile with the highest dose count and the outward spiral when the detector is measuring the doses.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
