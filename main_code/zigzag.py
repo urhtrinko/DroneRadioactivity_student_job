@@ -1,6 +1,9 @@
 import numpy as np
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
+import sys
+
+sys.path.insert(1, 'C:/Users/urhtr/OneDrive/Documents/Studij_fizike/Absolventsko_delo/DroneRadioactivity_student_job/main_code')
 
 from subsidary import point_source, parsEst2xN, dose_speed
 
