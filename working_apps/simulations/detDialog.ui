@@ -14,80 +14,24 @@
    <string>Detector</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="5" column="2">
-    <widget class="QLineEdit" name="lineEdit_m">
+   <item row="3" column="2">
+    <widget class="QLineEdit" name="lineEditGrid">
      <property name="text">
-      <string>100</string>
+      <string>10</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="2">
-    <widget class="QLabel" name="label_h">
+   <item row="1" column="2">
+    <widget class="QLineEdit" name="lineEdit_dt">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;h [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>20</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="11">
-    <widget class="QLabel" name="label_2">
+   <item row="6" column="6" colspan="4">
+    <widget class="QPushButton" name="btnSave">
      <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" colspan="2">
-    <widget class="QLabel" name="label_m">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;m []:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QLabel" name="labelX">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;X [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QLabel" name="label_dt">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;dt [s]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="5" colspan="2">
-    <widget class="QLabel" name="labelSgrid">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;s_grid []:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="2">
-    <widget class="QLabel" name="labePhi">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;phi [rad]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="5">
-    <widget class="QLabel" name="labelY">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Y [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QLabel" name="labelGrid">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;grid []:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="10">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string/>
+      <string>Save</string>
      </property>
     </widget>
    </item>
@@ -105,48 +49,10 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="6" colspan="5">
-    <widget class="QPushButton" name="btnSave">
-     <property name="text">
-      <string>Save</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="2" colspan="2">
+   <item row="6" column="2" colspan="2">
     <widget class="QPushButton" name="btnClearInput">
      <property name="text">
       <string>Clear Input</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="2">
-    <widget class="QLineEdit" name="lineEditPhi">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="text">
-      <string>18</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QLineEdit" name="lineEdit_dt">
-     <property name="text">
-      <string>20</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2">
-    <widget class="QLineEdit" name="lineEditX">
-     <property name="text">
-      <string>50</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2">
-    <widget class="QLineEdit" name="lineEditGrid">
-     <property name="text">
-      <string>10</string>
      </property>
     </widget>
    </item>
@@ -157,20 +63,83 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="7" colspan="3">
-    <widget class="QLineEdit" name="lineEditSgrid">
+   <item row="5" column="2">
+    <widget class="QLineEdit" name="lineEditPhi">
      <property name="enabled">
       <bool>true</bool>
      </property>
      <property name="text">
-      <string>10</string>
+      <string>18</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="7" colspan="3">
+   <item row="2" column="2">
+    <widget class="QLineEdit" name="lineEditX">
+     <property name="text">
+      <string>50</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="7" colspan="2">
     <widget class="QLineEdit" name="lineEditY">
      <property name="text">
       <string>50</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="5">
+    <widget class="QLabel" name="labelY">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Y [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QLabel" name="labelGrid">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;grid []:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="9">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="label_h">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;h [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QLabel" name="labelX">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;X [m]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QLabel" name="label_dt">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;dt [s]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <widget class="QLabel" name="labePhi">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;phi [rad]:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="10">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </item>
@@ -182,9 +151,7 @@
   <tabstop>lineEditX</tabstop>
   <tabstop>lineEditY</tabstop>
   <tabstop>lineEditGrid</tabstop>
-  <tabstop>lineEditSgrid</tabstop>
   <tabstop>lineEdit_K</tabstop>
-  <tabstop>lineEdit_m</tabstop>
   <tabstop>lineEditPhi</tabstop>
   <tabstop>btnSave</tabstop>
   <tabstop>btnClearInput</tabstop>
